@@ -3,9 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit.Logging;
-using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Builders;
-using NetEvolve.ProjectBuilders.Models;
 using NetEvolve.ProjectBuilders.TUnit;
 
 [ClassDataSource<TemporaryDirectory>]

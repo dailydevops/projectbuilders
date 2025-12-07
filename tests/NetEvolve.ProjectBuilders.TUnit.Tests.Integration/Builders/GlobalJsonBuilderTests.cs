@@ -1,6 +1,5 @@
 ﻿namespace NetEvolve.ProjectBuilders.Tests.Integration.Builders;
 
-using System;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders.Builders;
 using NetEvolve.ProjectBuilders.Models;
