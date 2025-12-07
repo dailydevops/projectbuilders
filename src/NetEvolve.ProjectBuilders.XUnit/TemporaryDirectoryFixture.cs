@@ -20,7 +20,7 @@ using Xunit;
 /// The temporary directory is automatically:
 /// <list type="bullet">
 /// <item><description>Created before test execution via <see cref="IAsyncLifetime.InitializeAsync"/></description></item>
-/// <item><description>Cleaned up and deleted after test completion via <see cref="IAsyncLifetime.DisposeAsync"/></description></item>
+/// <item><description>Cleaned up and deleted after test completion via <see cref="IAsyncDisposable.DisposeAsync"/></description></item>
 /// <item><description>Placed in a unique location to avoid conflicts between parallel test executions</description></item>
 /// </list>
 /// </para>

@@ -1,5 +1,7 @@
 ﻿namespace NetEvolve.ProjectBuilders.Abstractions;
 
+using NetEvolve.ProjectBuilders.Builders;
+
 /// <summary>
 /// Represents a temporary directory builder for creating isolated, auto-cleaning temporary directories.
 /// </summary>

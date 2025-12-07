@@ -105,7 +105,7 @@ public interface IProjectFactory : IAsyncDisposable
     /// to support specialized file generation beyond the built-in C#/VB.NET projects and global.json files.
     /// </para>
     /// <para>
-    /// All registered builders are created when <see cref="BuildAsync(string[]?, CancellationToken)"/> is called.
+    /// All registered builders are created when <see cref="BuildAsync(string[], CancellationToken)"/> is called.
     /// Attempting to add the same builder instance twice throws an exception.
     /// </para>
     /// </remarks>

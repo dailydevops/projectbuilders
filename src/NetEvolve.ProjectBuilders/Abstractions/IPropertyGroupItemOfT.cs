@@ -1,5 +1,7 @@
 ﻿namespace NetEvolve.ProjectBuilders.Abstractions;
 
+using NetEvolve.ProjectBuilders.Models;
+
 /// <summary>
 /// Represents a strongly-typed property element in a PropertyGroup that supports value mutation.
 /// </summary>

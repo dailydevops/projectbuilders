@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.ProjectBuilders.Abstractions;
 
 using System.Collections.Generic;
+using NetEvolve.ProjectBuilders.Models;
 
 /// <summary>
 /// Represents an item that provides lookup paths for resolving referenced packages or projects.
