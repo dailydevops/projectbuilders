@@ -6,7 +6,8 @@ using System.Xml;
 
 internal static class Constants
 {
-    public const string DefaultRuntimeSdk = "8.0.204";
+    public const string RuntimeSdkDefault = "8.0.204";
+    public const string RuntimeSdkLTS = "10.0.100";
 
     public const string CommandBuild = "build";
     public const string CommandRestore = "restore";
