@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.ProjectBuilders.Tests.Unit.Models;
 
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders.Models;
@@ -23,36 +24,37 @@ public partial class TargetFrameworkTests
         _ = await Assert.That(tf.Value).Matches(TargetFrameworkPattern());
 
     [Test]
-    [MethodDataSource<TargetFramework>(nameof(TargetFramework.Values))]
+    [MethodDataSource(nameof(GetTargetFrameworksWithSuffix))]
     public async ValueTask Value_IsWellFormatted_EndsWithSuffix(TargetFramework tf, string suffix) =>
         await Assert.That(tf.Value).EndsWith(suffix, Ordinal);
 
-    //[Test]
-    //[MethodDataSource(nameof(TargetFrameworkData))]
-    //public async Task Value_IsWellFormated(TargetFramework tf)
-    //{
-    //    using (Assert.Multiple())
-    //    {
-    //        _ = await Assert.That(tf.Value).IsNotNullOrWhiteSpace();
-    //    }
-
-    //    Assert.Multiple(
-    //        () => Assert.Matches(_targetFrameworkPattern, tf.Value),
-    //        () => Assert.Equal(tf.Platform!.Value == TargetPlatform.Windows, tf.Value.EndsWith("-windows", Ordinal)),
-    //        () => Assert.Equal(tf.Platform!.Value == TargetPlatform.Android, tf.Value.EndsWith("-android", Ordinal)),
-    //        () => Assert.Equal(tf.Platform!.Value == TargetPlatform.iOS, tf.Value.EndsWith("-ios", Ordinal)),
-    //        () =>
-    //            Assert.Equal(
-    //                tf.Platform!.Value == TargetPlatform.MacCatalyst,
-    //                tf.Value.EndsWith("-maccatalyst", Ordinal)
-    //            ),
-    //        () => Assert.Equal(tf.Platform!.Value == TargetPlatform.MacOs, tf.Value.EndsWith("-macos", Ordinal)),
-    //        () => Assert.Equal(tf.Platform!.Value == TargetPlatform.Tizen, tf.Value.EndsWith("-tizen", Ordinal)),
-    //        () => Assert.Equal(tf.Platform!.Value == TargetPlatform.tvOS, tf.Value.EndsWith("-tvos", Ordinal)),
-    //        () => Assert.Equal(tf.Platform!.Value == TargetPlatform.Browser, tf.Value.EndsWith("-browser", Ordinal)),
-    //        () => Assert.Equal(tf.Platform!.Value == TargetPlatform.Windows, tf.Value.EndsWith("-windows", Ordinal))
-    //    );
-    //}
+    public static IEnumerable<(TargetFramework, string)> GetTargetFrameworksWithSuffix()
+    {
+        foreach (
+            var value in TargetFramework.Values.Where(tf =>
+                !tf.Name.StartsWith("NetFramework", Ordinal)
+                && tf.Platform.HasValue
+                && !tf.Platform.Equals(TargetPlatform.None)
+            )
+        )
+        {
+            yield return (
+                value,
+                value.Platform switch
+                {
+                    TargetPlatform.Android => "-android",
+                    TargetPlatform.Windows => "-windows",
+                    TargetPlatform.iOS => "-ios",
+                    TargetPlatform.MacCatalyst => "-maccatalyst",
+                    TargetPlatform.MacOs => "-macos",
+                    TargetPlatform.tvOS => "-tvos",
+                    TargetPlatform.Tizen => "-tizen",
+                    TargetPlatform.Browser => "-browser",
+                    _ => throw new NotSupportedException($"Platform '{value.Platform}' is not supported."),
+                }
+            );
+        }
+    }
 
     public static IEnumerable<TargetFramework> TargetFrameworkData => TargetFramework.Values;
 

@@ -78,6 +78,44 @@ public readonly record struct TargetFramework
     public static TargetFramework Net5 { get; } = Create(nameof(Net5), "net5.0");
 
     /// <summary>
+    /// Gets the target framework for .NET 5 on Android.
+    /// </summary>
+    public static TargetFramework Net5Android { get; } =
+        Create(nameof(Net5Android), "net5.0-android", TargetPlatform.Android);
+
+    /// <summary>
+    /// Gets the target framework for .NET 5 on Browser (Blazor WebAssembly).
+    /// </summary>
+    public static TargetFramework Net5Browser { get; } =
+        Create(nameof(Net5Browser), "net5.0-browser", TargetPlatform.Browser);
+
+    /// <summary>
+    /// Gets the target framework for .NET 5 on iOS.
+    /// </summary>
+    public static TargetFramework Net5iOS { get; } = Create(nameof(Net5iOS), "net5.0-ios", TargetPlatform.iOS);
+
+    /// <summary>
+    /// Gets the target framework for .NET 5 on Mac Catalyst.
+    /// </summary>
+    public static TargetFramework Net5MacCatalyst { get; } =
+        Create(nameof(Net5MacCatalyst), "net5.0-maccatalyst", TargetPlatform.MacCatalyst);
+
+    /// <summary>
+    /// Gets the target framework for .NET 5 on macOS.
+    /// </summary>
+    public static TargetFramework Net5MacOs { get; } = Create(nameof(Net5MacOs), "net5.0-macos", TargetPlatform.MacOs);
+
+    /// <summary>
+    /// Gets the target framework for .NET 5 on Tizen.
+    /// </summary>
+    public static TargetFramework Net5Tizen { get; } = Create(nameof(Net5Tizen), "net5.0-tizen", TargetPlatform.Tizen);
+
+    /// <summary>
+    /// Gets the target framework for .NET 5 on tvOS.
+    /// </summary>
+    public static TargetFramework Net5tvOS { get; } = Create(nameof(Net5tvOS), "net5.0-tvos", TargetPlatform.tvOS);
+
+    /// <summary>
     /// Gets the target framework for .NET 5 on Windows.
     /// </summary>
     public static TargetFramework Net5Windows { get; } =
@@ -87,6 +125,44 @@ public readonly record struct TargetFramework
     /// Gets the target framework for .NET 6.
     /// </summary>
     public static TargetFramework Net6 { get; } = Create(nameof(Net6), "net6.0");
+
+    /// <summary>
+    /// Gets the target framework for .NET 6 on Android.
+    /// </summary>
+    public static TargetFramework Net6Android { get; } =
+        Create(nameof(Net6Android), "net6.0-android", TargetPlatform.Android);
+
+    /// <summary>
+    /// Gets the target framework for .NET 6 on Browser (Blazor WebAssembly).
+    /// </summary>
+    public static TargetFramework Net6Browser { get; } =
+        Create(nameof(Net6Browser), "net6.0-browser", TargetPlatform.Browser);
+
+    /// <summary>
+    /// Gets the target framework for .NET 6 on iOS.
+    /// </summary>
+    public static TargetFramework Net6iOS { get; } = Create(nameof(Net6iOS), "net6.0-ios", TargetPlatform.iOS);
+
+    /// <summary>
+    /// Gets the target framework for .NET 6 on Mac Catalyst.
+    /// </summary>
+    public static TargetFramework Net6MacCatalyst { get; } =
+        Create(nameof(Net6MacCatalyst), "net6.0-maccatalyst", TargetPlatform.MacCatalyst);
+
+    /// <summary>
+    /// Gets the target framework for .NET 6 on macOS.
+    /// </summary>
+    public static TargetFramework Net6MacOs { get; } = Create(nameof(Net6MacOs), "net6.0-macos", TargetPlatform.MacOs);
+
+    /// <summary>
+    /// Gets the target framework for .NET 6 on Tizen.
+    /// </summary>
+    public static TargetFramework Net6Tizen { get; } = Create(nameof(Net6Tizen), "net6.0-tizen", TargetPlatform.Tizen);
+
+    /// <summary>
+    /// Gets the target framework for .NET 6 on tvOS.
+    /// </summary>
+    public static TargetFramework Net6tvOS { get; } = Create(nameof(Net6tvOS), "net6.0-tvos", TargetPlatform.tvOS);
 
     /// <summary>
     /// Gets the target framework for .NET 6 on Windows.
@@ -100,6 +176,44 @@ public readonly record struct TargetFramework
     public static TargetFramework Net7 { get; } = Create(nameof(Net7), "net7.0");
 
     /// <summary>
+    /// Gets the target framework for .NET 7 on Android.
+    /// </summary>
+    public static TargetFramework Net7Android { get; } =
+        Create(nameof(Net7Android), "net7.0-android", TargetPlatform.Android);
+
+    /// <summary>
+    /// Gets the target framework for .NET 7 on Browser (Blazor WebAssembly).
+    /// </summary>
+    public static TargetFramework Net7Browser { get; } =
+        Create(nameof(Net7Browser), "net7.0-browser", TargetPlatform.Browser);
+
+    /// <summary>
+    /// Gets the target framework for .NET 7 on iOS.
+    /// </summary>
+    public static TargetFramework Net7iOS { get; } = Create(nameof(Net7iOS), "net7.0-ios", TargetPlatform.iOS);
+
+    /// <summary>
+    /// Gets the target framework for .NET 7 on Mac Catalyst.
+    /// </summary>
+    public static TargetFramework Net7MacCatalyst { get; } =
+        Create(nameof(Net7MacCatalyst), "net7.0-maccatalyst", TargetPlatform.MacCatalyst);
+
+    /// <summary>
+    /// Gets the target framework for .NET 7 on macOS.
+    /// </summary>
+    public static TargetFramework Net7MacOs { get; } = Create(nameof(Net7MacOs), "net7.0-macos", TargetPlatform.MacOs);
+
+    /// <summary>
+    /// Gets the target framework for .NET 7 on Tizen.
+    /// </summary>
+    public static TargetFramework Net7Tizen { get; } = Create(nameof(Net7Tizen), "net7.0-tizen", TargetPlatform.Tizen);
+
+    /// <summary>
+    /// Gets the target framework for .NET 7 on tvOS.
+    /// </summary>
+    public static TargetFramework Net7tvOS { get; } = Create(nameof(Net7tvOS), "net7.0-tvos", TargetPlatform.tvOS);
+
+    /// <summary>
     /// Gets the target framework for .NET 7 on Windows.
     /// </summary>
     public static TargetFramework Net7Windows { get; } =
@@ -109,6 +223,44 @@ public readonly record struct TargetFramework
     /// Gets the target framework for .NET 8.
     /// </summary>
     public static TargetFramework Net8 { get; } = Create(nameof(Net8), "net8.0");
+
+    /// <summary>
+    /// Gets the target framework for .NET 8 on Android.
+    /// </summary>
+    public static TargetFramework Net8Android { get; } =
+        Create(nameof(Net8Android), "net8.0-android", TargetPlatform.Android);
+
+    /// <summary>
+    /// Gets the target framework for .NET 8 on Browser (Blazor WebAssembly).
+    /// </summary>
+    public static TargetFramework Net8Browser { get; } =
+        Create(nameof(Net8Browser), "net8.0-browser", TargetPlatform.Browser);
+
+    /// <summary>
+    /// Gets the target framework for .NET 8 on iOS.
+    /// </summary>
+    public static TargetFramework Net8iOS { get; } = Create(nameof(Net8iOS), "net8.0-ios", TargetPlatform.iOS);
+
+    /// <summary>
+    /// Gets the target framework for .NET 8 on Mac Catalyst.
+    /// </summary>
+    public static TargetFramework Net8MacCatalyst { get; } =
+        Create(nameof(Net8MacCatalyst), "net8.0-maccatalyst", TargetPlatform.MacCatalyst);
+
+    /// <summary>
+    /// Gets the target framework for .NET 8 on macOS.
+    /// </summary>
+    public static TargetFramework Net8MacOs { get; } = Create(nameof(Net8MacOs), "net8.0-macos", TargetPlatform.MacOs);
+
+    /// <summary>
+    /// Gets the target framework for .NET 8 on Tizen.
+    /// </summary>
+    public static TargetFramework Net8Tizen { get; } = Create(nameof(Net8Tizen), "net8.0-tizen", TargetPlatform.Tizen);
+
+    /// <summary>
+    /// Gets the target framework for .NET 8 on tvOS.
+    /// </summary>
+    public static TargetFramework Net8tvOS { get; } = Create(nameof(Net8tvOS), "net8.0-tvos", TargetPlatform.tvOS);
 
     /// <summary>
     /// Gets the target framework for .NET 8 on Windows.
@@ -122,10 +274,99 @@ public readonly record struct TargetFramework
     public static TargetFramework Net9 { get; } = Create(nameof(Net9), "net9.0");
 
     /// <summary>
+    /// Gets the target framework for .NET 9 on Android.
+    /// </summary>
+    public static TargetFramework Net9Android { get; } =
+        Create(nameof(Net9Android), "net9.0-android", TargetPlatform.Android);
+
+    /// <summary>
+    /// Gets the target framework for .NET 9 on Browser (Blazor WebAssembly).
+    /// </summary>
+    public static TargetFramework Net9Browser { get; } =
+        Create(nameof(Net9Browser), "net9.0-browser", TargetPlatform.Browser);
+
+    /// <summary>
+    /// Gets the target framework for .NET 9 on iOS.
+    /// </summary>
+    public static TargetFramework Net9iOS { get; } = Create(nameof(Net9iOS), "net9.0-ios", TargetPlatform.iOS);
+
+    /// <summary>
+    /// Gets the target framework for .NET 9 on Mac Catalyst.
+    /// </summary>
+    public static TargetFramework Net9MacCatalyst { get; } =
+        Create(nameof(Net9MacCatalyst), "net9.0-maccatalyst", TargetPlatform.MacCatalyst);
+
+    /// <summary>
+    /// Gets the target framework for .NET 9 on macOS.
+    /// </summary>
+    public static TargetFramework Net9MacOs { get; } = Create(nameof(Net9MacOs), "net9.0-macos", TargetPlatform.MacOs);
+
+    /// <summary>
+    /// Gets the target framework for .NET 9 on Tizen.
+    /// </summary>
+    public static TargetFramework Net9Tizen { get; } = Create(nameof(Net9Tizen), "net9.0-tizen", TargetPlatform.Tizen);
+
+    /// <summary>
+    /// Gets the target framework for .NET 9 on tvOS.
+    /// </summary>
+    public static TargetFramework Net9tvOS { get; } = Create(nameof(Net9tvOS), "net9.0-tvos", TargetPlatform.tvOS);
+
+    /// <summary>
     /// Gets the target framework for .NET 9 on Windows.
     /// </summary>
     public static TargetFramework Net9Windows { get; } =
         Create(nameof(Net9Windows), "net9.0-windows", TargetPlatform.Windows);
+
+    /// <summary>
+    /// Gets the target framework for .NET 10.
+    /// </summary>
+    public static TargetFramework Net10 { get; } = Create(nameof(Net10), "net10.0");
+
+    /// <summary>
+    /// Gets the target framework for .NET 10 on Android.
+    /// </summary>
+    public static TargetFramework Net10Android { get; } =
+        Create(nameof(Net10Android), "net10.0-android", TargetPlatform.Android);
+
+    /// <summary>
+    /// Gets the target framework for .NET 10 on Browser (Blazor WebAssembly).
+    /// </summary>
+    public static TargetFramework Net10Browser { get; } =
+        Create(nameof(Net10Browser), "net10.0-browser", TargetPlatform.Browser);
+
+    /// <summary>
+    /// Gets the target framework for .NET 10 on iOS.
+    /// </summary>
+    public static TargetFramework Net10iOS { get; } = Create(nameof(Net10iOS), "net10.0-ios", TargetPlatform.iOS);
+
+    /// <summary>
+    /// Gets the target framework for .NET 10 on Mac Catalyst.
+    /// </summary>
+    public static TargetFramework Net10MacCatalyst { get; } =
+        Create(nameof(Net10MacCatalyst), "net10.0-maccatalyst", TargetPlatform.MacCatalyst);
+
+    /// <summary>
+    /// Gets the target framework for .NET 10 on macOS.
+    /// </summary>
+    public static TargetFramework Net10MacOs { get; } =
+        Create(nameof(Net10MacOs), "net10.0-macos", TargetPlatform.MacOs);
+
+    /// <summary>
+    /// Gets the target framework for .NET 10 on Tizen.
+    /// </summary>
+    public static TargetFramework Net10Tizen { get; } =
+        Create(nameof(Net10Tizen), "net10.0-tizen", TargetPlatform.Tizen);
+
+    /// <summary>
+    /// Gets the target framework for .NET 10 on tvOS.
+    /// </summary>
+    public static TargetFramework Net10tvOS { get; } = Create(nameof(Net10tvOS), "net10.0-tvos", TargetPlatform.tvOS);
+
+    /// <summary>
+    /// Gets the target framework for .NET 10 on Windows.
+    /// </summary>
+    public static TargetFramework Net10Windows { get; } =
+        Create(nameof(Net10Windows), "net10.0-windows", TargetPlatform.Windows);
 
     /// <summary>
     /// Gets the target framework for .NET Standard 1.0.
@@ -171,4 +412,87 @@ public readonly record struct TargetFramework
     /// Gets the target framework for .NET Standard 2.1.
     /// </summary>
     public static TargetFramework NetStandard2_1 { get; } = Create(nameof(NetStandard2_1), "netstandard2.1");
+
+    /// <summary>
+    /// Gets the target framework for .NET Core 1.0.
+    /// </summary>
+    public static TargetFramework NetCoreApp1_0 { get; } = Create(nameof(NetCoreApp1_0), "netcoreapp1.0");
+
+    /// <summary>
+    /// Gets the target framework for .NET Core 1.1.
+    /// </summary>
+    public static TargetFramework NetCoreApp1_1 { get; } = Create(nameof(NetCoreApp1_1), "netcoreapp1.1");
+
+    /// <summary>
+    /// Gets the target framework for .NET Core 2.0.
+    /// </summary>
+    public static TargetFramework NetCoreApp2_0 { get; } = Create(nameof(NetCoreApp2_0), "netcoreapp2.0");
+
+    /// <summary>
+    /// Gets the target framework for .NET Core 2.1.
+    /// </summary>
+    public static TargetFramework NetCoreApp2_1 { get; } = Create(nameof(NetCoreApp2_1), "netcoreapp2.1");
+
+    /// <summary>
+    /// Gets the target framework for .NET Core 2.2.
+    /// </summary>
+    public static TargetFramework NetCoreApp2_2 { get; } = Create(nameof(NetCoreApp2_2), "netcoreapp2.2");
+
+    /// <summary>
+    /// Gets the target framework for .NET Core 3.0.
+    /// </summary>
+    public static TargetFramework NetCoreApp3_0 { get; } = Create(nameof(NetCoreApp3_0), "netcoreapp3.0");
+
+    /// <summary>
+    /// Gets the target framework for .NET Core 3.1.
+    /// </summary>
+    public static TargetFramework NetCoreApp3_1 { get; } = Create(nameof(NetCoreApp3_1), "netcoreapp3.1");
+
+    /// <summary>
+    /// Gets the target framework for .NET Framework 4.6.
+    /// </summary>
+    public static TargetFramework NetFramework4_6 { get; } =
+        Create(nameof(NetFramework4_6), "net46", TargetPlatform.Windows);
+
+    /// <summary>
+    /// Gets the target framework for .NET Framework 4.6.1.
+    /// </summary>
+    public static TargetFramework NetFramework4_6_1 { get; } =
+        Create(nameof(NetFramework4_6_1), "net461", TargetPlatform.Windows);
+
+    /// <summary>
+    /// Gets the target framework for .NET Framework 4.6.2.
+    /// </summary>
+    public static TargetFramework NetFramework4_6_2 { get; } =
+        Create(nameof(NetFramework4_6_2), "net462", TargetPlatform.Windows);
+
+    /// <summary>
+    /// Gets the target framework for .NET Framework 4.7.
+    /// </summary>
+    public static TargetFramework NetFramework4_7 { get; } =
+        Create(nameof(NetFramework4_7), "net47", TargetPlatform.Windows);
+
+    /// <summary>
+    /// Gets the target framework for .NET Framework 4.7.1.
+    /// </summary>
+    public static TargetFramework NetFramework4_7_1 { get; } =
+        Create(nameof(NetFramework4_7_1), "net471", TargetPlatform.Windows);
+
+    /// <summary>
+    /// Gets the target framework for .NET Framework 4.7.2.
+    /// </summary>
+    public static TargetFramework NetFramework4_7_2 { get; } =
+        Create(nameof(NetFramework4_7_2), "net472", TargetPlatform.Windows);
+
+    /// <summary>
+    /// Gets the target framework for .NET Framework 4.8.
+    /// </summary>
+    public static TargetFramework NetFramework4_8 { get; } =
+        Create(nameof(NetFramework4_8), "net48", TargetPlatform.Windows);
+
+    /// <summary>
+    /// Gets the target framework for .NET Framework 4.8.1.
+    /// </summary>
+    public static TargetFramework NetFramework4_8_1 { get; } =
+        Create(nameof(NetFramework4_8_1), "net481", TargetPlatform.Windows);
 }
