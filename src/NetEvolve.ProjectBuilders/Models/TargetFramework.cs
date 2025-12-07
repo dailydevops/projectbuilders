@@ -53,8 +53,9 @@ public readonly record struct TargetFramework
     /// <returns>
     /// A new instance of <see cref="TargetFramework"/>.
     /// </returns>
-    /// <exception cref="ArgumentNullException">If the target framework is already registered.</exception>
-    public static TargetFramework Create(string name, string value, TargetPlatform platform = TargetPlatform.None)
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/> or <paramref name="value"/> is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when the target framework is already registered or when <paramref name="name"/> or <paramref name="value"/> is empty or whitespace.</exception>
+    public static TargetFramework Create(string name, string value, TargetPlatform? platform = null)
     {
         Argument.ThrowIfNullOrWhiteSpace(name);
         Argument.ThrowIfNullOrWhiteSpace(value);

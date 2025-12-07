@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>$(TestTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Extensions.TUnit" />
+    <PackageReference Include="TUnit" />
+    <PackageReference Include="Verify.ParametersHashing" />
+    <PackageReference Include="Verify.TUnit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="NetEvolve.Extensions.TUnit.IntegrationTestAttribute" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NetEvolve.ProjectBuilders.TUnit\NetEvolve.ProjectBuilders.TUnit.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.ProjectBuilders\NetEvolve.ProjectBuilders.csproj" />
+  </ItemGroup>
+</Project>

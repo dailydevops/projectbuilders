@@ -60,7 +60,7 @@ internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
         _directory = new DirectoryInfo(directoryPath);
     }
 
-    /// <inheritdoc cref="IDisposable.Dispose"/>
+    /// <inheritdoc cref="IAsyncDisposable.DisposeAsync"/>
     public ValueTask DisposeAsync() => DisposeAsync(true);
 
     private async ValueTask DisposeAsync(bool disposing)

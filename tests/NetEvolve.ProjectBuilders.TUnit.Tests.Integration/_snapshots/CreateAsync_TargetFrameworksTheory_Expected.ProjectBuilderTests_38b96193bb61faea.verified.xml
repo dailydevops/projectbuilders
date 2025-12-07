@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <ErrorLog>result.sarif,version=2.1</ErrorLog>
+    <TargetFrameworks>net8.0;netstandard2.0;net10.0-windows</TargetFrameworks>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

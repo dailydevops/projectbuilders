@@ -38,7 +38,6 @@ internal sealed class ProjectBuilder : IProjectBuilder
 
         PropertyGroup = new PropertyGroup();
         PropertyGroup.Add("ErrorLog", $"{Constants.OutputFileName},version=2.1");
-        _ = this.WithTargetFramework(TargetFramework.Net8);
         ItemGroup = new ItemGroup();
     }
 
