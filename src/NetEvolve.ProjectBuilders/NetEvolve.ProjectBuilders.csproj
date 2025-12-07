@@ -11,8 +11,4 @@
     <PackageReference Include="CliWrap" />
     <PackageReference Include="NetEvolve.Arguments" />
   </ItemGroup>
-
-  <ItemGroup>
-    <InternalsVisibleTo Include="$(MSBuildProjectName).XUnit" />
-  </ItemGroup>
 </Project>
