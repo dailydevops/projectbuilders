@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using NetEvolve.Arguments;
 using NetEvolve.ProjectBuilders.Abstractions;
 
-/// <inheritdoc cref="ITempDirectoryBuilder" />
-internal sealed class TempDirectoryBuilder : ITempDirectoryBuilder
+/// <inheritdoc cref="ITemporaryDirectoryBuilder" />
+internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
 {
     private readonly DirectoryInfo _directory;
     private bool _disposedValue;
@@ -52,9 +52,9 @@ internal sealed class TempDirectoryBuilder : ITempDirectoryBuilder
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="TempDirectoryBuilder"/> class.
+    /// Initializes a new instance of the <see cref="TemporaryDirectoryBuilder"/> class.
     /// </summary>
-    public TempDirectoryBuilder()
+    public TemporaryDirectoryBuilder()
     {
         var directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
         _directory = new DirectoryInfo(directoryPath);

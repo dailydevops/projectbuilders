@@ -44,7 +44,7 @@ public sealed partial class ProjectFactory : IProjectFactory
     {
         _logger = logger ?? NullLogger<ProjectFactory>.Instance;
         _testPackageBuilder = testPackageBuilder;
-        _tempDirectory = directory ?? new TempDirectoryBuilder();
+        _tempDirectory = directory ?? new TemporaryDirectoryBuilder();
         _output = [];
 
         EnvironmentVariables = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase)
