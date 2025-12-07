@@ -35,5 +35,6 @@ jobs:
       disableTestsOnWindows: false
       dotnetLogging: ${{ inputs.dotnet-logging }}
       dotnetVersion: ${{ vars.NE_DOTNET_TARGETFRAMEWORKS }}
+      failFast: false
       solution: ./ProjectBuilders.slnx
     secrets: inherit
