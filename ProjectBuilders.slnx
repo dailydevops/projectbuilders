@@ -26,7 +26,6 @@
     <Project Path="src/NetEvolve.ProjectBuilders/NetEvolve.ProjectBuilders.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/NetEvolve.ProjectBuilders.Tests.Integration/NetEvolve.ProjectBuilders.Tests.Integration.csproj" />
     <Project Path="tests/NetEvolve.ProjectBuilders.Tests.Unit/NetEvolve.ProjectBuilders.Tests.Unit.csproj" />
     <Project Path="tests/NetEvolve.ProjectBuilders.TUnit.Tests.Integration/NetEvolve.ProjectBuilders.TUnit.Tests.Integration.csproj" />
   </Folder>
