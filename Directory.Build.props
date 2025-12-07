@@ -2,8 +2,8 @@
   <PropertyGroup Label="Package settings">
     <Title>$(MSBuildProjectName)</Title>
     <Description>Allows you to create a temporary .NET project with all possible settings and few bells and whistles.</Description>
-    <RepositoryUrl>https://github.com/dailydevops/projectbuilder.git</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/dailydevops/projectbuilder</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dailydevops/projectbuilders.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dailydevops/projectbuilders</PackageProjectUrl>
     <PackageReleaseNotes>$(RepositoryUrl)/releases</PackageReleaseNotes>
     <PackageTags>test;projectbuilder</PackageTags>
     <CopyrightYearStart>2025</CopyrightYearStart>
