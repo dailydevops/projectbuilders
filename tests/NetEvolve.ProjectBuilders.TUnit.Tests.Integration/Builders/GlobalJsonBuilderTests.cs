@@ -12,7 +12,7 @@ public class GlobalJsonBuilderTests(TemporaryDirectory directory)
     [Test]
     [MatrixDataSource]
     public async Task CreateAsync_Theory_Expected(
-        [Matrix(Constants.RuntimeDotNet8, "10.0.100")] string runtimeVersion,
+        [Matrix(Constants.RuntimeSdkDefault, "10.0.100")] string runtimeVersion,
         bool allowPrerelease,
         RollForward rollForward
     )

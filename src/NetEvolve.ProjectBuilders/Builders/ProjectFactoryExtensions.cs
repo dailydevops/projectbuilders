@@ -56,7 +56,7 @@ public static class ProjectFactoryExtensions
     /// </returns>
     public static IProjectFactory AddGlobalJson(
         this IProjectFactory factory,
-        string runtimeVersion = Constants.RuntimeDotNet8,
+        string runtimeVersion = Constants.DefaultRuntimeSdk,
         Action<IGlobalJsonBuilder>? configure = null
     )
     {
