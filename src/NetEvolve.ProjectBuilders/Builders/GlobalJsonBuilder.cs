@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
+using NetEvolve.Arguments;
 using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Models;
 
@@ -16,7 +17,7 @@ internal sealed class GlobalJsonBuilder : IGlobalJsonBuilder
 
     private bool? _allowPrerelease;
     private RollForward? _rollForward;
-    private readonly string _runtimeVersion;
+    private string _runtimeVersion;
 
     public string FullPath => Path.Combine(_directory.FullPath, FileName);
 
@@ -32,6 +33,16 @@ internal sealed class GlobalJsonBuilder : IGlobalJsonBuilder
     public IGlobalJsonBuilder SetRollForward(RollForward rollForward)
     {
         _rollForward = rollForward;
+
+        return this;
+    }
+
+    /// <inheritdoc cref="IGlobalJsonBuilder.SetRuntimeSdk(string)" />
+    public IGlobalJsonBuilder SetRuntimeSdk(string runtimeVersion)
+    {
+        Argument.ThrowIfNullOrWhiteSpace(runtimeVersion);
+
+        _runtimeVersion = runtimeVersion;
 
         return this;
     }

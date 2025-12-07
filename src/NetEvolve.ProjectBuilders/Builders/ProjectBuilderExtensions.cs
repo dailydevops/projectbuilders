@@ -55,6 +55,14 @@ public static class ProjectBuilderExtensions
         }
     }
 
+    public static T WithDefaults<T>(this T builder)
+        where T : class, IProjectBuilder
+    {
+        Argument.ThrowIfNull(builder);
+
+        return builder.WithTargetFramework(TargetFramework.Net8).WithNullable(NullableOptions.Enable);
+    }
+
     /// <summary>
     /// Sets the <b>&lt;Nullable&gt;</b> property in the project file. Caution: this method will override any existing value.
     /// </summary>

@@ -24,4 +24,6 @@ public interface IGlobalJsonBuilder : IFileBuilder
     /// </param>
     /// <returns>The current instance of the <see cref="IGlobalJsonBuilder"/>.</returns>
     IGlobalJsonBuilder SetRollForward(RollForward rollForward);
+
+    IGlobalJsonBuilder SetRuntimeSdk(string runtimeVersion);
 }
