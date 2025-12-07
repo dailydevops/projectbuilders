@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <ErrorLog>result.sarif,version=2.1</ErrorLog>
-    <TargetFramework>net481</TargetFramework>
     <Nullable>enable</Nullable>
+    <TargetFramework>net481</TargetFramework>
   </PropertyGroup>
 </Project>

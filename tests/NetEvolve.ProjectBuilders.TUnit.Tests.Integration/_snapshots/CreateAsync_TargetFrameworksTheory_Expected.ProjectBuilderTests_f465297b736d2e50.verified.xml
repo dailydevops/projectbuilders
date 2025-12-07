@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ErrorLog>result.sarif,version=2.1</ErrorLog>
-    <TargetFrameworks>net8.0;netstandard2.0;net481</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net481</TargetFrameworks>
   </PropertyGroup>
 </Project>

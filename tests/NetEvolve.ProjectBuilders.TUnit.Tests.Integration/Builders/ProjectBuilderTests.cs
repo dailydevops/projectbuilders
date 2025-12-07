@@ -6,7 +6,7 @@ using NetEvolve.ProjectBuilders.Builders;
 using NetEvolve.ProjectBuilders.Models;
 using NetEvolve.ProjectBuilders.TUnit;
 
-[ClassDataSource<TemporaryDirectory>(Shared = SharedType.None)]
+[ClassDataSource<TemporaryDirectory>]
 public class ProjectBuilderTests(TemporaryDirectory directory)
 {
     [Test]
@@ -17,7 +17,7 @@ public class ProjectBuilderTests(TemporaryDirectory directory)
         [MatrixInstanceMethod<ProjectBuilderTests>(nameof(GetTargetFrameworkValues))] TargetFramework targetFramework
     )
     {
-        var subdirectory = directory.CreateDirectory($"{nameof(CreateAsync_TargetFrameworkTheory_Expected)}{nullable}");
+        var subdirectory = directory.CreateDirectory($"{nameof(CreateAsync_TargetFrameworkTheory_Expected)}");
         await using var builder = new ProjectBuilder(subdirectory, Constants.CSharpProjectFileName);
 
         await builder.WithNullable(nullable).WithTargetFramework(targetFramework).SetProjectSdk(sdk).CreateAsync();
