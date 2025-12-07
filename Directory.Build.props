@@ -1,15 +1,16 @@
 <Project>
   <PropertyGroup Label="Package settings">
     <Title>$(MSBuildProjectName)</Title>
-    <Description></Description>
-    <RepositoryUrl></RepositoryUrl>
-    <PackageProjectUrl></PackageProjectUrl>
+    <Description>Allows you to create a temporary .NET project with all possible settings and few bells and whistles.</Description>
+    <RepositoryUrl>https://github.com/dailydevops/projectbuilder.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dailydevops/projectbuilder</PackageProjectUrl>
     <PackageReleaseNotes>$(RepositoryUrl)/releases</PackageReleaseNotes>
-    <PackageTags></PackageTags>
-    <CopyrightYearStart>2024</CopyrightYearStart>
+    <PackageTags>test;projectbuilder</PackageTags>
+    <CopyrightYearStart>2025</CopyrightYearStart>
   </PropertyGroup>
+
   <PropertyGroup>
-    <!-- Workaround, until https://github.com/GitTools/GitVersion/pull/4206 is released -->
-    <GitVersionTargetFramework>net8.0</GitVersionTargetFramework>
+    <ProjectTargetFrameworks>net8.0;net9.0;net10.0</ProjectTargetFrameworks>
+    <TestTargetFrameworks>net8.0;net9.0;net10.0</TestTargetFrameworks>
   </PropertyGroup>
 </Project>
