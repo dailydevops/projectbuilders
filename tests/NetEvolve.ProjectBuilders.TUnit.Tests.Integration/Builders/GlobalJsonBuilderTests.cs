@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.ProjectBuilders.Tests.Integration.Builders;
+﻿namespace NetEvolve.ProjectBuilders.TUnit.Tests.Integration.Builders;
 
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders.Builders;

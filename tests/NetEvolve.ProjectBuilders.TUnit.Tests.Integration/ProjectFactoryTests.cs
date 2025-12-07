@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.ProjectBuilders.Tests.Integration;
+﻿namespace NetEvolve.ProjectBuilders.TUnit.Tests.Integration;
 
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit.Logging;

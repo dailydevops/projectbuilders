@@ -1,7 +1,8 @@
-﻿namespace NetEvolve.ProjectBuilders.Tests.Integration.Builders;
+﻿namespace NetEvolve.ProjectBuilders.TUnit.Tests.Integration.Builders;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using NetEvolve.ProjectBuilders;
 using NetEvolve.ProjectBuilders.Builders;
 using NetEvolve.ProjectBuilders.Models;
 using NetEvolve.ProjectBuilders.TUnit;
