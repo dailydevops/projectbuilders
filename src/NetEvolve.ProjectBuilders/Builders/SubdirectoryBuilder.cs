@@ -7,6 +7,30 @@ using System.Threading.Tasks;
 using NetEvolve.Arguments;
 using NetEvolve.ProjectBuilders.Abstractions;
 
+/// <summary>
+/// Manages subdirectories and file creation within a directory hierarchy.
+/// </summary>
+/// <remarks>
+/// <para>
+/// This internal class implements <see cref="ISubdirectoryBuilder"/> to provide file system
+/// operations for creating and managing subdirectories and files during project building.
+/// </para>
+/// <para>
+/// Each instance wraps a <see cref="DirectoryInfo"/> and provides methods to:
+/// <list type="bullet">
+/// <item><description>Create nested subdirectories</description></item>
+/// <item><description>Create new files with stream access</description></item>
+/// <item><description>Query file paths</description></item>
+/// </list>
+/// </para>
+/// <para>
+/// Unlike <see cref="TemporaryDirectoryBuilder"/>, this class does not provide automatic cleanup.
+/// It is typically used to represent subdirectories within a temporary directory that will be
+/// cleaned up by its parent.
+/// </para>
+/// </remarks>
+/// <seealso cref="ISubdirectoryBuilder"/>
+/// <seealso cref="TemporaryDirectoryBuilder"/>
 /// <inheritdoc cref="ISubdirectoryBuilder" />
 internal sealed class SubdirectoryBuilder : ISubdirectoryBuilder
 {

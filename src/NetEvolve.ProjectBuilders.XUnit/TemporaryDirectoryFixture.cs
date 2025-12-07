@@ -9,21 +9,30 @@ using Xunit;
 
 /// <summary>
 /// Represents a temporary directory fixture that is automatically created and cleaned up for xUnit tests.
-/// This class integrates with xUnit's <see cref="IAsyncLifetime"/> to automatically initialize
-/// the temporary directory before test execution and implements <see cref="IAsyncDisposable"/>
-/// to ensure proper cleanup after test completion.
 /// </summary>
 /// <remarks>
 /// <para>
-/// This class serves as an xUnit-specific wrapper around <see cref="TemporaryDirectoryBuilder"/>
+/// This class serves as an xUnit-specific adapter around <see cref="TemporaryDirectoryBuilder"/>
 /// to provide seamless integration with xUnit's test lifecycle management through the fixture pattern.
+/// It implements <see cref="IAsyncLifetime"/> for automatic initialization and cleanup.
 /// </para>
 /// <para>
-/// The temporary directory is created in a unique location to avoid conflicts between parallel
-/// test executions and is automatically deleted when disposed, ensuring clean test isolation.
+/// The temporary directory is automatically:
+/// <list type="bullet">
+/// <item><description>Created before test execution via <see cref="IAsyncLifetime.InitializeAsync"/></description></item>
+/// <item><description>Cleaned up and deleted after test completion via <see cref="IAsyncLifetime.DisposeAsync"/></description></item>
+/// <item><description>Placed in a unique location to avoid conflicts between parallel test executions</description></item>
+/// </list>
 /// </para>
 /// <para>
-/// Usage in xUnit tests with class fixtures:
+/// Provides directory and file management methods through <see cref="ITemporaryDirectoryBuilder"/>,
+/// including directory creation, file creation, and path resolution.
+/// </para>
+/// <para>
+/// Works with xUnit class fixtures and collection fixtures for flexible test lifecycle management.
+/// </para>
+/// <para>
+/// Class fixture usage example:
 /// <code>
 /// public class MyTests : IClassFixture&lt;TemporaryDirectoryFixture&gt;
 /// {
@@ -35,27 +44,26 @@ using Xunit;
 ///     }
 ///
 ///     [Fact]
-///     public void MyTest()
+///     public void TestCreateFile()
 ///     {
-///         // Directory is automatically initialized via IAsyncLifetime
-///         var filePath = _directory.GetFilePath("test.txt");
+///         // Directory is automatically initialized before this test runs
 ///         using var stream = _directory.CreateFile("test.txt");
-///         // ... test code ...
-///
-///         // Directory is automatically cleaned up after all tests in the class complete
+///         var fullPath = _directory.GetFilePath("test.txt");
+///         Assert.True(File.Exists(fullPath));
+///         // Directory is automatically cleaned up after this test completes
 ///     }
 /// }
 /// </code>
 /// </para>
 /// <para>
-/// Usage in xUnit tests with collection fixtures:
+/// Collection fixture usage example:
 /// <code>
-/// [CollectionDefinition("Temporary Directory")]
+/// [CollectionDefinition("Temporary Directory Collection")]
 /// public class TemporaryDirectoryCollection : ICollectionFixture&lt;TemporaryDirectoryFixture&gt;
 /// {
 /// }
 ///
-/// [Collection("Temporary Directory")]
+/// [Collection("Temporary Directory Collection")]
 /// public class MyTests
 /// {
 ///     private readonly TemporaryDirectoryFixture _directory;
@@ -66,11 +74,17 @@ using Xunit;
 ///     }
 ///
 ///     [Fact]
-///     public void MyTest()
+///     public void TestOne()
 ///     {
 ///         // Directory is shared across all tests in the collection
-///         var filePath = _directory.GetFilePath("test.txt");
-///         // ... test code ...
+///         using var stream = _directory.CreateFile("test1.txt");
+///     }
+///
+///     [Fact]
+///     public void TestTwo()
+///     {
+///         // Same directory instance from TestOne
+///         using var stream = _directory.CreateFile("test2.txt");
 ///     }
 /// }
 /// </code>
@@ -78,6 +92,8 @@ using Xunit;
 /// </remarks>
 /// <seealso cref="IClassFixture{TFixture}"/>
 /// <seealso cref="ICollectionFixture{TFixture}"/>
+/// <seealso cref="IAsyncLifetime"/>
+/// <seealso cref="TemporaryDirectoryBuilder"/>
 public sealed class TemporaryDirectoryFixture : ITemporaryDirectoryBuilder, IAsyncLifetime
 {
     private readonly TemporaryDirectoryBuilder _directory = new();

@@ -16,6 +16,37 @@ using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Builders;
 using NetEvolve.ProjectBuilders.Models.Output;
 
+/// <summary>
+/// Provides fluent API to create, configure, and build .NET projects for testing purposes.
+/// </summary>
+/// <remarks>
+/// <para>
+/// This class is the primary entry point for the ProjectBuilders library. It implements the
+/// fluent API pattern to allow convenient creation of test projects with various configurations,
+/// such as C#, VB.NET, and global.json files.
+/// </para>
+/// <para>
+/// The factory manages the complete lifecycle of test project creation, including:
+/// <list type="bullet">
+/// <item><description>Creating temporary directories for isolated testing</description></item>
+/// <item><description>Building project files with custom properties and item groups</description></item>
+/// <item><description>Executing dotnet build and restore commands</description></item>
+/// <item><description>Capturing and analyzing SARIF diagnostic output</description></item>
+/// <item><description>Managing environment variables for build execution</description></item>
+/// </list>
+/// </para>
+/// <para>
+/// Usage example:
+/// <code>
+/// using var factory = ProjectFactory.Create();
+/// factory
+///     .AddCSharpProject(pb => pb.WithDefaults())
+///     .AddGlobalJson(configure: gb => gb.WithDefaults());
+/// var result = await factory.BuildAsync();
+/// </code>
+/// </para>
+/// </remarks>
+/// <seealso cref="IProjectFactory"/>
 /// <inheritdoc cref="IProjectFactory" />
 public sealed partial class ProjectFactory : IProjectFactory
 {
@@ -31,6 +62,13 @@ public sealed partial class ProjectFactory : IProjectFactory
     internal Dictionary<string, string?> EnvironmentVariables { get; init; }
     internal HashSet<IObjectBuilder> ObjectBuilders { get; init; }
 
+    /// <summary>
+    /// Gets the directory builder for the temporary directory used by this factory.
+    /// </summary>
+    /// <remarks>
+    /// This directory serves as the root for all project files, subdirectories, and outputs
+    /// created during the test project building process.
+    /// </remarks>
     /// <inheritdoc cref="IProjectFactory.DirectoryBuilder" />
     public ISubdirectoryBuilder DirectoryBuilder => _tempDirectory;
 
@@ -220,8 +258,14 @@ public sealed partial class ProjectFactory : IProjectFactory
             .ExecuteAsync(cancellationToken);
 
     /// <summary>
-    /// Regular expression to filter diagnostic id from the output.
+    /// Regular expression pattern used to extract diagnostic rule IDs from build output.
+    /// Matches patterns like "NU1234" or "NEP5678".
     /// </summary>
+    /// <remarks>
+    /// The pattern matches NuGet (NU) or NetEvolve.ProjectBuilders (NEP) diagnostic codes
+    /// followed by a four-digit number. This is used to filter and enrich SARIF output
+    /// with diagnostic information extracted from the dotnet build command output.
+    /// </remarks>
 #if NET8_0_OR_GREATER
     [GeneratedRegex(RulesFilterPattern, RegexOptions.Compiled)]
     public static partial Regex RulesFilter();

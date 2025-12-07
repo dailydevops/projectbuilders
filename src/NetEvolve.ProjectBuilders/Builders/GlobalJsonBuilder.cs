@@ -9,6 +9,29 @@ using NetEvolve.Arguments;
 using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Models;
 
+/// <summary>
+/// Builds global.json SDK configuration files with fluent API support.
+/// </summary>
+/// <remarks>
+/// <para>
+/// This class implements <see cref="IGlobalJsonBuilder"/> to provide a convenient way to create
+/// global.json configuration files that specify SDK versions and roll-forward policies for
+/// .NET projects.
+/// </para>
+/// <para>
+/// The generated global.json file follows the .NET SDK global.json format and includes:
+/// <list type="bullet">
+/// <item><description>SDK version specification</description></item>
+/// <item><description>Prerelease version allowance configuration</description></item>
+/// <item><description>Roll-forward policy selection</description></item>
+/// </list>
+/// </para>
+/// <para>
+/// See <see href="https://learn.microsoft.com/en-us/dotnet/core/tools/global-json"/> for detailed information
+/// on global.json file format and options.
+/// </para>
+/// </remarks>
+/// <seealso cref="IGlobalJsonBuilder"/>
 /// <inheritdoc cref="IGlobalJsonBuilder" />
 internal sealed class GlobalJsonBuilder : IGlobalJsonBuilder
 {

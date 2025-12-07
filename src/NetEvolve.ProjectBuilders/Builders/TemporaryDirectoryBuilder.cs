@@ -7,6 +7,31 @@ using System.Threading.Tasks;
 using NetEvolve.Arguments;
 using NetEvolve.ProjectBuilders.Abstractions;
 
+/// <summary>
+/// Creates and manages temporary directories with automatic cleanup.
+/// </summary>
+/// <remarks>
+/// <para>
+/// This internal class implements <see cref="ITemporaryDirectoryBuilder"/> to provide isolated,
+/// auto-cleaning temporary directories for project building and testing. Each instance creates
+/// a unique directory in the system's temporary folder.
+/// </para>
+/// <para>
+/// The builder:
+/// <list type="bullet">
+/// <item><description>Creates a unique directory using <see cref="Guid"/> for isolation</description></item>
+/// <item><description>Provides file and subdirectory creation capabilities</description></item>
+/// <item><description>Automatically deletes the entire directory hierarchy when disposed</description></item>
+/// <item><description>Handles exceptions during cleanup gracefully</description></item>
+/// </list>
+/// </para>
+/// <para>
+/// The automatic cleanup ensures that test artifacts don't pollute the file system, even if exceptions occur
+/// during the build process. This is essential for maintaining clean test environments.
+/// </para>
+/// </remarks>
+/// <seealso cref="ITemporaryDirectoryBuilder"/>
+/// <seealso cref="SubdirectoryBuilder"/>
 /// <inheritdoc cref="ITemporaryDirectoryBuilder" />
 internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
 {

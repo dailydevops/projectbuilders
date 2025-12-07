@@ -11,6 +11,30 @@ using System.Xml.Linq;
 using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Models;
 
+/// <summary>
+/// Builds MSBuild project files (.csproj, .vbproj) with fluent API support.
+/// </summary>
+/// <remarks>
+/// <para>
+/// This internal class implements <see cref="IProjectBuilder"/> to provide programmatic creation
+/// of .NET project files with proper XML structure. It manages property groups and item groups
+/// that configure the project's build behavior.
+/// </para>
+/// <para>
+/// The generated project file includes:
+/// <list type="bullet">
+/// <item><description>Project SDK specification (e.g., Microsoft.NET.Sdk)</description></item>
+/// <item><description>PropertyGroup elements for build configuration</description></item>
+/// <item><description>ItemGroup elements for package and project references</description></item>
+/// <item><description>Proper XML formatting with indentation</description></item>
+/// </list>
+/// </para>
+/// <para>
+/// The class automatically initializes with default error logging configuration for SARIF v2.1 output,
+/// which captures build diagnostics during the build process.
+/// </para>
+/// </remarks>
+/// <seealso cref="IProjectBuilder"/>
 /// <inheritdoc cref="IProjectBuilder" />
 internal sealed class ProjectBuilder : IProjectBuilder
 {

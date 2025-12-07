@@ -9,36 +9,55 @@ using NetEvolve.ProjectBuilders.Builders;
 
 /// <summary>
 /// Represents a temporary directory that is automatically created and cleaned up for TUnit tests.
-/// This class integrates with TUnit's <see cref="IAsyncInitializer"/> to automatically initialize
-/// the temporary directory before test execution and implements <see cref="IAsyncDisposable"/>
-/// to ensure proper cleanup after test completion.
 /// </summary>
 /// <remarks>
 /// <para>
-/// This class serves as a TUnit-specific wrapper around <see cref="TemporaryDirectoryBuilder"/>
-/// to provide seamless integration with TUnit's test lifecycle management.
+/// This class serves as a TUnit-specific adapter around <see cref="TemporaryDirectoryBuilder"/>
+/// to provide seamless integration with TUnit's test lifecycle management. It implements both
+/// <see cref="IAsyncInitializer"/> for automatic initialization and <see cref="IAsyncDisposable"/>
+/// for automatic cleanup.
 /// </para>
 /// <para>
-/// The temporary directory is created in a unique location to avoid conflicts between parallel
-/// test executions and is automatically deleted when disposed, ensuring clean test isolation.
+/// The temporary directory is automatically:
+/// <list type="bullet">
+/// <item><description>Created before test execution via <see cref="IAsyncInitializer.InitializeAsync"/></description></item>
+/// <item><description>Cleaned up and deleted after test completion via <see cref="DisposeAsync"/></description></item>
+/// <item><description>Placed in a unique location to avoid conflicts between parallel test executions</description></item>
+/// </list>
 /// </para>
 /// <para>
-/// Usage in TUnit tests:
+/// Provides directory and file management methods through <see cref="ITemporaryDirectoryBuilder"/>,
+/// including directory creation, file creation, and path resolution.
+/// </para>
+/// <para>
+/// Usage example in TUnit tests:
 /// <code>
 /// [ClassDataSource&lt;TemporaryDirectory&gt;]
 /// public class MyTests(TemporaryDirectory directory)
 /// {
 ///     [Test]
-///     public async Task MyTest()
+///     public async Task TestCreateFile()
 ///     {
-///         var filePath = directory.GetFilePath("test.txt");
 ///         using var stream = directory.CreateFile("test.txt");
-///         // ... test code ...
+///         stream.WriteAsync(new byte[] { 1, 2, 3 }, 0, 3);
+///
+///         string fullPath = directory.GetFilePath("test.txt");
+///         Assert.That(File.Exists(fullPath));
+///     }
+///
+///     [Test]
+///     public void TestCreateDirectory()
+///     {
+///         var subDir = directory.CreateDirectory("subdirectory");
+///         Assert.That(Directory.Exists(Path.Combine(directory.FullPath, "subdirectory")));
 ///     }
 /// }
 /// </code>
 /// </para>
 /// </remarks>
+/// <seealso cref="IAsyncInitializer"/>
+/// <seealso cref="IAsyncDisposable"/>
+/// <seealso cref="TemporaryDirectoryBuilder"/>
 public sealed class TemporaryDirectory : ITemporaryDirectoryBuilder, IAsyncInitializer
 {
     private readonly TemporaryDirectoryBuilder _directory = new();
