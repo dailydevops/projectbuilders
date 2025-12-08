@@ -45,6 +45,8 @@ public interface IReference : IItemGroupItem
     /// </returns>
     IEnumerable<string> LookUpPaths => [];
 
+    string? Aliases { get; }
+
     ReferenceAssets? IncludeAssets { get; }
     ReferenceAssets? ExcludeAssets { get; }
     ReferenceAssets? PrivateAssets { get; }

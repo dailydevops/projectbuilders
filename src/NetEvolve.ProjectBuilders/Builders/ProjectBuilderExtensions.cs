@@ -247,6 +247,7 @@ public static class ProjectBuilderExtensions
         string? version = null,
         string? versionOverride = null,
         bool generatePathProperty = false,
+        string? aliases = null,
         ReferenceAssets? includeAssets = null,
         ReferenceAssets? excludeAssets = null,
         ReferenceAssets? privateAssets = null
@@ -262,6 +263,7 @@ public static class ProjectBuilderExtensions
             item.Version = string.IsNullOrWhiteSpace(version) ? null : version;
             item.VersionOverride = string.IsNullOrWhiteSpace(versionOverride) ? null : versionOverride;
             item.GeneratePathProperty = generatePathProperty;
+            item.Aliases = aliases;
             item.IncludeAssets = includeAssets;
             item.ExcludeAssets = excludeAssets;
             item.PrivateAssets = privateAssets;

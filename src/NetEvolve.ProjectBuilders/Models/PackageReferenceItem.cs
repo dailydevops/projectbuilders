@@ -65,6 +65,9 @@ internal sealed record PackageReferenceItem : IReference
         }
     }
 
+    /// <inheritdoc cref="IReference.Aliases"/>
+    public string? Aliases { get; set; }
+
     public XElement GetXElement()
     {
         var element = this.ToXElement();

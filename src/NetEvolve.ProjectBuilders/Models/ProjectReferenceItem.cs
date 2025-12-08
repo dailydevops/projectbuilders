@@ -40,16 +40,19 @@ internal sealed record ProjectReferenceItem : IReference
     public string Include { get; } = default!;
 
     /// <inheritdoc cref="IReference.GeneratePathProperty"/>
-    public bool GeneratePathProperty => false;
+    public bool GeneratePathProperty { get; set; }
 
     /// <inheritdoc cref="IReference.IncludeAssets"/>
-    public ReferenceAssets? IncludeAssets => null;
+    public ReferenceAssets? IncludeAssets { get; set; }
 
     /// <inheritdoc cref="IReference.ExcludeAssets"/>
-    public ReferenceAssets? ExcludeAssets => null;
+    public ReferenceAssets? ExcludeAssets { get; set; }
 
     /// <inheritdoc cref="IReference.PrivateAssets"/>
-    public ReferenceAssets? PrivateAssets => null;
+    public ReferenceAssets? PrivateAssets { get; set; }
+
+    /// <inheritdoc cref="IReference.Aliases"/>
+    public string? Aliases { get; set; }
 
     /// <inheritdoc cref="IReference.LookUpPaths"/>
     /// <remarks>

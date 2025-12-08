@@ -61,6 +61,7 @@ public class ProjectBuilderTests(TemporaryDirectory directory)
         [Matrix("13.0.1", null)] string? version,
         [Matrix("13.0.1", null)] string? versionOverride,
         bool generatePathProperty,
+        [Matrix("NJson", "")] string? aliases,
         [Matrix(ReferenceAssets.All, null)] ReferenceAssets? includeAssets,
         [Matrix(ReferenceAssets.None, ReferenceAssets.Runtime)] ReferenceAssets? excludeAssets,
         [Matrix(ReferenceAssets.Build | ReferenceAssets.ContentFiles, null)] ReferenceAssets? privateAssets
@@ -74,6 +75,7 @@ public class ProjectBuilderTests(TemporaryDirectory directory)
                 version,
                 versionOverride,
                 generatePathProperty,
+                aliases,
                 includeAssets,
                 excludeAssets,
                 privateAssets
@@ -81,7 +83,15 @@ public class ProjectBuilderTests(TemporaryDirectory directory)
             .CreateAsync();
 
         _ = await VerifyFile(builder.FullPath, extension: "xml")
-            .UseParameters(version, versionOverride, generatePathProperty, includeAssets, excludeAssets, privateAssets)
+            .UseParameters(
+                version,
+                versionOverride,
+                generatePathProperty,
+                aliases,
+                includeAssets,
+                excludeAssets,
+                privateAssets
+            )
             .HashParameters();
     }
 }
