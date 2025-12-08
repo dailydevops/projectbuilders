@@ -54,4 +54,34 @@ public class ProjectBuilderTests(TemporaryDirectory directory)
     [SuppressMessage("Design", "CA1024:Use properties where appropriate", Justification = "Required by TUnit.")]
     public static IEnumerable<TargetFramework> GetTargetFrameworkValues() =>
         [TargetFramework.NetStandard2_0, TargetFramework.Net10Windows, TargetFramework.NetFramework4_8_1];
+
+    [Test]
+    [MatrixDataSource]
+    public async ValueTask AddPackageReference_Newtonsoft_Expected(
+        [Matrix("13.0.1", null)] string? version,
+        [Matrix("13.0.1", null)] string? versionOverride,
+        bool generatePathProperty,
+        [Matrix(ReferenceAssets.All, null)] ReferenceAssets? includeAssets,
+        [Matrix(ReferenceAssets.None, ReferenceAssets.Runtime)] ReferenceAssets? excludeAssets,
+        [Matrix(ReferenceAssets.Build | ReferenceAssets.ContentFiles, null)] ReferenceAssets? privateAssets
+    )
+    {
+        var subdirectory = directory.CreateDirectory($"{nameof(AddPackageReference_Newtonsoft_Expected)}");
+        await using var builder = new ProjectBuilder(subdirectory, Constants.CSharpProjectFileName);
+        await builder
+            .AddPackageReference(
+                "Newtonsoft.Json",
+                version,
+                versionOverride,
+                generatePathProperty,
+                includeAssets,
+                excludeAssets,
+                privateAssets
+            )
+            .CreateAsync();
+
+        _ = await VerifyFile(builder.FullPath, extension: "xml")
+            .UseParameters(version, versionOverride, generatePathProperty, includeAssets, excludeAssets, privateAssets)
+            .HashParameters();
+    }
 }

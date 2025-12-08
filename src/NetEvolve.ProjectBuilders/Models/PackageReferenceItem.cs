@@ -1,6 +1,10 @@
 ﻿namespace NetEvolve.ProjectBuilders.Models;
 
+using System.Reflection.Emit;
+using System.Xml.Linq;
 using NetEvolve.ProjectBuilders.Abstractions;
+using NetEvolve.ProjectBuilders.Builders;
+using NetEvolve.ProjectBuilders.Helpers;
 
 /// <summary>
 /// Represents a PackageReference item in a project file's ItemGroup.
@@ -31,5 +35,43 @@ internal sealed record PackageReferenceItem : IReference
     /// For package references, this typically contains the NuGet package name, such as "Newtonsoft.Json"
     /// or "Serilog".
     /// </remarks>
-    public string Include { get; } = default!;
+    public string? Include { get; set; }
+
+    /// <inheritdoc cref="IReference.GeneratePathProperty"/>
+    public bool GeneratePathProperty { get; set; }
+
+    /// <inheritdoc cref="IReference.IncludeAssets"/>
+    public ReferenceAssets? IncludeAssets { get; set; }
+
+    /// <inheritdoc cref="IReference.ExcludeAssets"/>
+    public ReferenceAssets? ExcludeAssets { get; set; }
+
+    /// <inheritdoc cref="IReference.PrivateAssets"/>
+    public ReferenceAssets? PrivateAssets { get; set; }
+
+    public string? Version { get; set; }
+
+    public string? VersionOverride
+    {
+        get;
+        set
+        {
+            field = value;
+
+            if (!string.IsNullOrWhiteSpace(field))
+            {
+                Version = null;
+            }
+        }
+    }
+
+    public XElement GetXElement()
+    {
+        var element = this.ToXElement();
+
+        element.SetAttributeValue("Version", Version);
+        element.SetAttributeValue("VersionOverride", VersionOverride);
+
+        return element;
+    }
 }

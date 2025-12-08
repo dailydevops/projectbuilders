@@ -23,6 +23,9 @@ using NetEvolve.ProjectBuilders.Models;
 /// <seealso cref="FrameworkReferenceItem"/>
 public interface IReference : IItemGroupItem
 {
+    /// <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#generatepathproperty" />
+    bool GeneratePathProperty { get; }
+
     /// <summary>
     /// Gets the collection of directory paths used for lookup operations.
     /// </summary>
@@ -41,4 +44,8 @@ public interface IReference : IItemGroupItem
     /// Returns an empty enumeration if no lookup paths are applicable.
     /// </returns>
     IEnumerable<string> LookUpPaths => [];
+
+    ReferenceAssets? IncludeAssets { get; }
+    ReferenceAssets? ExcludeAssets { get; }
+    ReferenceAssets? PrivateAssets { get; }
 }

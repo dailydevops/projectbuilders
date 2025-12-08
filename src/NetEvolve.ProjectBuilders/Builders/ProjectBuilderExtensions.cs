@@ -240,4 +240,32 @@ public static class ProjectBuilderExtensions
 
         return builder;
     }
+
+    public static T AddPackageReference<T>(
+        this T builder,
+        string name,
+        string? version = null,
+        string? versionOverride = null,
+        bool generatePathProperty = false,
+        ReferenceAssets? includeAssets = null,
+        ReferenceAssets? excludeAssets = null,
+        ReferenceAssets? privateAssets = null
+    )
+        where T : class, IProjectBuilder
+    {
+        Argument.ThrowIfNullOrWhiteSpace(name);
+
+        if (builder is ProjectBuilder projectBuilder)
+        {
+            var item = projectBuilder.GetOrAddItemGroupItem<PackageReferenceItem>();
+            item.Include = name;
+            item.Version = string.IsNullOrWhiteSpace(version) ? null : version;
+            item.VersionOverride = string.IsNullOrWhiteSpace(versionOverride) ? null : versionOverride;
+            item.GeneratePathProperty = generatePathProperty;
+            item.IncludeAssets = includeAssets;
+            item.ExcludeAssets = excludeAssets;
+            item.PrivateAssets = privateAssets;
+        }
+        return builder;
+    }
 }

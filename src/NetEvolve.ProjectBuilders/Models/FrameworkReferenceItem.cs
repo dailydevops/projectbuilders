@@ -1,6 +1,8 @@
 ﻿namespace NetEvolve.ProjectBuilders.Models;
 
+using System.Xml.Linq;
 using NetEvolve.ProjectBuilders.Abstractions;
+using NetEvolve.ProjectBuilders.Builders;
 
 /// <summary>
 /// Represents a FrameworkReference item in a project file's ItemGroup.
@@ -25,4 +27,19 @@ internal sealed record FrameworkReferenceItem : IReference
 
     /// <inheritdoc cref="IItemGroupItem.Include"/>
     public string Include { get; } = default!;
+
+    /// <inheritdoc cref="IReference.GeneratePathProperty"/>
+    public bool GeneratePathProperty => false;
+
+    /// <inheritdoc cref="IReference.IncludeAssets"/>
+    public ReferenceAssets? IncludeAssets => null;
+
+    /// <inheritdoc cref="IReference.ExcludeAssets"/>
+    public ReferenceAssets? ExcludeAssets => null;
+
+    /// <inheritdoc cref="IReference.PrivateAssets"/>
+    public ReferenceAssets? PrivateAssets => null;
+
+    /// <inheritdoc cref="IItemGroupItem.GetXElement"/>
+    public XElement GetXElement() => this.ToXElement();
 }

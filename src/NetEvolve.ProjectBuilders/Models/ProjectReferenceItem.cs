@@ -2,7 +2,9 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 using NetEvolve.ProjectBuilders.Abstractions;
+using NetEvolve.ProjectBuilders.Builders;
 
 /// <summary>
 /// Represents a ProjectReference item in a project file's ItemGroup.
@@ -37,6 +39,18 @@ internal sealed record ProjectReferenceItem : IReference
     /// </remarks>
     public string Include { get; } = default!;
 
+    /// <inheritdoc cref="IReference.GeneratePathProperty"/>
+    public bool GeneratePathProperty => false;
+
+    /// <inheritdoc cref="IReference.IncludeAssets"/>
+    public ReferenceAssets? IncludeAssets => null;
+
+    /// <inheritdoc cref="IReference.ExcludeAssets"/>
+    public ReferenceAssets? ExcludeAssets => null;
+
+    /// <inheritdoc cref="IReference.PrivateAssets"/>
+    public ReferenceAssets? PrivateAssets => null;
+
     /// <inheritdoc cref="IReference.LookUpPaths"/>
     /// <remarks>
     /// Returns paths for both the .nuspec file (if the project is packaged as a NuGet) and
@@ -52,4 +66,7 @@ internal sealed record ProjectReferenceItem : IReference
     }
 
     private string FullPath => Path.GetFullPath(Include);
+
+    /// <inheritdoc cref="IItemGroupItem.GetXElement"/>
+    public XElement GetXElement() => this.ToXElement();
 }

@@ -1,5 +1,8 @@
 ﻿namespace NetEvolve.ProjectBuilders.Abstractions;
 
+using System.Xml.Linq;
+using NetEvolve.ProjectBuilders.Helpers;
+
 /// <summary>
 /// Represents an item element within an ItemGroup in an MSBuild project file.
 /// </summary>
@@ -70,5 +73,7 @@ public interface IItemGroupItem
     /// </para>
     /// </remarks>
     /// <value>The include value as a string, typically a package name or file path.</value>
-    string Include { get; }
+    string? Include { get; }
+
+    XElement GetXElement();
 }

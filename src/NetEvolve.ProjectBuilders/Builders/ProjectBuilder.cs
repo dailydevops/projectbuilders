@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using NetEvolve.ProjectBuilders.Abstractions;
+using NetEvolve.ProjectBuilders.Helpers;
 using NetEvolve.ProjectBuilders.Models;
 
 /// <summary>
@@ -117,12 +118,7 @@ internal sealed class ProjectBuilder : IProjectBuilder
 
         foreach (var attributePair in _projectAttributes)
         {
-            if (string.IsNullOrWhiteSpace(attributePair.Value))
-            {
-                continue;
-            }
-
-            project.Add(new XAttribute(attributePair.Key, attributePair.Value));
+            project.SetAttributeValue(attributePair.Key, attributePair.Value);
         }
 
         AppendPropertyGroups(project);
@@ -142,18 +138,7 @@ internal sealed class ProjectBuilder : IProjectBuilder
 
         foreach (var item in ItemGroup.Items)
         {
-            var element = new XElement(item.Name);
-
-            if (!string.IsNullOrWhiteSpace(item.Condition))
-            {
-                element.Add(new XAttribute("Condition", item.Condition));
-            }
-
-            if (!string.IsNullOrWhiteSpace(item.Label))
-            {
-                element.Add(new XAttribute("Label", item.Label));
-            }
-
+            var element = item.GetXElement();
             result.Add(element);
         }
 
@@ -179,15 +164,8 @@ internal sealed class ProjectBuilder : IProjectBuilder
 
             var element = new XElement(item.Name, value);
 
-            if (!string.IsNullOrWhiteSpace(item.Condition))
-            {
-                element.Add(new XAttribute("Condition", item.Condition));
-            }
-
-            if (!string.IsNullOrWhiteSpace(item.Label))
-            {
-                element.Add(new XAttribute("Label", item.Label));
-            }
+            element.SetAttributeValue("Condition", item.Condition);
+            element.SetAttributeValue("Label", item.Label);
 
             result.Add(element);
         }
