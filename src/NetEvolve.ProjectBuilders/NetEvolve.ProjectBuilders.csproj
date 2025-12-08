@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(ProjectTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>NetEvolve.ProjectBuilders</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CliWrap" />
+    <PackageReference Include="NetEvolve.Arguments" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(MSBuildProjectName).TUnit" />
+    <InternalsVisibleTo Include="$(MSBuildProjectName).TUnit.Tests.Integration" />
+    <InternalsVisibleTo Include="$(MSBuildProjectName).XUnit" />
+  </ItemGroup>
+</Project>

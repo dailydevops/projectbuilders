@@ -1,0 +1,1 @@
+﻿class Program { static async void Main() { System.Console.WriteLine("Hello, World!"); } }
