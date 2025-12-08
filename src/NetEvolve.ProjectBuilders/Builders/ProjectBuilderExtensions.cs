@@ -57,9 +57,9 @@ public static class ProjectBuilderExtensions
         Argument.ThrowIfNullOrWhiteSpace(fileName);
         Argument.ThrowIfNullOrWhiteSpace(content);
 
-        if (builder is ProjectBuilder concreteBuilder)
+        if (builder is ProjectBuilder projectBuilder)
         {
-            using var file = concreteBuilder.CreateFile($"{Path.GetFileNameWithoutExtension(fileName)}.cs");
+            using var file = projectBuilder.CreateFile($"{Path.GetFileNameWithoutExtension(fileName)}.cs");
             file.Write(Encoding.UTF8.GetBytes(content).AsSpan());
         }
     }
@@ -99,9 +99,9 @@ public static class ProjectBuilderExtensions
         Argument.ThrowIfNullOrWhiteSpace(fileName);
         Argument.ThrowIfNullOrWhiteSpace(content);
 
-        if (builder is ProjectBuilder concreteBuilder)
+        if (builder is ProjectBuilder projectBuilder)
         {
-            using var file = concreteBuilder.CreateFile($"{Path.GetFileNameWithoutExtension(fileName)}.vb");
+            using var file = projectBuilder.CreateFile($"{Path.GetFileNameWithoutExtension(fileName)}.vb");
             file.Write(Encoding.UTF8.GetBytes(content).AsSpan());
         }
     }
@@ -159,9 +159,9 @@ public static class ProjectBuilderExtensions
     public static T WithNullable<T>(this T builder, NullableOptions nullable)
         where T : class, IProjectBuilder
     {
-        if (builder is ProjectBuilder concreteBuilder)
+        if (builder is ProjectBuilder projectBuilder)
         {
-            var propertyItem = concreteBuilder.GetOrAddPropertyGroupItem<NullableItem>();
+            var propertyItem = projectBuilder.GetOrAddPropertyGroupItem<NullableItem>();
             propertyItem.SetValue(nullable);
         }
 
@@ -195,9 +195,9 @@ public static class ProjectBuilderExtensions
     public static T WithTargetFramework<T>(this T builder, TargetFramework targetFramework)
         where T : class, IProjectBuilder
     {
-        if (builder is ProjectBuilder concreteBuilder)
+        if (builder is ProjectBuilder projectBuilder)
         {
-            var propertyItem = concreteBuilder.GetOrAddPropertyGroupItem<TargetFrameworkItem>();
+            var propertyItem = projectBuilder.GetOrAddPropertyGroupItem<TargetFrameworkItem>();
 
             propertyItem.SetValue(targetFramework);
         }
@@ -231,9 +231,9 @@ public static class ProjectBuilderExtensions
     public static T WithTargetFrameworks<T>(this T builder, params TargetFramework[] targetFrameworks)
         where T : class, IProjectBuilder
     {
-        if (builder is ProjectBuilder concreteBuilder)
+        if (builder is ProjectBuilder projectBuilder)
         {
-            var propertyItem = concreteBuilder.GetOrAddPropertyGroupItem<TargetFrameworkItem>();
+            var propertyItem = projectBuilder.GetOrAddPropertyGroupItem<TargetFrameworkItem>();
 
             propertyItem.SetValues(targetFrameworks);
         }
