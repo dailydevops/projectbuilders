@@ -45,9 +45,60 @@ public interface IReference : IItemGroupItem
     /// </returns>
     IEnumerable<string> LookUpPaths => [];
 
+    /// <summary>
+    /// Gets the optional alias name(s) to use for referencing this reference in code.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Aliases allow you to reference the same assembly using different names to avoid naming conflicts.
+    /// Multiple aliases can be specified by separating them with commas.
+    /// </para>
+    /// <para>
+    /// See <see href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/extern-alias"/> for more information on extern aliases.
+    /// </para>
+    /// </remarks>
+    /// <value>A comma-separated list of alias names, or <see langword="null"/> if no aliases are defined.</value>
     string? Aliases { get; }
 
+    /// <summary>
+    /// Gets the asset types to include from this reference.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Controls which assets from the package are included in the build. When <see langword="null"/>, all assets are included by default.
+    /// </para>
+    /// <para>
+    /// See <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets"/> for more information.
+    /// </para>
+    /// </remarks>
+    /// <value>A flags enumeration of <see cref="NetEvolve.ProjectBuilders.Models.ReferenceAssets"/> values, or <see langword="null"/> to include all assets.</value>
     ReferenceAssets? IncludeAssets { get; }
+
+    /// <summary>
+    /// Gets the asset types to exclude from this reference.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Controls which assets from the package are excluded from the build. Takes precedence over <see cref="IncludeAssets"/>.
+    /// </para>
+    /// <para>
+    /// See <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets"/> for more information.
+    /// </para>
+    /// </remarks>
+    /// <value>A flags enumeration of <see cref="NetEvolve.ProjectBuilders.Models.ReferenceAssets"/> values, or <see langword="null"/> to not exclude any assets.</value>
     ReferenceAssets? ExcludeAssets { get; }
+
+    /// <summary>
+    /// Gets the asset types that flow privately and are not exposed to dependent projects.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Controls which assets from the package do not flow to consuming projects. Commonly used with analyzer packages or build tools.
+    /// </para>
+    /// <para>
+    /// See <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets"/> for more information.
+    /// </para>
+    /// </remarks>
+    /// <value>A flags enumeration of <see cref="NetEvolve.ProjectBuilders.Models.ReferenceAssets"/> values, or <see langword="null"/> to allow all assets to flow.</value>
     ReferenceAssets? PrivateAssets { get; }
 }

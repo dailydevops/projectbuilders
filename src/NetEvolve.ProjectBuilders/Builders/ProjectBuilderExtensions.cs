@@ -241,6 +241,31 @@ public static class ProjectBuilderExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Adds a NuGet package reference to the project.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This method adds a PackageReference item to the project, enabling the project to consume
+    /// a NuGet package and its dependencies. Package references are the modern way to manage
+    /// dependencies in .NET projects.
+    /// </para>
+    /// <para>
+    /// See <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files"/> for more information.
+    /// </para>
+    /// </remarks>
+    /// <typeparam name="T">The type of the project builder.</typeparam>
+    /// <param name="builder">The project builder to add the package reference to. Must not be <see langword="null"/>.</param>
+    /// <param name="name">The package ID of the NuGet package to reference. Must not be <see langword="null"/> or empty.</param>
+    /// <param name="version">The optional version of the package to reference. When <see langword="null"/>, uses centrally managed version or latest version.</param>
+    /// <param name="versionOverride">The optional version override for the package. Overrides centrally managed versions.</param>
+    /// <param name="generatePathProperty">When <see langword="true"/>, generates a property containing the path to the package. Default is <see langword="false"/>.</param>
+    /// <param name="aliases">The optional comma-separated list of alias names for the reference. See <see href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/extern-alias"/>.</param>
+    /// <param name="includeAssets">The optional asset types to include from the package. When <see langword="null"/>, all assets are included.</param>
+    /// <param name="excludeAssets">The optional asset types to exclude from the package. Takes precedence over <paramref name="includeAssets"/>.</param>
+    /// <param name="privateAssets">The optional asset types that should not flow to consuming projects. Commonly used for analyzers and build tools.</param>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="name"/> is <see langword="null"/> or whitespace.</exception>
     public static T AddPackageReference<T>(
         this T builder,
         string name,

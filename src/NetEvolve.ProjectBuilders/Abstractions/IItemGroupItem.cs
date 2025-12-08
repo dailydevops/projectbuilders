@@ -75,5 +75,9 @@ public interface IItemGroupItem
     /// <value>The include value as a string, typically a package name or file path.</value>
     string? Include { get; }
 
+    /// <summary>
+    /// Converts this item group item to its XML representation.
+    /// </summary>
+    /// <returns>An <see cref="System.Xml.Linq.XElement"/> representing the MSBuild item element with all its attributes and metadata.</returns>
     XElement GetXElement();
 }
