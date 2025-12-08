@@ -39,6 +39,36 @@ public class CSharpProjectTests(TemporaryDirectory directory)
         }
     }
 
+    [Test]
+    [MethodDataSource(nameof(AddCSharpFileData))]
+    public async Task BuildAsync_CSharp_VerifyDirectory(bool expectedErrors, bool expectedWarnings, string content)
+    {
+        var logger = TestContext.Current!.GetDefaultLogger();
+        var projectDirectory = directory.CreateDirectory(
+            $"{nameof(BuildAsync_CSharp_VerifyDirectory)}{Guid.NewGuid()}"
+        );
+        var nugetDirectory = directory.CreateDirectory($"{nameof(BuildAsync_CSharp_VerifyDirectory)}{Guid.NewGuid()}");
+
+        await using var nugetFactory = new TestPackageBuilder(nugetDirectory);
+        await using var factory = ProjectFactory.Create(
+            nugetFactory,
+            projectDirectory,
+            logger.ConvertTo<ProjectFactory>()
+        );
+
+        _ = await factory
+            .AddCSharpProject(builder =>
+            {
+                builder.WithDefaults().AddCSharpFile("main.cs", content);
+            })
+            .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
+            .BuildAsync();
+
+        _ = await VerifyDirectory(projectDirectory.FullPath, include: ProjectHelpers.DirectoryFilter)
+            .UseParameters(expectedErrors, expectedWarnings, content)
+            .HashParameters();
+    }
+
     public static IEnumerable<(bool, bool, string)> AddCSharpFileData =>
         [
             (false, false, "class Program { static void Main() { System.Console.WriteLine(\"Hello, World!\"); } }"),

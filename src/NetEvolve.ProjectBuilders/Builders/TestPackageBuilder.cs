@@ -19,7 +19,7 @@ using NetEvolve.ProjectBuilders.Helpers;
 /// <list type="bullet">
 /// <item><description>Thread-safe package creation with semaphore-based locking</description></item>
 /// <item><description>Platform-specific tooling (nuget.exe on Windows, nuget CLI on others)</description></item>
-/// <item><description>Automatic downl loading of nuget.exe if needed</description></item>
+/// <item><description>Automatic downloading of nuget.exe if needed</description></item>
 /// <item><description>Deduplication of package paths to avoid redundant processing</description></item>
 /// </list>
 /// </para>
@@ -69,7 +69,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
                     packagePath,
                     "-ForceEnglishOutput",
                     "-Version",
-                    "999.999.999",
+                    "999.999.999", // To prevent version conflicts during testing
                     "-OutputDirectory",
                     _directoy.FullPath,
                 ];
