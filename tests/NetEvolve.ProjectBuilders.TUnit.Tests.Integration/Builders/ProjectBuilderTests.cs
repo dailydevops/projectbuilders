@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders;
 using NetEvolve.ProjectBuilders.Builders;
 using NetEvolve.ProjectBuilders.Models;
-using NetEvolve.ProjectBuilders.TUnit;
 
 [ClassDataSource<TemporaryDirectory>]
 public class ProjectBuilderTests(TemporaryDirectory directory)

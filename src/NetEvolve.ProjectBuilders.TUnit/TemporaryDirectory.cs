@@ -1,11 +1,11 @@
-﻿namespace NetEvolve.ProjectBuilders.TUnit;
+﻿namespace NetEvolve.ProjectBuilders;
 
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using global::TUnit.Core.Interfaces;
 using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Builders;
+using TUnit.Core.Interfaces;
 
 /// <summary>
 /// Represents a temporary directory that is automatically created and cleaned up for TUnit tests.

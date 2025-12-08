@@ -3,8 +3,8 @@
 using System;
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit.Logging;
+using NetEvolve.ProjectBuilders;
 using NetEvolve.ProjectBuilders.Builders;
-using NetEvolve.ProjectBuilders.TUnit;
 
 [ClassDataSource<TemporaryDirectory>]
 public class CSharpProjectTests(TemporaryDirectory directory)

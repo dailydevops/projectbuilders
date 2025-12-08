@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(ProjectTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>NetEvolve.ProjectBuilders</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="xunit.v3.extensibility.core" />

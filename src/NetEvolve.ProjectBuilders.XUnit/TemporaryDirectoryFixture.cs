@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.ProjectBuilders.XUnit;
+﻿namespace NetEvolve.ProjectBuilders;
 
 using System.IO;
 using System.Threading;
