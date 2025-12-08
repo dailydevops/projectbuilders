@@ -1,4 +1,4 @@
-namespace NetEvolve.ProjectBuilders.Tests.Unit.Builders;
+﻿namespace NetEvolve.ProjectBuilders.Tests.Unit.Builders;
 
 using System;
 using System.IO;
@@ -56,7 +56,7 @@ public class GlobalJsonBuilderTests
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
-        builder.SetAllowPrerelease(true);
+        _ = builder.SetAllowPrerelease(true);
         await builder.CreateAsync();
         var content = await File.ReadAllTextAsync(builder.FullPath);
         var json = JsonDocument.Parse(content);
@@ -74,7 +74,7 @@ public class GlobalJsonBuilderTests
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
-        builder.SetAllowPrerelease(false);
+        _ = builder.SetAllowPrerelease(false);
         await builder.CreateAsync();
         var content = await File.ReadAllTextAsync(builder.FullPath);
         var json = JsonDocument.Parse(content);
@@ -94,7 +94,7 @@ public class GlobalJsonBuilderTests
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
-        builder.SetRollForward(RollForward.LatestPatch);
+        _ = builder.SetRollForward(RollForward.LatestPatch);
         await builder.CreateAsync();
         var content = await File.ReadAllTextAsync(builder.FullPath);
         var json = JsonDocument.Parse(content);
@@ -114,7 +114,7 @@ public class GlobalJsonBuilderTests
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
-        builder.SetRollForward(RollForward.LatestMinor);
+        _ = builder.SetRollForward(RollForward.LatestMinor);
         await builder.CreateAsync();
         var content = await File.ReadAllTextAsync(builder.FullPath);
         var json = JsonDocument.Parse(content);
@@ -135,7 +135,7 @@ public class GlobalJsonBuilderTests
         var newVersion = Constants.RuntimeSdkLTS;
 
         // Act
-        builder.SetRuntimeSdk(newVersion);
+        _ = builder.SetRuntimeSdk(newVersion);
         await builder.CreateAsync();
         var content = await File.ReadAllTextAsync(builder.FullPath);
         var json = JsonDocument.Parse(content);
@@ -169,8 +169,8 @@ public class GlobalJsonBuilderTests
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkLTS);
 
         // Act
-        builder.SetAllowPrerelease(true);
-        builder.SetRollForward(RollForward.LatestMinor);
+        _ = builder.SetAllowPrerelease(true);
+        _ = builder.SetRollForward(RollForward.LatestMinor);
         await builder.CreateAsync();
         var content = await File.ReadAllTextAsync(builder.FullPath);
         var json = JsonDocument.Parse(content);

@@ -1,4 +1,4 @@
-namespace NetEvolve.ProjectBuilders.Tests.Unit.Models;
+﻿namespace NetEvolve.ProjectBuilders.Tests.Unit.Models;
 
 using System;
 using System.Linq;
@@ -135,8 +135,7 @@ public class ItemGroupTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(items.Count).IsEqualTo(2);
-            _ = await Assert.That(items[0] == item1).IsTrue();
-            _ = await Assert.That(items[1] == item2).IsTrue();
+            _ = await Assert.That(items).Contains(item1).And.Contains(item2);
         }
     }
 
@@ -147,9 +146,9 @@ public class ItemGroupTests
         var itemGroup = new ItemGroup();
 
         // Act
-        var item1 = itemGroup.Add<PackageReferenceItem>();
-        var item2 = itemGroup.Add<PackageReferenceItem>();
-        var item3 = itemGroup.Add<PackageReferenceItem>();
+        _ = itemGroup.Add<PackageReferenceItem>();
+        _ = itemGroup.Add<PackageReferenceItem>();
+        _ = itemGroup.Add<PackageReferenceItem>();
 
         // Assert
         _ = await Assert.That(itemGroup.Items.Count).IsEqualTo(3);

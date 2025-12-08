@@ -1,4 +1,4 @@
-namespace NetEvolve.ProjectBuilders.Tests.Unit.Models;
+﻿namespace NetEvolve.ProjectBuilders.Tests.Unit.Models;
 
 using System;
 using System.Linq;
@@ -80,9 +80,9 @@ public class PropertyGroupTests
         var propertyGroup = new PropertyGroup();
 
         // Act
-        var item1 = propertyGroup.Add<NullableItem>();
-        var item2 = propertyGroup.Add<NullableItem>();
-        var item3 = propertyGroup.Add<NullableItem>();
+        _ = propertyGroup.Add<NullableItem>();
+        _ = propertyGroup.Add<NullableItem>();
+        _ = propertyGroup.Add<NullableItem>();
 
         // Assert
         _ = await Assert.That(propertyGroup.Items.Count).IsEqualTo(3);
@@ -103,8 +103,7 @@ public class PropertyGroupTests
         using (Assert.Multiple())
         {
             _ = await Assert.That(items.Count).IsEqualTo(2);
-            _ = await Assert.That(items[0] == item1).IsTrue();
-            _ = await Assert.That(items[1] == item2).IsTrue();
+            _ = await Assert.That(items).Contains(item1).And.Contains(item2);
         }
     }
 }

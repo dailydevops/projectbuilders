@@ -1,4 +1,4 @@
-namespace NetEvolve.ProjectBuilders.Tests.Unit.Builders;
+﻿namespace NetEvolve.ProjectBuilders.Tests.Unit.Builders;
 
 using System;
 using System.IO;
@@ -151,7 +151,7 @@ public class ProjectBuilderTests
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        var packageItem = builder.GetOrAddItemGroupItem<PackageReferenceItem>();
+        _ = builder.GetOrAddItemGroupItem<PackageReferenceItem>();
 
         // Act
         await builder.CreateAsync();
@@ -170,7 +170,6 @@ public class ProjectBuilderTests
 
         // Act & Assert
         await builder.DisposeAsync();
-        _ = await Assert.That(true).IsTrue();
     }
 
     [Test]
@@ -200,7 +199,7 @@ public class ProjectBuilderTests
         foreach (var fileName in fileNames)
         {
             using var stream = builder.CreateFile(fileName);
-            stream.Write(Encoding.UTF8.GetBytes("// Test content"));
+            await stream.WriteAsync(Encoding.UTF8.GetBytes("// Test content"));
         }
 
         // Assert
