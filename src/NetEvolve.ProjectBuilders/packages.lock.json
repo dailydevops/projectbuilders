@@ -50,11 +50,11 @@
       },
       "NetEvolve.Defaults": {
         "type": "Direct",
-        "requested": "[1.4.81, )",
-        "resolved": "1.4.81",
-        "contentHash": "1P/7oZ6k188KaGLaMYVgT4BE/fGNr3wsMFWLyOU7BZE6PvrRovMU57brX/KU6h9sTZHC1r6mWLAljqtxTyR6/g==",
+        "requested": "[1.5.0, )",
+        "resolved": "1.5.0",
+        "contentHash": "3yfPg9lLpWLV+EoQ8BScjaFQapr4P4n+6pu8zGe5qFKvKCmBASQd29kCEDacltoZHC7xD+aAKi5rMS5EvnV0Bg==",
         "dependencies": {
-          "NetEvolve.Defaults.Analyzer": "1.4.81"
+          "NetEvolve.Defaults.Analyzer": "1.5.0"
         }
       },
       "SonarAnalyzer.CSharp": {
@@ -75,8 +75,8 @@
       },
       "NetEvolve.Defaults.Analyzer": {
         "type": "Transitive",
-        "resolved": "1.4.81",
-        "contentHash": "SdgwEaqTdjpylQnCzTW3qWHlCJo8l/k5pVi1/wtu8zNq2RCmjKjdEwdzbqnuNZgq88O1kKk03eoC0QrBnLzf+w=="
+        "resolved": "1.5.0",
+        "contentHash": "0sV9J488C2T3cutAILugMd12PdJQhMqa5xyMTtkOwYAMf/rjg9kf6Y+0vOqLpEkrFaLTCOcI1f0S6ULhhQ9ygA=="
       }
     },
     "net8.0": {
@@ -128,11 +128,11 @@
       },
       "NetEvolve.Defaults": {
         "type": "Direct",
-        "requested": "[1.4.81, )",
-        "resolved": "1.4.81",
-        "contentHash": "1P/7oZ6k188KaGLaMYVgT4BE/fGNr3wsMFWLyOU7BZE6PvrRovMU57brX/KU6h9sTZHC1r6mWLAljqtxTyR6/g==",
+        "requested": "[1.5.0, )",
+        "resolved": "1.5.0",
+        "contentHash": "3yfPg9lLpWLV+EoQ8BScjaFQapr4P4n+6pu8zGe5qFKvKCmBASQd29kCEDacltoZHC7xD+aAKi5rMS5EvnV0Bg==",
         "dependencies": {
-          "NetEvolve.Defaults.Analyzer": "1.4.81"
+          "NetEvolve.Defaults.Analyzer": "1.5.0"
         }
       },
       "SonarAnalyzer.CSharp": {
@@ -153,8 +153,8 @@
       },
       "NetEvolve.Defaults.Analyzer": {
         "type": "Transitive",
-        "resolved": "1.4.81",
-        "contentHash": "SdgwEaqTdjpylQnCzTW3qWHlCJo8l/k5pVi1/wtu8zNq2RCmjKjdEwdzbqnuNZgq88O1kKk03eoC0QrBnLzf+w=="
+        "resolved": "1.5.0",
+        "contentHash": "0sV9J488C2T3cutAILugMd12PdJQhMqa5xyMTtkOwYAMf/rjg9kf6Y+0vOqLpEkrFaLTCOcI1f0S6ULhhQ9ygA=="
       }
     },
     "net9.0": {
@@ -206,11 +206,11 @@
       },
       "NetEvolve.Defaults": {
         "type": "Direct",
-        "requested": "[1.4.81, )",
-        "resolved": "1.4.81",
-        "contentHash": "1P/7oZ6k188KaGLaMYVgT4BE/fGNr3wsMFWLyOU7BZE6PvrRovMU57brX/KU6h9sTZHC1r6mWLAljqtxTyR6/g==",
+        "requested": "[1.5.0, )",
+        "resolved": "1.5.0",
+        "contentHash": "3yfPg9lLpWLV+EoQ8BScjaFQapr4P4n+6pu8zGe5qFKvKCmBASQd29kCEDacltoZHC7xD+aAKi5rMS5EvnV0Bg==",
         "dependencies": {
-          "NetEvolve.Defaults.Analyzer": "1.4.81"
+          "NetEvolve.Defaults.Analyzer": "1.5.0"
         }
       },
       "SonarAnalyzer.CSharp": {
@@ -231,8 +231,8 @@
       },
       "NetEvolve.Defaults.Analyzer": {
         "type": "Transitive",
-        "resolved": "1.4.81",
-        "contentHash": "SdgwEaqTdjpylQnCzTW3qWHlCJo8l/k5pVi1/wtu8zNq2RCmjKjdEwdzbqnuNZgq88O1kKk03eoC0QrBnLzf+w=="
+        "resolved": "1.5.0",
+        "contentHash": "0sV9J488C2T3cutAILugMd12PdJQhMqa5xyMTtkOwYAMf/rjg9kf6Y+0vOqLpEkrFaLTCOcI1f0S6ULhhQ9ygA=="
       }
     }
   }
