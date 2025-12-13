@@ -10,9 +10,9 @@
       },
       "CSharpier.MsBuild": {
         "type": "Direct",
-        "requested": "[1.2.1, )",
-        "resolved": "1.2.1",
-        "contentHash": "HolJfE0CR81eBFbYluoPxj3Kj6eQAeosVQ8QThw2NlTer1/2o8D6IxFhmRvZR8MkpgqAuvbO7WL90oudTYLGOw=="
+        "requested": "[1.2.2, )",
+        "resolved": "1.2.2",
+        "contentHash": "Sa+06jZAiYz6bvx/QnM4f0deX+7FOV1FYUUSNRzwq4CnAJP+cg495IK8K0jJC5wS6qQ/YpT32Ex87sBWDcQiDQ=="
       },
       "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
         "type": "Direct",
@@ -88,9 +88,9 @@
       },
       "CSharpier.MsBuild": {
         "type": "Direct",
-        "requested": "[1.2.1, )",
-        "resolved": "1.2.1",
-        "contentHash": "HolJfE0CR81eBFbYluoPxj3Kj6eQAeosVQ8QThw2NlTer1/2o8D6IxFhmRvZR8MkpgqAuvbO7WL90oudTYLGOw=="
+        "requested": "[1.2.2, )",
+        "resolved": "1.2.2",
+        "contentHash": "Sa+06jZAiYz6bvx/QnM4f0deX+7FOV1FYUUSNRzwq4CnAJP+cg495IK8K0jJC5wS6qQ/YpT32Ex87sBWDcQiDQ=="
       },
       "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
         "type": "Direct",
@@ -166,9 +166,9 @@
       },
       "CSharpier.MsBuild": {
         "type": "Direct",
-        "requested": "[1.2.1, )",
-        "resolved": "1.2.1",
-        "contentHash": "HolJfE0CR81eBFbYluoPxj3Kj6eQAeosVQ8QThw2NlTer1/2o8D6IxFhmRvZR8MkpgqAuvbO7WL90oudTYLGOw=="
+        "requested": "[1.2.2, )",
+        "resolved": "1.2.2",
+        "contentHash": "Sa+06jZAiYz6bvx/QnM4f0deX+7FOV1FYUUSNRzwq4CnAJP+cg495IK8K0jJC5wS6qQ/YpT32Ex87sBWDcQiDQ=="
       },
       "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
         "type": "Direct",
