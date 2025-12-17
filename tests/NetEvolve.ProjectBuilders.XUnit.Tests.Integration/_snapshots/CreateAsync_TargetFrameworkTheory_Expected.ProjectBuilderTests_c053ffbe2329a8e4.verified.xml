@@ -1,0 +1,6 @@
+﻿<Project>
+  <PropertyGroup>
+    <ErrorLog>result.sarif,version=2.1</ErrorLog>
+    <TargetFramework>net10.0-windows</TargetFramework>
+  </PropertyGroup>
+</Project>

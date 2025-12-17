@@ -1,0 +1,6 @@
+﻿<Project>
+  <PropertyGroup>
+    <ErrorLog>result.sarif,version=2.1</ErrorLog>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+</Project>
