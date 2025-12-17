@@ -9,15 +9,16 @@ public class GlobalJsonBuilderTests(TemporaryDirectoryFixture directory) : IClas
 {
     [Theory]
     [MemberData(nameof(GetTheoryData))]
-    public async Task CreateAsync_Theory_Expected(
-        string runtimeVersion,
-        bool allowPrerelease,
-        RollForward rollForward
-    )
+    public async Task CreateAsync_Theory_Expected(string runtimeVersion, bool allowPrerelease, RollForward rollForward)
     {
-        var subdirectory = directory.CreateDirectory($"{nameof(CreateAsync_Theory_Expected)}{runtimeVersion}{allowPrerelease}{rollForward}");
+        var subdirectory = directory.CreateDirectory(
+            $"{nameof(CreateAsync_Theory_Expected)}{runtimeVersion}{allowPrerelease}{rollForward}"
+        );
         await using var builder = new GlobalJsonBuilder(subdirectory, runtimeVersion);
-        await builder.SetAllowPrerelease(allowPrerelease).SetRollForward(rollForward).CreateAsync(cancellationToken: TestContext.Current.CancellationToken);
+        await builder
+            .SetAllowPrerelease(allowPrerelease)
+            .SetRollForward(rollForward)
+            .CreateAsync(cancellationToken: TestContext.Current.CancellationToken);
         _ = await VerifyFile(builder.FullPath)
             .UseParameters(allowPrerelease, rollForward, runtimeVersion)
             .HashParameters();
