@@ -77,6 +77,6 @@ public interface IItemGroupItem
     /// <summary>
     /// Converts this item group item to its XML representation.
     /// </summary>
-    /// <returns>An <see cref="System.Xml.Linq.XElement"/> representing the MSBuild item element with all its attributes and metadata.</returns>
+    /// <returns>An <see cref="XElement"/> representing the MSBuild item element with all its attributes and metadata.</returns>
     XElement GetXElement();
 }
