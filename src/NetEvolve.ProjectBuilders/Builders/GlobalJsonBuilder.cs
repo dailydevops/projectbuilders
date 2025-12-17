@@ -114,10 +114,6 @@ internal sealed class GlobalJsonBuilder : IGlobalJsonBuilder
     private static string? RollForwardToString(RollForward? value) =>
         value switch
         {
-            RollForward.Patch => "patch",
-            RollForward.Feature => "feature",
-            RollForward.Minor => "minor",
-            RollForward.Major => "major",
             RollForward.LatestPatch => "latestPatch",
             RollForward.LatestFeature => "latestFeature",
             RollForward.LatestMinor => "latestMinor",

@@ -87,67 +87,6 @@ public enum RollForward
     LatestPatch = 4,
 
     /// <summary>
-    /// Rolls forward from the specified version through feature bands, then minor versions, then major versions.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This policy allows the most aggressive roll-forward behavior. Starting with the specified version,
-    /// it searches for higher patch levels in the feature band, then higher feature bands in the minor version,
-    /// then higher minor versions in the major version, and finally rolls forward to higher major versions.
-    /// </para>
-    /// <para>
-    /// Use this when compatibility across major versions is acceptable and you want automatic upgrades to the latest available SDK.
-    /// </para>
-    /// </remarks>
-    Major = 5,
-
-    /// <summary>
-    /// Rolls forward from the specified version through feature bands and minor versions within the same major version.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Similar to Major but stops at major version boundaries, never rolling forward to a different major version.
-    /// This is useful for staying within a major version family while allowing flexibility for minor upgrades.
-    /// </para>
-    /// <para>
-    /// Example: For specified version 5.0.100, rolls forward through 5.0.x → 5.1.x → 5.2.x but not to 6.x.
-    /// </para>
-    /// </remarks>
-    Minor = 6,
-
-    /// <summary>
-    /// Rolls forward from the specified version through feature bands within the same major and minor version.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Restricts roll-forward to feature band upgrades only, never allowing minor or major version changes.
-    /// This is suitable for environments requiring tight version control within a minor version line.
-    /// </para>
-    /// <para>
-    /// Example: For specified version 5.0.100, rolls forward through 5.0.100 → 5.0.200 → 5.0.300 but not to 5.1.x.
-    /// </para>
-    /// </remarks>
-    Feature = 7,
-
-    /// <summary>
-    /// Uses the specified version, rolling forward only to the latest patch level if the exact version is not available.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// A conservative policy that tries to use the exact specified version first, then falls back to higher patch levels
-    /// but never to different minor, feature band, or major versions.
-    /// </para>
-    /// <para>
-    /// This is the legacy default behavior from earlier .NET SDK versions and provides a good balance
-    /// between stability and flexibility.
-    /// </para>
-    /// <para>
-    /// Example: For specified version 5.0.100, accepts 5.0.100 or higher (5.0.101, 5.0.105, etc.) but not 5.0.99 or 5.1.x.
-    /// </para>
-    /// </remarks>
-    Patch = 8,
-
-    /// <summary>
     /// Requires an exact version match; no roll-forward is allowed.
     /// </summary>
     /// <remarks>
@@ -159,5 +98,5 @@ public enum RollForward
     /// Use this policy in strictly controlled environments where reproducible builds with exact versions are essential.
     /// </para>
     /// </remarks>
-    Disable = 9,
+    Disable = 5,
 }
