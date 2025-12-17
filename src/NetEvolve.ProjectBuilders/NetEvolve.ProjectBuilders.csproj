@@ -17,5 +17,6 @@
     <InternalsVisibleTo Include="$(MSBuildProjectName).TUnit" />
     <InternalsVisibleTo Include="$(MSBuildProjectName).TUnit.Tests.Integration" />
     <InternalsVisibleTo Include="$(MSBuildProjectName).XUnit" />
+    <InternalsVisibleTo Include="$(MSBuildProjectName).XUnit.Tests.Integration" />
   </ItemGroup>
 </Project>
