@@ -23,7 +23,27 @@ using NetEvolve.ProjectBuilders.Models;
 /// <seealso cref="FrameworkReferenceItem"/>
 public interface IReference : IItemGroupItem
 {
-    /// <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#generatepathproperty" />
+    /// <summary>
+    /// Gets a value indicating whether MSBuild should generate a property containing the resolved package path for this reference.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// When set to <see langword="true"/>, MSBuild generates a property named <c>Pkg{PackageId}</c> (with dots replaced by underscores)
+    /// that contains the full path to the package folder. This allows you to reference files from the package in your build process.
+    /// </para>
+    /// <para>
+    /// This property is particularly useful when you need to access package content files, tools, or other resources during the build.
+    /// The generated property can be used in MSBuild targets, tasks, or other build-time operations.
+    /// </para>
+    /// <para>
+    /// For more information about this feature, see
+    /// <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#generatepathproperty">GeneratePathProperty documentation</see>.
+    /// </para>
+    /// </remarks>
+    /// <value>
+    /// <see langword="true"/> if MSBuild should generate a path property for this package reference; otherwise, <see langword="false"/>.
+    /// </value>
+    /// <seealso href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#generatepathproperty"/>
     bool GeneratePathProperty { get; }
 
     /// <summary>
@@ -71,7 +91,7 @@ public interface IReference : IItemGroupItem
     /// See <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets"/> for more information.
     /// </para>
     /// </remarks>
-    /// <value>A flags enumeration of <see cref="NetEvolve.ProjectBuilders.Models.ReferenceAssets"/> values, or <see langword="null"/> to include all assets.</value>
+    /// <value>A flags enumeration of <see cref="ReferenceAssets"/> values, or <see langword="null"/> to include all assets.</value>
     ReferenceAssets? IncludeAssets { get; }
 
     /// <summary>
@@ -85,7 +105,7 @@ public interface IReference : IItemGroupItem
     /// See <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets"/> for more information.
     /// </para>
     /// </remarks>
-    /// <value>A flags enumeration of <see cref="NetEvolve.ProjectBuilders.Models.ReferenceAssets"/> values, or <see langword="null"/> to not exclude any assets.</value>
+    /// <value>A flags enumeration of <see cref="ReferenceAssets"/> values, or <see langword="null"/> to not exclude any assets.</value>
     ReferenceAssets? ExcludeAssets { get; }
 
     /// <summary>
@@ -99,6 +119,6 @@ public interface IReference : IItemGroupItem
     /// See <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#controlling-dependency-assets"/> for more information.
     /// </para>
     /// </remarks>
-    /// <value>A flags enumeration of <see cref="NetEvolve.ProjectBuilders.Models.ReferenceAssets"/> values, or <see langword="null"/> to allow all assets to flow.</value>
+    /// <value>A flags enumeration of <see cref="ReferenceAssets"/> values, or <see langword="null"/> to allow all assets to flow.</value>
     ReferenceAssets? PrivateAssets { get; }
 }

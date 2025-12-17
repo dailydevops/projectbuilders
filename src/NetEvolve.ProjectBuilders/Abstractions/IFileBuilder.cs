@@ -17,4 +17,4 @@
 /// <seealso cref="IObjectBuilder"/>
 /// <seealso cref="IProjectBuilder"/>
 /// <seealso cref="IGlobalJsonBuilder"/>
-public interface IFileBuilder : IObjectBuilder { }
+public interface IFileBuilder : IObjectBuilder;

@@ -25,10 +25,7 @@ public class VBProjectTests(TemporaryDirectory directory)
         );
 
         var result = await factory
-            .AddVBProject(builder =>
-            {
-                builder.WithDefaults().AddVBFile("main.vb", content);
-            })
+            .AddVBProject(builder => builder.WithDefaults().AddVBFile("main.vb", content))
             .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
             .BuildAsync();
 
@@ -55,10 +52,7 @@ public class VBProjectTests(TemporaryDirectory directory)
         );
 
         _ = await factory
-            .AddVBProject(builder =>
-            {
-                builder.WithDefaults().AddVBFile("main.vb", content);
-            })
+            .AddVBProject(builder => builder.WithDefaults().AddVBFile("main.vb", content))
             .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
             .BuildAsync();
 

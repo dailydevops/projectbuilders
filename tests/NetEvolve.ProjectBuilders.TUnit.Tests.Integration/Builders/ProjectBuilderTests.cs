@@ -17,7 +17,7 @@ public class ProjectBuilderTests(TemporaryDirectory directory)
         [MatrixInstanceMethod<ProjectBuilderTests>(nameof(GetTargetFrameworkValues))] TargetFramework targetFramework
     )
     {
-        var subdirectory = directory.CreateDirectory($"{nameof(CreateAsync_TargetFrameworkTheory_Expected)}");
+        var subdirectory = directory.CreateDirectory(nameof(CreateAsync_TargetFrameworkTheory_Expected));
         await using var builder = new ProjectBuilder(subdirectory, Constants.CSharpProjectFileName);
 
         await builder.WithNullable(nullable).WithTargetFramework(targetFramework).SetProjectSdk(sdk).CreateAsync();
@@ -67,7 +67,7 @@ public class ProjectBuilderTests(TemporaryDirectory directory)
         [Matrix(ReferenceAssets.Build | ReferenceAssets.ContentFiles, null)] ReferenceAssets? privateAssets
     )
     {
-        var subdirectory = directory.CreateDirectory($"{nameof(AddPackageReference_Newtonsoft_Expected)}");
+        var subdirectory = directory.CreateDirectory(nameof(AddPackageReference_Newtonsoft_Expected));
         await using var builder = new ProjectBuilder(subdirectory, Constants.CSharpProjectFileName);
         await builder
             .AddPackageReference(

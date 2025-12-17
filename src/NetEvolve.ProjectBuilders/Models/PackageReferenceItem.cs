@@ -1,10 +1,8 @@
 ﻿namespace NetEvolve.ProjectBuilders.Models;
 
-using System.Reflection.Emit;
 using System.Xml.Linq;
 using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Builders;
-using NetEvolve.ProjectBuilders.Helpers;
 
 /// <summary>
 /// Represents a PackageReference item in a project file's ItemGroup.

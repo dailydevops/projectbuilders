@@ -28,5 +28,9 @@
   <Folder Name="/tests/">
     <Project Path="tests/NetEvolve.ProjectBuilders.Tests.Unit/NetEvolve.ProjectBuilders.Tests.Unit.csproj" />
     <Project Path="tests/NetEvolve.ProjectBuilders.TUnit.Tests.Integration/NetEvolve.ProjectBuilders.TUnit.Tests.Integration.csproj" />
+    <Project
+      Path="tests/NetEvolve.ProjectBuilders.XUnit.Tests.Integration/NetEvolve.ProjectBuilders.XUnit.Tests.Integration.csproj"
+      Id="594f97b7-f15b-43c9-9067-996a157539ec"
+    />
   </Folder>
 </Solution>

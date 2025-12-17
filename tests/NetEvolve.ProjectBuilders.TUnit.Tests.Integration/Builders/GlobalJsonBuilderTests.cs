@@ -16,7 +16,7 @@ public class GlobalJsonBuilderTests(TemporaryDirectory directory)
         RollForward rollForward
     )
     {
-        var subdirectory = directory.CreateDirectory($"{nameof(CreateAsync_Theory_Expected)}");
+        var subdirectory = directory.CreateDirectory(nameof(CreateAsync_Theory_Expected));
         await using var builder = new GlobalJsonBuilder(subdirectory, runtimeVersion);
         await builder.SetAllowPrerelease(allowPrerelease).SetRollForward(rollForward).CreateAsync();
         _ = await VerifyFile(builder.FullPath)

@@ -50,7 +50,7 @@ public class ProjectBuilderTests
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        var customSdk = "Custom.SDK";
+        const string customSdk = "Custom.SDK";
 
         // Act
         var result = builder.SetProjectSdk(customSdk);
@@ -65,7 +65,7 @@ public class ProjectBuilderTests
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        var fileName = "TestFile.cs";
+        const string fileName = "TestFile.cs";
 
         // Act
         using var stream = builder.CreateFile(fileName);
@@ -177,7 +177,7 @@ public class ProjectBuilderTests
     {
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        var projectExtension = Constants.VBNetProjectFileName;
+        const string projectExtension = Constants.VBNetProjectFileName;
 
         // Act
         await using var builder = new ProjectBuilder(directory, projectExtension);

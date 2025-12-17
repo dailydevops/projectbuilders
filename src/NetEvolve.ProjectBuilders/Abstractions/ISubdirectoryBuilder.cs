@@ -40,10 +40,10 @@ public interface ISubdirectoryBuilder : IObjectBuilder
     /// <returns>
     /// An <see cref="ISubdirectoryBuilder"/> for the newly created subdirectory, supporting fluent chaining.
     /// </returns>
-    /// <exception cref="System.ArgumentNullException">
+    /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="directoryName"/> is <see langword="null"/>.
     /// </exception>
-    /// <exception cref="System.ArgumentException">
+    /// <exception cref="ArgumentException">
     /// Thrown when <paramref name="directoryName"/> is empty, contains only whitespace characters,
     /// or the subdirectory already exists.
     /// </exception>
@@ -66,7 +66,7 @@ public interface ISubdirectoryBuilder : IObjectBuilder
     /// A writeable <see cref="Stream"/> to the newly created file. The caller is responsible for
     /// disposing this stream after writing.
     /// </returns>
-    /// <exception cref="System.ArgumentException">
+    /// <exception cref="ArgumentException">
     /// Thrown when a file with the specified name already exists in this directory.
     /// </exception>
     Stream CreateFile(string fileName);

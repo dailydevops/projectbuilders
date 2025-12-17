@@ -114,7 +114,7 @@ internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
 
             directory.Delete(true);
         }
-        catch (Exception)
+        catch
         {
             // Ignore, because we are using this while testing.
         }

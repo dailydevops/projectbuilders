@@ -265,7 +265,7 @@ public static class ProjectBuilderExtensions
     /// <param name="excludeAssets">The optional asset types to exclude from the package. Takes precedence over <paramref name="includeAssets"/>.</param>
     /// <param name="privateAssets">The optional asset types that should not flow to consuming projects. Commonly used for analyzers and build tools.</param>
     /// <returns>The builder instance for fluent chaining.</returns>
-    /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="name"/> is <see langword="null"/> or whitespace.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="name"/> is <see langword="null"/> or whitespace.</exception>
     public static T AddPackageReference<T>(
         this T builder,
         string name,

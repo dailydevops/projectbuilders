@@ -14,15 +14,15 @@ public class ProjectBuilderExtensionsTests
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        var fileName = "Program";
-        var content = "public class Program { }";
+        const string fileName = "Program";
+        const string content = "public class Program { }";
 
         // Act
         builder.AddCSharpFile(fileName, content);
 
         // Assert
-        var filePath = System.IO.Path.Combine(directory.FullPath, "Program.cs");
-        _ = await Assert.That(System.IO.File.Exists(filePath)).IsTrue();
+        var filePath = Path.Combine(directory.FullPath, "Program.cs");
+        _ = await Assert.That(File.Exists(filePath)).IsTrue();
     }
 
     [Test]
@@ -32,27 +32,27 @@ public class ProjectBuilderExtensionsTests
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        var fileName = "Program.cs";
-        var content = "public class Program { }";
+        const string fileName = "Program.cs";
+        const string content = "public class Program { }";
 
         // Act
         builder.AddCSharpFile(fileName, content);
 
         // Assert
-        var filePath = System.IO.Path.Combine(directory.FullPath, "Program.cs");
-        _ = await Assert.That(System.IO.File.Exists(filePath)).IsTrue();
+        var filePath = Path.Combine(directory.FullPath, "Program.cs");
+        _ = await Assert.That(File.Exists(filePath)).IsTrue();
     }
 
     [Test]
     public async Task AddCSharpFile_WithNullBuilder_ThrowsArgumentNullException()
     {
         // Arrange
-        IProjectBuilder? builder = null!;
-        var fileName = "Program";
-        var content = "public class Program { }";
+        IProjectBuilder builder = null!;
+        const string fileName = "Program";
+        const string content = "public class Program { }";
 
         // Act
-        void Act() => ProjectBuilderExtensions.AddCSharpFile(builder, fileName, content);
+        void Act() => builder.AddCSharpFile(fileName, content);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>(Act);
@@ -64,8 +64,8 @@ public class ProjectBuilderExtensionsTests
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        string? fileName = null;
-        var content = "public class Program { }";
+        const string? fileName = null;
+        const string content = "public class Program { }";
 
         // Act
         void Act() => builder.AddCSharpFile(fileName!, content);
@@ -81,7 +81,7 @@ public class ProjectBuilderExtensionsTests
         await using var directory = new TemporaryDirectoryBuilder();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
         var fileName = string.Empty;
-        var content = "public class Program { }";
+        const string content = "public class Program { }";
 
         // Act
         void Act() => builder.AddCSharpFile(fileName, content);
@@ -96,8 +96,8 @@ public class ProjectBuilderExtensionsTests
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        var fileName = "Program";
-        string? content = null;
+        const string fileName = "Program";
+        const string? content = null;
 
         // Act
         void Act() => builder.AddCSharpFile(fileName, content!);
@@ -112,7 +112,7 @@ public class ProjectBuilderExtensionsTests
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        var fileName = "Program";
+        const string fileName = "Program";
         var content = string.Empty;
 
         // Act
@@ -129,15 +129,15 @@ public class ProjectBuilderExtensionsTests
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
         await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
-        var fileName = "Program";
-        var content = "Public Class Program\nEnd Class";
+        const string fileName = "Program";
+        const string content = "Public Class Program\nEnd Class";
 
         // Act
         builder.AddVBFile(fileName, content);
 
         // Assert
-        var filePath = System.IO.Path.Combine(directory.FullPath, "Program.vb");
-        _ = await Assert.That(System.IO.File.Exists(filePath)).IsTrue();
+        var filePath = Path.Combine(directory.FullPath, "Program.vb");
+        _ = await Assert.That(File.Exists(filePath)).IsTrue();
     }
 
     [Test]
@@ -147,27 +147,27 @@ public class ProjectBuilderExtensionsTests
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
         await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
-        var fileName = "Program.vb";
-        var content = "Public Class Program\nEnd Class";
+        const string fileName = "Program.vb";
+        const string content = "Public Class Program\nEnd Class";
 
         // Act
         builder.AddVBFile(fileName, content);
 
         // Assert
-        var filePath = System.IO.Path.Combine(directory.FullPath, "Program.vb");
-        _ = await Assert.That(System.IO.File.Exists(filePath)).IsTrue();
+        var filePath = Path.Combine(directory.FullPath, "Program.vb");
+        _ = await Assert.That(File.Exists(filePath)).IsTrue();
     }
 
     [Test]
     public async Task AddVBFile_WithNullBuilder_ThrowsArgumentNullException()
     {
         // Arrange
-        IProjectBuilder? builder = null!;
-        var fileName = "Program";
-        var content = "Public Class Program\nEnd Class";
+        IProjectBuilder builder = null!;
+        const string fileName = "Program";
+        const string content = "Public Class Program\nEnd Class";
 
         // Act
-        void Act() => ProjectBuilderExtensions.AddVBFile(builder, fileName, content);
+        void Act() => builder.AddVBFile(fileName, content);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>(Act);
@@ -180,13 +180,13 @@ public class ProjectBuilderExtensionsTests
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
-        var fileName = "Program";
-        var content = "namespace Test { public class Program { } }";
+        const string fileName = "Program";
+        const string content = "namespace Test { public class Program { } }";
 
         // Act
         builder.AddCSharpFile(fileName, content);
-        var filePath = System.IO.Path.Combine(directory.FullPath, "Program.cs");
-        var fileContent = await System.IO.File.ReadAllTextAsync(filePath);
+        var filePath = Path.Combine(directory.FullPath, "Program.cs");
+        var fileContent = await File.ReadAllTextAsync(filePath);
 
         // Assert
         _ = await Assert.That(fileContent).IsEqualTo(content);
@@ -199,13 +199,13 @@ public class ProjectBuilderExtensionsTests
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
         await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
-        var fileName = "Program";
-        var content = "Namespace Test\nPublic Class Program\nEnd Class\nEnd Namespace";
+        const string fileName = "Program";
+        const string content = "Namespace Test\nPublic Class Program\nEnd Class\nEnd Namespace";
 
         // Act
         builder.AddVBFile(fileName, content);
-        var filePath = System.IO.Path.Combine(directory.FullPath, "Program.vb");
-        var fileContent = await System.IO.File.ReadAllTextAsync(filePath);
+        var filePath = Path.Combine(directory.FullPath, "Program.vb");
+        var fileContent = await File.ReadAllTextAsync(filePath);
 
         // Assert
         _ = await Assert.That(fileContent).IsEqualTo(content);

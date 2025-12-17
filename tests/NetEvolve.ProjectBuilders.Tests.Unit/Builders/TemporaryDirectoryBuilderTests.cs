@@ -11,7 +11,7 @@ public class TemporaryDirectoryBuilderTests
     {
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        var fileName = "file.txt";
+        const string fileName = "file.txt";
 
         // Act
         var file = directory.CreateFile(fileName);
@@ -29,7 +29,7 @@ public class TemporaryDirectoryBuilderTests
     {
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        var fileName = "file.txt";
+        const string fileName = "file.txt";
         _ = directory.CreateFile(fileName);
 
         // Act
@@ -44,7 +44,7 @@ public class TemporaryDirectoryBuilderTests
     {
         // Arrange
         await using var tempDirectory = new TemporaryDirectoryBuilder();
-        var fileName = "file.txt";
+        const string fileName = "file.txt";
 
         // Act
         var filePath = tempDirectory.GetFilePath(fileName);
@@ -58,10 +58,10 @@ public class TemporaryDirectoryBuilderTests
     {
         // Arrange
         await using var tempDirectory = new TemporaryDirectoryBuilder();
-        string? fileName = null;
+        const string? fileName = null;
 
         // Act
-        void Act() => tempDirectory.GetFilePath(fileName);
+        void Act() => tempDirectory.GetFilePath(fileName!);
 
         // Assert
         _ = Assert.Throws<ArgumentNullException>(Act);

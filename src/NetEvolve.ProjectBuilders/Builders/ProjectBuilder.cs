@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using NetEvolve.ProjectBuilders.Abstractions;
-using NetEvolve.ProjectBuilders.Helpers;
 using NetEvolve.ProjectBuilders.Models;
 
 /// <summary>

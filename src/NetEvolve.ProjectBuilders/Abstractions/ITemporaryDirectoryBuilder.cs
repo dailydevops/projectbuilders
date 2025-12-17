@@ -22,4 +22,4 @@ using NetEvolve.ProjectBuilders.Builders;
 /// </remarks>
 /// <seealso cref="ISubdirectoryBuilder"/>
 /// <seealso cref="TemporaryDirectoryBuilder"/>
-public interface ITemporaryDirectoryBuilder : ISubdirectoryBuilder { }
+public interface ITemporaryDirectoryBuilder : ISubdirectoryBuilder;

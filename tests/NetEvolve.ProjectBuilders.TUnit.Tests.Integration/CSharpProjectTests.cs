@@ -25,10 +25,7 @@ public class CSharpProjectTests(TemporaryDirectory directory)
         );
 
         var result = await factory
-            .AddCSharpProject(builder =>
-            {
-                builder.WithDefaults().AddCSharpFile("main.cs", content);
-            })
+            .AddCSharpProject(builder => builder.WithDefaults().AddCSharpFile("main.cs", content))
             .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
             .BuildAsync();
 
@@ -57,10 +54,7 @@ public class CSharpProjectTests(TemporaryDirectory directory)
         );
 
         _ = await factory
-            .AddCSharpProject(builder =>
-            {
-                builder.WithDefaults().AddCSharpFile("main.cs", content);
-            })
+            .AddCSharpProject(builder => builder.WithDefaults().AddCSharpFile("main.cs", content))
             .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
             .BuildAsync();
 
