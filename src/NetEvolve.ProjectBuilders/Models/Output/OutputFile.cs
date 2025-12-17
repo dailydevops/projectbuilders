@@ -77,7 +77,8 @@ public sealed class OutputFile
                             }
                             return r.Results;
                         })
-                        .ToList() ?? [];
+                        .ToList()
+                    ?? [];
             }
 
             return _results;
