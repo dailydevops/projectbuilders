@@ -1,4 +1,4 @@
-﻿namespace NetEvolve.ProjectBuilders.TUnit.Tests.Integration;
+﻿namespace NetEvolve.ProjectBuilders.XUnit.Tests.Integration;
 
 using System.IO;
 using System.Runtime.CompilerServices;

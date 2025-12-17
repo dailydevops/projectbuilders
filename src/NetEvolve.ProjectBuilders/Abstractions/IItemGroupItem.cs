@@ -1,7 +1,6 @@
 ﻿namespace NetEvolve.ProjectBuilders.Abstractions;
 
 using System.Xml.Linq;
-using NetEvolve.ProjectBuilders.Helpers;
 
 /// <summary>
 /// Represents an item element within an ItemGroup in an MSBuild project file.

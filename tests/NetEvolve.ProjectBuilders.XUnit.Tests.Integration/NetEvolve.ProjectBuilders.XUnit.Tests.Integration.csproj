@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>$(TestTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="_snapshots/**/*.*" />
+    <None Include="_snapshots/**/*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetEvolve.Extensions.XUnit.V3" />
+    <PackageReference Include="Verify.ParametersHashing" />
+    <PackageReference Include="Verify.XunitV3" />
+    <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="NetEvolve.Extensions.XUnit.V3.IntegrationTestAttribute" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NetEvolve.ProjectBuilders.TUnit\NetEvolve.ProjectBuilders.TUnit.csproj" />
+    <ProjectReference Include="..\..\src\NetEvolve.ProjectBuilders\NetEvolve.ProjectBuilders.csproj" />
+  </ItemGroup>
+</Project>

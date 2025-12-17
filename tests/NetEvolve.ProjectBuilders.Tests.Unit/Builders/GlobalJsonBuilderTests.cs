@@ -30,7 +30,7 @@ public class GlobalJsonBuilderTests
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
-        var runtimeVersion = "8.0.204";
+        const string runtimeVersion = "8.0.204";
         await using var builder = new GlobalJsonBuilder(directory, runtimeVersion);
 
         // Act
@@ -132,7 +132,7 @@ public class GlobalJsonBuilderTests
         await using var directory = new TemporaryDirectoryBuilder();
         await directory.CreateAsync();
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
-        var newVersion = Constants.RuntimeSdkLTS;
+        const string newVersion = Constants.RuntimeSdkLTS;
 
         // Act
         _ = builder.SetRuntimeSdk(newVersion);
