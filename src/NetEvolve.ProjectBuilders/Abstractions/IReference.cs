@@ -28,7 +28,7 @@ public interface IReference : IItemGroupItem
     /// </summary>
     /// <remarks>
     /// <para>
-    /// When set to <see langword="true"/>, MSBuild generates a property named <c>Pkg{PackageId}</c> (with dots replaced by underscores) 
+    /// When set to <see langword="true"/>, MSBuild generates a property named <c>Pkg{PackageId}</c> (with dots replaced by underscores)
     /// that contains the full path to the package folder. This allows you to reference files from the package in your build process.
     /// </para>
     /// <para>
@@ -36,7 +36,7 @@ public interface IReference : IItemGroupItem
     /// The generated property can be used in MSBuild targets, tasks, or other build-time operations.
     /// </para>
     /// <para>
-    /// For more information about this feature, see 
+    /// For more information about this feature, see
     /// <see href="https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#generatepathproperty">GeneratePathProperty documentation</see>.
     /// </para>
     /// </remarks>
