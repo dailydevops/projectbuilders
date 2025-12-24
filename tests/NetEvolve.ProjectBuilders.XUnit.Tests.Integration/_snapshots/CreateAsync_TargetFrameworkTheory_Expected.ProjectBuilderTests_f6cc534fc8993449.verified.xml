@@ -1,0 +1,7 @@
+﻿<Project>
+  <PropertyGroup>
+    <ErrorLog>result.sarif,version=2.1</ErrorLog>
+    <Nullable>disable</Nullable>
+    <TargetFramework>net481</TargetFramework>
+  </PropertyGroup>
+</Project>

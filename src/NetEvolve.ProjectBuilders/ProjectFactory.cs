@@ -175,24 +175,7 @@ public sealed partial class ProjectFactory : IProjectFactory
         // Create temporary directory for testing
         await _tempDirectory.CreateAsync(cancellationToken).ConfigureAwait(false);
 
-        if (_testPackageBuilder is not null)
-        {
-            var lookupPaths = ObjectBuilders
-                .OfType<ProjectBuilder>()
-                .Select(x => x.ItemGroup.Items)
-                .OfType<IReference>()
-                .SelectMany(x => x.LookUpPaths)
-                .Distinct()
-                .ToArray();
-
-            if (lookupPaths.Length > 0)
-            {
-                _testPackageBuilder.SetPackagePaths(lookupPaths);
-
-                // Prepare nuget packages for testings
-                await _testPackageBuilder.CreateAsync(cancellationToken).ConfigureAwait(false);
-            }
-        }
+        await PrepareNuGetPackagesAsync(cancellationToken).ConfigureAwait(false);
 
         await Parallel
             .ForEachAsync(
@@ -228,6 +211,30 @@ public sealed partial class ProjectFactory : IProjectFactory
         }
 
         return sarif;
+    }
+
+    private async Task PrepareNuGetPackagesAsync(CancellationToken cancellationToken)
+    {
+        if (_testPackageBuilder is null)
+        {
+            return;
+        }
+
+        var lookupPaths = ObjectBuilders
+            .OfType<ProjectBuilder>()
+            .Select(x => x.ItemGroup.Items)
+            .OfType<IReference>()
+            .SelectMany(x => x.LookUpPaths)
+            .Distinct()
+            .ToArray();
+
+        if (lookupPaths.Length > 0)
+        {
+            _testPackageBuilder.SetPackagePaths(lookupPaths);
+
+            // Prepare nuget packages for testings
+            await _testPackageBuilder.CreateAsync(cancellationToken).ConfigureAwait(false);
+        }
     }
 
     private async Task<CommandResult> ExecuteDotNetCommandAsync(
