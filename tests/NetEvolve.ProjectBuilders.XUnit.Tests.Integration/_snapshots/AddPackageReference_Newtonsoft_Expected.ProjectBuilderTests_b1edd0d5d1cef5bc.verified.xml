@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ErrorLog>result.sarif,version=2.1</ErrorLog>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" GeneratePathProperty="true" Version="13.0.1" />
+  </ItemGroup>
+</Project>
