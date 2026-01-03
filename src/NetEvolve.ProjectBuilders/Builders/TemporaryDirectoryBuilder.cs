@@ -44,7 +44,7 @@ internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
     /// <inheritdoc cref="ISubdirectoryBuilder.CreateDirectory(string)" />
     public ISubdirectoryBuilder CreateDirectory(string directoryName)
     {
-        Argument.ThrowIfNullOrWhiteSpace(directoryName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(directoryName);
 
         return new SubdirectoryBuilder(_directory.CreateSubdirectory(directoryName));
     }
@@ -52,7 +52,7 @@ internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
     /// <inheritdoc cref="ISubdirectoryBuilder.CreateFile(string)" />
     public Stream CreateFile(string fileName)
     {
-        Argument.ThrowIfNullOrWhiteSpace(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
 
         if (!_directory.Exists)
         {
@@ -72,7 +72,7 @@ internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
     /// <inheritdoc cref="ISubdirectoryBuilder.GetFilePath(string)" />
     public string GetFilePath(string fileName)
     {
-        Argument.ThrowIfNullOrWhiteSpace(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
         return Path.Combine(FullPath, fileName);
     }
 

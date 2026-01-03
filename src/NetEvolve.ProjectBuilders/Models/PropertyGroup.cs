@@ -48,7 +48,7 @@ internal sealed record PropertyGroup : IPropertyGroup
     /// </exception>
     internal void Add(string key, string? value)
     {
-        Argument.ThrowIfNullOrWhiteSpace(key);
+        ArgumentException.ThrowIfNullOrWhiteSpace(key);
 
         _items.Add(new PropertyGroupItem(key, value));
     }

@@ -125,8 +125,8 @@ public readonly record struct TargetFramework
     /// </exception>
     public static TargetFramework Create(string name, string value, TargetPlatform? platform = null)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
-        Argument.ThrowIfNullOrWhiteSpace(value);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(value);
 
         var targetFramework = new TargetFramework(name, value, platform);
 

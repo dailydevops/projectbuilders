@@ -47,7 +47,7 @@ internal sealed class SubdirectoryBuilder : ISubdirectoryBuilder
     /// <inheritdoc cref="ISubdirectoryBuilder.CreateDirectory(string)" />
     public ISubdirectoryBuilder CreateDirectory(string directoryName)
     {
-        Argument.ThrowIfNullOrWhiteSpace(directoryName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(directoryName);
 
         return new SubdirectoryBuilder(_directory.CreateSubdirectory(directoryName));
     }
@@ -55,7 +55,7 @@ internal sealed class SubdirectoryBuilder : ISubdirectoryBuilder
     /// <inheritdoc cref="ISubdirectoryBuilder.CreateFile(string)" />
     public Stream CreateFile(string fileName)
     {
-        Argument.ThrowIfNullOrWhiteSpace(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
 
         var fileInfo = new FileInfo(Path.Combine(_directory.FullName, fileName));
 

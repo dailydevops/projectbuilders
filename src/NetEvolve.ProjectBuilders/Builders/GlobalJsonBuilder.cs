@@ -63,7 +63,7 @@ internal sealed class GlobalJsonBuilder : IGlobalJsonBuilder
     /// <inheritdoc cref="IGlobalJsonBuilder.SetRuntimeSdk(string)" />
     public IGlobalJsonBuilder SetRuntimeSdk(string runtimeVersion)
     {
-        Argument.ThrowIfNullOrWhiteSpace(runtimeVersion);
+        ArgumentException.ThrowIfNullOrWhiteSpace(runtimeVersion);
 
         _runtimeVersion = runtimeVersion;
 

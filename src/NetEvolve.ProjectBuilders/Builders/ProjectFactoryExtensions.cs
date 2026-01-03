@@ -122,7 +122,7 @@ public static class ProjectFactoryExtensions
     )
     {
         ArgumentNullException.ThrowIfNull(factory);
-        Argument.ThrowIfNullOrWhiteSpace(runtimeVersion);
+        ArgumentException.ThrowIfNullOrWhiteSpace(runtimeVersion);
 
         var builder = factory.AddFileBuilder<IGlobalJsonBuilder, GlobalJsonBuilder>(
             new GlobalJsonBuilder(factory.DirectoryBuilder, runtimeVersion)
