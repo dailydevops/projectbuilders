@@ -53,9 +53,9 @@ public static class ProjectBuilderExtensions
     public static void AddCSharpFile<T>(this T builder, string fileName, string content)
         where T : class, IProjectBuilder
     {
-        Argument.ThrowIfNull(builder);
-        Argument.ThrowIfNullOrWhiteSpace(fileName);
-        Argument.ThrowIfNullOrWhiteSpace(content);
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(content);
 
         if (builder is ProjectBuilder projectBuilder)
         {
@@ -95,9 +95,9 @@ public static class ProjectBuilderExtensions
     public static void AddVBFile<T>(this T builder, string fileName, string content)
         where T : class, IProjectBuilder
     {
-        Argument.ThrowIfNull(builder);
-        Argument.ThrowIfNullOrWhiteSpace(fileName);
-        Argument.ThrowIfNullOrWhiteSpace(content);
+        ArgumentNullException.ThrowIfNull(builder);
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(content);
 
         if (builder is ProjectBuilder projectBuilder)
         {
@@ -130,7 +130,7 @@ public static class ProjectBuilderExtensions
     public static T WithDefaults<T>(this T builder)
         where T : class, IProjectBuilder
     {
-        Argument.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(builder);
 
         return builder.WithTargetFramework(TargetFramework.Net8).WithNullable(NullableOptions.Enable);
     }
@@ -279,7 +279,7 @@ public static class ProjectBuilderExtensions
     )
         where T : class, IProjectBuilder
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
 
         if (builder is ProjectBuilder projectBuilder)
         {

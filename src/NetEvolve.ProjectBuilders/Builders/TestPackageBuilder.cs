@@ -87,7 +87,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
 
     public void SetPackagePaths(string[] packagePaths)
     {
-        Argument.ThrowIfNull(packagePaths);
+        ArgumentNullException.ThrowIfNull(packagePaths);
 
         foreach (var packagePath in packagePaths.Where(x => !string.IsNullOrWhiteSpace(x)))
         {

@@ -120,8 +120,8 @@ public sealed partial class ProjectFactory : IProjectFactory
     /// <inheritdoc cref="IProjectFactory.AddEnvironmentVariable"/>
     public IProjectFactory AddEnvironmentVariable(string name, string? value)
     {
-        Argument.ThrowIfNullOrWhiteSpace(name);
-        Argument.ThrowIfNullOrWhiteSpace(value);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(value);
 
         if (!EnvironmentVariables.TryAdd(name, value))
         {
@@ -134,7 +134,7 @@ public sealed partial class ProjectFactory : IProjectFactory
     /// <inheritdoc cref="IProjectFactory.AddEnvironmentVariables"/>
     public IProjectFactory AddEnvironmentVariables(params KeyValuePair<string, string?>[] variables)
     {
-        Argument.ThrowIfNull(variables);
+        ArgumentNullException.ThrowIfNull(variables);
 
         foreach (var variable in variables)
         {

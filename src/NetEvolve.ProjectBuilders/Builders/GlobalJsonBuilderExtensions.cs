@@ -37,7 +37,7 @@ public static class GlobalJsonBuilderExtensions
     /// </exception>
     public static IGlobalJsonBuilder WithDefaults(this IGlobalJsonBuilder builder)
     {
-        Argument.ThrowIfNull(builder);
+        ArgumentNullException.ThrowIfNull(builder);
 
         return builder
             .SetRuntimeSdk(Constants.RuntimeSdkDefault)
