@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" VersionOverride="18.0.6" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" VersionOverride="18.4.1" />
     <PackageReference Include="NetEvolve.Extensions.XUnit.V3" />
     <PackageReference Include="Verify.ParametersHashing" />
     <PackageReference Include="Verify.XunitV3" />
