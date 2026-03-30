@@ -38,7 +38,7 @@ using System.Threading.Tasks;
 /// </remarks>
 internal static class SharedHttpClient
 {
-    private static readonly Lazy<HttpClient> _instance = new(
+    private static readonly Lazy<HttpClient> InstanceLazy = new(
         CreateHttpClient,
         LazyThreadSafetyMode.ExecutionAndPublication
     );
@@ -53,7 +53,7 @@ internal static class SharedHttpClient
     /// </para>
     /// </remarks>
     /// <value>The shared HttpClient instance configured with retry logic and connection pooling.</value>
-    public static HttpClient Instance { get; } = _instance.Value;
+    public static HttpClient Instance { get; } = InstanceLazy.Value;
 
     [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "As designed.")]
     private static HttpClient CreateHttpClient()

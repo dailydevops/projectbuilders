@@ -32,7 +32,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
     private TemporaryDirectoryBuilder? _nugetFolder;
     private readonly ISubdirectoryBuilder _directoy;
     private bool _isInitialized;
-    private static readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+    private static readonly SemaphoreSlim Lock = new SemaphoreSlim(1, 1);
     private readonly HashSet<string> _packagePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
     /// <inheritdoc cref="IObjectBuilder.FullPath"/>
@@ -49,7 +49,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
     /// <inheritdoc cref="IObjectBuilder.CreateAsync(CancellationToken)"/>
     public async ValueTask CreateAsync(CancellationToken cancellationToken = default)
     {
-        await _lock.WaitAsync(cancellationToken).ConfigureAwait(false);
+        await Lock.WaitAsync(cancellationToken).ConfigureAwait(false);
 
         try
         {
@@ -81,7 +81,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
         }
         finally
         {
-            _ = _lock.Release();
+            _ = Lock.Release();
         }
     }
 
