@@ -84,8 +84,8 @@ public readonly record struct TargetFramework
         Platform = platform;
     }
 
-    private static readonly HashSet<TargetFramework> _values = [];
-    internal static TargetFramework[] Values => [.. _values];
+    private static readonly HashSet<TargetFramework> ValuesSet = [];
+    internal static TargetFramework[] Values => [.. ValuesSet];
 
     /// <summary>
     /// Creates a custom target framework instance.
@@ -130,7 +130,7 @@ public readonly record struct TargetFramework
 
         var targetFramework = new TargetFramework(name, value, platform);
 
-        if (!_values.Add(targetFramework))
+        if (!ValuesSet.Add(targetFramework))
         {
             throw new ArgumentException("TargetFramework already registered.", nameof(name));
         }

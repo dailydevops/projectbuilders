@@ -279,9 +279,9 @@ public sealed partial class ProjectFactory : IProjectFactory
     [GeneratedRegex(RulesFilterPattern, RegexOptions.Compiled)]
     public static partial Regex RulesFilter();
 #else
-    public static Regex RulesFilter() => _rulesFilter;
+    public static Regex RulesFilter() => RulesFilterField;
 
-    private static readonly Regex _rulesFilter = new Regex(RulesFilterPattern, RegexOptions.Compiled);
+    private static readonly Regex RulesFilterField = new Regex(RulesFilterPattern, RegexOptions.Compiled);
 #endif
 
     private void EnrichSarifResults(OutputFile? sarif)
