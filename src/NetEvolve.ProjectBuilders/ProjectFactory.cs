@@ -72,7 +72,7 @@ public sealed partial class ProjectFactory : IProjectFactory
     /// <inheritdoc cref="IProjectFactory.DirectoryBuilder" />
     public ISubdirectoryBuilder DirectoryBuilder => _tempDirectory;
 
-    private static readonly string[] _newLineSeparator = ["\r\n", "\r", "\n"];
+    private static readonly string[] NewLineSeparator = ["\r\n", "\r", "\n"];
 
     internal ProjectFactory(
         ITestPackageBuilder? testPackageBuilder,
@@ -205,9 +205,11 @@ public sealed partial class ProjectFactory : IProjectFactory
 
         EnrichSarifResults(sarif);
 
-        if (!sarif.HasNoErrorsOrWarnings())
+        if (!sarif.HasNoErrorsOrWarnings() && _logger.IsEnabled(LogLevel.Information))
         {
+#pragma warning disable CA1873 // Avoid potentially expensive logging
             LogSarifResult(string.Join('\n', sarif.Results.Select(x => x.ToString())));
+#pragma warning restore CA1873 // Avoid potentially expensive logging
         }
 
         return sarif;
@@ -291,7 +293,7 @@ public sealed partial class ProjectFactory : IProjectFactory
 
         var outputLines = _output
             .SelectMany(x =>
-                x.Split(_newLineSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                x.Split(NewLineSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             )
             .ToArray();
         var filteredResults = new List<OutputRunResult>();
