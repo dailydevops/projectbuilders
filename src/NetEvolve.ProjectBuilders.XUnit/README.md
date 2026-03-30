@@ -36,8 +36,8 @@ dotnet add package NetEvolve.ProjectBuilders.XUnit
 
 ```csharp
 using NetEvolve.ProjectBuilders.XUnit;
+using Xunit;
 
-// Use TemporaryDirectoryFixture in your xUnit tests
 public class MyTests : IClassFixture<TemporaryDirectoryFixture>
 {
     private readonly TemporaryDirectoryFixture _fixture;
@@ -45,7 +45,23 @@ public class MyTests : IClassFixture<TemporaryDirectoryFixture>
     {
         _fixture = fixture;
     }
-    // Use _fixture.Directory for test files
+
+    [Fact]
+    public void TestCreateFile()
+    {
+        // Create a file in the temporary directory
+        using var stream = _fixture.CreateFile("test.txt");
+        stream.WriteByte(42);
+        string filePath = _fixture.GetFilePath("test.txt");
+        Assert.True(File.Exists(filePath));
+    }
+
+    [Fact]
+    public void TestCreateDirectory()
+    {
+        var subDir = _fixture.CreateDirectory("sub");
+        Assert.True(Directory.Exists(Path.Combine(_fixture.FullPath, "sub")));
+    }
 }
 ```
 
@@ -54,7 +70,6 @@ public class MyTests : IClassFixture<TemporaryDirectoryFixture>
 ### Basic Example
 
 ```csharp
-// Use TemporaryDirectoryFixture in xUnit tests
 public class ExampleTests : IClassFixture<TemporaryDirectoryFixture>
 {
     private readonly TemporaryDirectoryFixture _fixture;
@@ -62,7 +77,17 @@ public class ExampleTests : IClassFixture<TemporaryDirectoryFixture>
     {
         _fixture = fixture;
     }
-    // Use _fixture.Directory for test files
+
+    [Fact]
+    public void TestDirectoryAndFiles()
+    {
+        // Use _fixture.FullPath for test files
+        var subDir = _fixture.CreateDirectory("sub");
+        using var file = _fixture.CreateFile("sample.txt");
+        file.WriteByte(99);
+        string filePath = _fixture.GetFilePath("sample.txt");
+        Assert.True(File.Exists(filePath));
+    }
 }
 ```
 

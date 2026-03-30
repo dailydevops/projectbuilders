@@ -36,11 +36,22 @@ dotnet add package NetEvolve.ProjectBuilders.TUnit
 
 ```csharp
 using NetEvolve.ProjectBuilders.TUnit;
+using TUnit;
 
-// Use TemporaryDirectory in your TUnit tests
-using (var tempDir = new TemporaryDirectory())
+[ClassDataSource<TemporaryDirectory>]
+public class MyTests(TemporaryDirectory directory)
 {
-    // Arrange test files in tempDir.Path
+    [Test]
+    public void TestCreateFile()
+    {
+        // Create a file in the temporary directory
+        using var stream = directory.CreateFile("test.txt");
+        // Write to the file (example)
+        stream.Write(new byte[] { 1, 2, 3 }, 0, 3);
+
+        string filePath = directory.GetFilePath("test.txt");
+        Assert.That(File.Exists(filePath));
+    }
 }
 ```
 
@@ -49,10 +60,19 @@ using (var tempDir = new TemporaryDirectory())
 ### Basic Example
 
 ```csharp
-// Create a temporary directory for a test
-using (var tempDir = new TemporaryDirectory())
+[ClassDataSource<TemporaryDirectory>]
+public class ExampleTests(TemporaryDirectory directory)
 {
-    // Use tempDir.Path for test files
+    [Test]
+    public void TestDirectoryAndFiles()
+    {
+        // Use directory.FullPath for test files
+        var subDir = directory.CreateDirectory("sub");
+        using var file = directory.CreateFile("sample.txt");
+        file.WriteByte(42);
+        string filePath = directory.GetFilePath("sample.txt");
+        Assert.That(File.Exists(filePath));
+    }
 }
 ```
 
