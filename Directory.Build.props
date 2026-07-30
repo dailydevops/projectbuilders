@@ -7,6 +7,8 @@
     <PackageReleaseNotes>$(RepositoryUrl)/releases</PackageReleaseNotes>
     <PackageTags>test;projectbuilder</PackageTags>
     <CopyrightYearStart>2025</CopyrightYearStart>
+
+    <DisableRecommendedPackage>Meziantou.Analyzer</DisableRecommendedPackage>
   </PropertyGroup>
 
   <PropertyGroup>
