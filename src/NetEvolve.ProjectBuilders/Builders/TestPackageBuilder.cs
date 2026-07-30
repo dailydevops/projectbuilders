@@ -101,7 +101,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
         {
             var exe = await GetNuGetExeAsync(cancellationToken).ConfigureAwait(false);
 
-            return Cli.Wrap(exe!);
+            return Cli.Wrap(exe);
         }
 
         return Cli.Wrap("nuget");
