@@ -1,0 +1,34 @@
+{
+  "stryker-config": {
+    "solution": "ProjectBuilders.slnx",
+    "mutation-level": "Advanced",
+    "reporters": [
+      "html",
+      "json",
+      "dashboard",
+      "progress"
+    ],
+    "project-info": {
+      "name": "github.com/dailydevops/projectbuilders"
+    },
+    "thresholds": {
+      "high": 80,
+      "low": 60,
+      "break": 0
+    },
+    "test-projects": [
+      "tests/NetEvolve.ProjectBuilders.Tests.Unit/NetEvolve.ProjectBuilders.Tests.Unit.csproj",
+      "tests/NetEvolve.ProjectBuilders.Tests.Integration/NetEvolve.ProjectBuilders.Tests.Integration.csproj",
+      "tests/NetEvolve.ProjectBuilders.XUnit.Tests.Integration/NetEvolve.ProjectBuilders.XUnit.Tests.Integration.csproj",
+      "tests/NetEvolve.ProjectBuilders.TUnit.Tests.Integration/NetEvolve.ProjectBuilders.TUnit.Tests.Integration.csproj"
+    ],
+    "coverage-analysis": "perTest",
+    "mutate": [
+      "**/*.cs",
+      "!**/*.Designer.cs",
+      "!**/*.g.cs",
+      "!**/*.g.i.cs"
+    ],
+    "test-runner": "mtp"
+  }
+}
