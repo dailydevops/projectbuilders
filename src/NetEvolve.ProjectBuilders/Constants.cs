@@ -51,13 +51,15 @@ internal static class Constants
 #pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// Default XML writer settings for project file generation.
-    /// Omits the XML declaration, enables indentation with 2-space characters.
+    /// Omits the XML declaration, enables indentation with 2-space characters
+    /// and allows the use of asynchronous write methods.
     /// </summary>
     public static readonly XmlWriterSettings XmlSettings = new XmlWriterSettings
     {
         OmitXmlDeclaration = true,
         Indent = true,
         IndentChars = "  ",
+        Async = true,
     };
 
     /// <summary>

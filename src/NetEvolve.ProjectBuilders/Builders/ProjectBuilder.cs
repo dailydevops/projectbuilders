@@ -66,16 +66,19 @@ internal sealed class ProjectBuilder : IProjectBuilder
     }
 
     /// <inheritdoc cref="IObjectBuilder.CreateAsync(CancellationToken)" />
-    public ValueTask CreateAsync(CancellationToken cancellationToken = default)
+    public async ValueTask CreateAsync(CancellationToken cancellationToken = default)
     {
         var document = CreateDocument();
 
-        using var file = _directory.CreateFile(_projectName);
-        using var writer = XmlWriter.Create(file, Constants.XmlSettings);
-
-        document.WriteTo(writer);
-
-        return ValueTask.CompletedTask;
+        var file = _directory.CreateFile(_projectName);
+        await using (file.ConfigureAwait(false))
+        {
+            var writer = XmlWriter.Create(file, Constants.XmlSettings);
+            await using (writer.ConfigureAwait(false))
+            {
+                await document.WriteToAsync(writer, cancellationToken).ConfigureAwait(false);
+            }
+        }
     }
 
     /// <inheritdoc cref="IProjectBuilder.CreateFile(string)" />
