@@ -97,7 +97,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
         }
     }
 
-    private async ValueTask<Command> GetCliWrapAsync(CancellationToken cancellationToken)
+    internal async ValueTask<Command> GetCliWrapAsync(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -111,7 +111,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
         return Cli.Wrap("nuget");
     }
 
-    private async ValueTask<string> GetNuGetExeAsync(CancellationToken cancellationToken)
+    internal async ValueTask<string> GetNuGetExeAsync(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -138,7 +138,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
         return filePath;
     }
 
-    private async Task DownloadNuGetClientAsync(string url, string fileName, CancellationToken cancellationToken)
+    internal async Task DownloadNuGetClientAsync(string url, string fileName, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
