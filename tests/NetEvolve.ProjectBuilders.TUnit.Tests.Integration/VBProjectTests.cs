@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.ProjectBuilders.TUnit.Tests.Integration;
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit.Logging;
 using NetEvolve.ProjectBuilders;
@@ -11,8 +12,15 @@ public class VBProjectTests(TemporaryDirectory directory)
 {
     [Test]
     [MethodDataSource(nameof(AddVBFileData))]
-    public async Task BuildAsync_VB_Theory(bool expectedErrors, bool expectedWarnings, string content)
+    public async Task BuildAsync_VB_Theory(
+        bool expectedErrors,
+        bool expectedWarnings,
+        string content,
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var logger = TestContext.Current!.GetDefaultLogger();
         var projectDirectory = directory.CreateDirectory($"{nameof(BuildAsync_VB_Theory)}{Guid.NewGuid()}");
         var nugetDirectory = directory.CreateDirectory($"{nameof(BuildAsync_VB_Theory)}{Guid.NewGuid()}");
@@ -27,7 +35,7 @@ public class VBProjectTests(TemporaryDirectory directory)
         var result = await factory
             .AddVBProject(builder => builder.WithDefaults().AddVBFile("main.vb", content))
             .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
-            .BuildAsync();
+            .BuildAsync(cancellationToken: cancellationToken);
 
         using (Assert.Multiple())
         {
@@ -38,8 +46,15 @@ public class VBProjectTests(TemporaryDirectory directory)
 
     [Test]
     [MethodDataSource(nameof(AddVBFileData))]
-    public async Task BuildAsync_VB_VerifyDirectory(bool expectedErrors, bool expectedWarnings, string content)
+    public async Task BuildAsync_VB_VerifyDirectory(
+        bool expectedErrors,
+        bool expectedWarnings,
+        string content,
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var logger = TestContext.Current!.GetDefaultLogger();
         var projectDirectory = directory.CreateDirectory($"{nameof(BuildAsync_VB_Theory)}{Guid.NewGuid()}");
         var nugetDirectory = directory.CreateDirectory($"{nameof(BuildAsync_VB_Theory)}{Guid.NewGuid()}");
@@ -54,7 +69,7 @@ public class VBProjectTests(TemporaryDirectory directory)
         _ = await factory
             .AddVBProject(builder => builder.WithDefaults().AddVBFile("main.vb", content))
             .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
-            .BuildAsync();
+            .BuildAsync(cancellationToken: cancellationToken);
 
         _ = await VerifyDirectory(projectDirectory.FullPath, include: ProjectHelpers.DirectoryFilter)
             .UseParameters(expectedErrors, expectedWarnings, content)

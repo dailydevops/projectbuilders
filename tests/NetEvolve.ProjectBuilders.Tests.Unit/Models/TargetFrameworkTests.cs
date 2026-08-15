@@ -77,4 +77,54 @@ public partial class TargetFrameworkTests
     [Test]
     public void Create_EmptyValue_ThrowsArgumentException() =>
         _ = Assert.Throws<ArgumentException>(() => TargetFramework.Create(nameof(TargetFramework.Net5), string.Empty));
+
+    [Test]
+    public void Create_WhitespaceName_ThrowsArgumentException() =>
+        _ = Assert.Throws<ArgumentException>(() => TargetFramework.Create("   ", "net5.0"));
+
+    [Test]
+    public void Create_WhitespaceValue_ThrowsArgumentException() =>
+        _ = Assert.Throws<ArgumentException>(() => TargetFramework.Create(nameof(TargetFramework.Net5), "   "));
+
+    [Test]
+    public async ValueTask ToString_Net8_ReturnsValue() =>
+        await Assert.That(TargetFramework.Net8.ToString()).IsEqualTo("net8.0");
+
+    [Test]
+    public async ValueTask Platform_NonPlatformSpecificFramework_IsNull() =>
+        await Assert.That(TargetFramework.Net8.Platform).IsNull();
+
+    [Test]
+    public async ValueTask Platform_PlatformSpecificFramework_IsNotNull() =>
+        await Assert.That(TargetFramework.Net8Android.Platform).IsEqualTo(TargetPlatform.Android);
+
+    [Test]
+    public async ValueTask Equals_SameValues_ReturnsTrue() =>
+        await Assert.That(TargetFramework.Net8.Equals(TargetFramework.Net8)).IsTrue();
+
+    [Test]
+    public async ValueTask Equals_DifferentValues_ReturnsFalse() =>
+        await Assert.That(TargetFramework.Net8.Equals(TargetFramework.Net9)).IsFalse();
+
+    [Test]
+    public async ValueTask Equals_ObjectOverload_SameValues_ReturnsTrue() =>
+        await Assert.That(TargetFramework.Net8.Equals((object)TargetFramework.Net8)).IsTrue();
+
+    [Test]
+    public async ValueTask GetHashCode_SameValues_AreEqual()
+    {
+        var copy = TargetFramework.Net8;
+        _ = await Assert.That(TargetFramework.Net8.GetHashCode()).IsEqualTo(copy.GetHashCode());
+    }
+
+    [Test]
+    public async ValueTask EqualityOperator_SameValues_ReturnsTrue()
+    {
+        var copy = TargetFramework.Net8;
+        _ = await Assert.That(TargetFramework.Net8 == copy).IsTrue();
+    }
+
+    [Test]
+    public async ValueTask InequalityOperator_DifferentValues_ReturnsTrue() =>
+        await Assert.That(TargetFramework.Net8 != TargetFramework.Net9).IsTrue();
 }

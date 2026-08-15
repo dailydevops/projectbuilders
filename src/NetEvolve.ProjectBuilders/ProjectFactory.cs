@@ -172,6 +172,8 @@ public sealed partial class ProjectFactory : IProjectFactory
             throw new ArgumentException("No project builder were added.");
         }
 
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Create temporary directory for testing
         await _tempDirectory.CreateAsync(cancellationToken).ConfigureAwait(false);
 
@@ -217,6 +219,8 @@ public sealed partial class ProjectFactory : IProjectFactory
 
     private async Task PrepareNuGetPackagesAsync(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (_testPackageBuilder is null)
         {
             return;

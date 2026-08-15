@@ -1,6 +1,7 @@
 ﻿namespace NetEvolve.ProjectBuilders.TUnit.Tests.Integration;
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit.Logging;
 using NetEvolve.ProjectBuilders;
@@ -11,8 +12,15 @@ public class CSharpProjectTests(TemporaryDirectory directory)
 {
     [Test]
     [MethodDataSource(nameof(AddCSharpFileData))]
-    public async Task BuildAsync_CSharp_Theory(bool expectedErrors, bool expectedWarnings, string content)
+    public async Task BuildAsync_CSharp_Theory(
+        bool expectedErrors,
+        bool expectedWarnings,
+        string content,
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var logger = TestContext.Current!.GetDefaultLogger();
         var projectDirectory = directory.CreateDirectory($"{nameof(BuildAsync_CSharp_Theory)}{Guid.NewGuid()}");
         var nugetDirectory = directory.CreateDirectory($"{nameof(BuildAsync_CSharp_Theory)}{Guid.NewGuid()}");
@@ -27,7 +35,7 @@ public class CSharpProjectTests(TemporaryDirectory directory)
         var result = await factory
             .AddCSharpProject(builder => builder.WithDefaults().AddCSharpFile("main.cs", content))
             .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
-            .BuildAsync();
+            .BuildAsync(cancellationToken: cancellationToken);
 
         using (Assert.Multiple())
         {
@@ -38,8 +46,15 @@ public class CSharpProjectTests(TemporaryDirectory directory)
 
     [Test]
     [MethodDataSource(nameof(AddCSharpFileData))]
-    public async Task BuildAsync_CSharp_VerifyDirectory(bool expectedErrors, bool expectedWarnings, string content)
+    public async Task BuildAsync_CSharp_VerifyDirectory(
+        bool expectedErrors,
+        bool expectedWarnings,
+        string content,
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var logger = TestContext.Current!.GetDefaultLogger();
         var projectDirectory = directory.CreateDirectory(
             $"{nameof(BuildAsync_CSharp_VerifyDirectory)}{Guid.NewGuid()}"
@@ -56,7 +71,7 @@ public class CSharpProjectTests(TemporaryDirectory directory)
         _ = await factory
             .AddCSharpProject(builder => builder.WithDefaults().AddCSharpFile("main.cs", content))
             .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
-            .BuildAsync();
+            .BuildAsync(cancellationToken: cancellationToken);
 
         _ = await VerifyDirectory(projectDirectory.FullPath, include: ProjectHelpers.DirectoryFilter)
             .UseParameters(expectedErrors, expectedWarnings, content)

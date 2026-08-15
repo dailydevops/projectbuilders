@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders.Builders;
 using NetEvolve.ProjectBuilders.Models;
@@ -10,32 +11,34 @@ using NetEvolve.ProjectBuilders.Models;
 public class GlobalJsonBuilderTests
 {
     [Test]
-    public async Task CreateAsync_CreatesGlobalJsonFile()
+    public async Task CreateAsync_CreatesGlobalJsonFile(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
-        await builder.CreateAsync();
+        await builder.CreateAsync(cancellationToken: cancellationToken);
 
         // Assert
         _ = await Assert.That(File.Exists(builder.FullPath)).IsTrue();
     }
 
     [Test]
-    public async Task CreateAsync_GeneratesValidJson()
+    public async Task CreateAsync_GeneratesValidJson(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         const string runtimeVersion = "8.0.204";
         await using var builder = new GlobalJsonBuilder(directory, runtimeVersion);
 
         // Act
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
         var json = JsonDocument.Parse(content);
 
         // Assert
@@ -48,17 +51,18 @@ public class GlobalJsonBuilderTests
     }
 
     [Test]
-    public async Task SetAllowPrerelease_WithTrue_IncludesInOutput()
+    public async Task SetAllowPrerelease_WithTrue_IncludesInOutput(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
         _ = builder.SetAllowPrerelease(true);
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
         var json = JsonDocument.Parse(content);
 
         // Assert
@@ -66,17 +70,18 @@ public class GlobalJsonBuilderTests
     }
 
     [Test]
-    public async Task SetAllowPrerelease_WithFalse_IncludesInOutput()
+    public async Task SetAllowPrerelease_WithFalse_IncludesInOutput(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
         _ = builder.SetAllowPrerelease(false);
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
         var json = JsonDocument.Parse(content);
 
         // Assert
@@ -86,17 +91,18 @@ public class GlobalJsonBuilderTests
     }
 
     [Test]
-    public async Task SetRollForward_WithLatestPatch_IncludesInOutput()
+    public async Task SetRollForward_WithLatestPatch_IncludesInOutput(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
         _ = builder.SetRollForward(RollForward.LatestPatch);
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
         var json = JsonDocument.Parse(content);
 
         // Assert
@@ -106,17 +112,18 @@ public class GlobalJsonBuilderTests
     }
 
     [Test]
-    public async Task SetRollForward_WithLatestMinor_IncludesInOutput()
+    public async Task SetRollForward_WithLatestMinor_IncludesInOutput(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
         _ = builder.SetRollForward(RollForward.LatestMinor);
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
         var json = JsonDocument.Parse(content);
 
         // Assert
@@ -126,18 +133,82 @@ public class GlobalJsonBuilderTests
     }
 
     [Test]
-    public async Task SetRuntimeSdk_UpdatesVersion()
+    public async Task SetRollForward_WithLatestFeature_IncludesInOutput(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
+        await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
+
+        // Act
+        _ = builder.SetRollForward(RollForward.LatestFeature);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
+        var json = JsonDocument.Parse(content);
+
+        // Assert
+        _ = await Assert
+            .That(json.RootElement.GetProperty("sdk").GetProperty("rollForward").GetString())
+            .IsEqualTo("latestFeature");
+    }
+
+    [Test]
+    public async Task SetRollForward_WithLatestMajor_IncludesInOutput(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
+        await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
+
+        // Act
+        _ = builder.SetRollForward(RollForward.LatestMajor);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
+        var json = JsonDocument.Parse(content);
+
+        // Assert
+        _ = await Assert
+            .That(json.RootElement.GetProperty("sdk").GetProperty("rollForward").GetString())
+            .IsEqualTo("latestMajor");
+    }
+
+    [Test]
+    public async Task SetRollForward_WithDisable_IncludesInOutput(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
+        await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
+
+        // Act
+        _ = builder.SetRollForward(RollForward.Disable);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
+        var json = JsonDocument.Parse(content);
+
+        // Assert
+        _ = await Assert
+            .That(json.RootElement.GetProperty("sdk").GetProperty("rollForward").GetString())
+            .IsEqualTo("disable");
+    }
+
+    [Test]
+    public async Task SetRuntimeSdk_UpdatesVersion(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
         const string newVersion = Constants.RuntimeSdkLTS;
 
         // Act
         _ = builder.SetRuntimeSdk(newVersion);
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
         var json = JsonDocument.Parse(content);
 
         // Assert
@@ -161,18 +232,19 @@ public class GlobalJsonBuilderTests
     }
 
     [Test]
-    public async Task CreateAsync_WithMultipleOptions_IncludesAll()
+    public async Task CreateAsync_WithMultipleOptions_IncludesAll(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkLTS);
 
         // Act
         _ = builder.SetAllowPrerelease(true);
         _ = builder.SetRollForward(RollForward.LatestMinor);
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
         var json = JsonDocument.Parse(content);
 
         // Assert
@@ -191,16 +263,19 @@ public class GlobalJsonBuilderTests
     }
 
     [Test]
-    public async Task CreateAsync_WithoutOptionalSettings_OnlyIncludesVersion()
+    public async Task CreateAsync_WithoutOptionalSettings_OnlyIncludesVersion(
+        CancellationToken cancellationToken = default
+    )
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
 
         // Act
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
 
         // Assert
         _ = await Assert.That(content).Contains("\"version\"");
