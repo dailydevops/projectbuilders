@@ -1,5 +1,6 @@
 ﻿namespace NetEvolve.ProjectBuilders.TUnit.Tests.Integration;
 
+using System.Threading;
 using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit.Logging;
 using NetEvolve.ProjectBuilders;
@@ -10,8 +11,10 @@ using NetEvolve.ProjectBuilders.Models;
 public class ProjectFactoryTests(TemporaryDirectory directory)
 {
     [Test]
-    public async Task BuildAsync_CSharpProject_Expected()
+    public async Task BuildAsync_CSharpProject_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var logger = TestContext.Current!.GetDefaultLogger();
         var subdirectory = directory.CreateDirectory(nameof(BuildAsync_CSharpProject_Expected));
         await using var factory = ProjectFactory.Create(
@@ -25,14 +28,16 @@ public class ProjectFactoryTests(TemporaryDirectory directory)
                 Constants.RuntimeSdkDefault,
                 jsonBuilder => jsonBuilder.SetRollForward(RollForward.LatestMinor)
             )
-            .BuildAsync();
+            .BuildAsync(cancellationToken: cancellationToken);
 
         _ = await Assert.That(result.HasNoErrorsOrWarnings()).IsTrue();
     }
 
     [Test]
-    public async Task BuildAsync_VBProject_Expected()
+    public async Task BuildAsync_VBProject_Expected(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var logger = TestContext.Current!.GetDefaultLogger();
         var subdirectory = directory.CreateDirectory(nameof(BuildAsync_VBProject_Expected));
         await using var factory = ProjectFactory.Create(
@@ -46,7 +51,7 @@ public class ProjectFactoryTests(TemporaryDirectory directory)
                 Constants.RuntimeSdkDefault,
                 jsonBuilder => jsonBuilder.SetRollForward(RollForward.LatestMinor)
             )
-            .BuildAsync();
+            .BuildAsync(cancellationToken: cancellationToken);
 
         _ = await Assert.That(result.HasNoErrorsOrWarnings()).IsTrue();
     }

@@ -68,6 +68,8 @@ internal sealed class ProjectBuilder : IProjectBuilder
     /// <inheritdoc cref="IObjectBuilder.CreateAsync(CancellationToken)" />
     public async ValueTask CreateAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var document = CreateDocument();
 
         var file = _directory.CreateFile(_projectName);

@@ -1,6 +1,7 @@
-namespace NetEvolve.ProjectBuilders.Tests.Unit.Builders;
+﻿namespace NetEvolve.ProjectBuilders.Tests.Unit.Builders;
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Builders;
@@ -8,11 +9,12 @@ using NetEvolve.ProjectBuilders.Builders;
 public class ProjectBuilderExtensionsTests
 {
     [Test]
-    public async Task AddCSharpFile_WithValidParameters_CreatesFile()
+    public async Task AddCSharpFile_WithValidParameters_CreatesFile(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
         const string fileName = "Program";
         const string content = "public class Program { }";
@@ -26,11 +28,12 @@ public class ProjectBuilderExtensionsTests
     }
 
     [Test]
-    public async Task AddCSharpFile_WithFileExtension_RemovesAndReAddsIt()
+    public async Task AddCSharpFile_WithFileExtension_RemovesAndReAddsIt(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
         const string fileName = "Program.cs";
         const string content = "public class Program { }";
@@ -123,11 +126,12 @@ public class ProjectBuilderExtensionsTests
     }
 
     [Test]
-    public async Task AddVBFile_WithValidParameters_CreatesFile()
+    public async Task AddVBFile_WithValidParameters_CreatesFile(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
         const string fileName = "Program";
         const string content = "Public Class Program\nEnd Class";
@@ -141,11 +145,12 @@ public class ProjectBuilderExtensionsTests
     }
 
     [Test]
-    public async Task AddVBFile_WithFileExtension_RemovesAndReAddsIt()
+    public async Task AddVBFile_WithFileExtension_RemovesAndReAddsIt(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
         const string fileName = "Program.vb";
         const string content = "Public Class Program\nEnd Class";
@@ -174,11 +179,12 @@ public class ProjectBuilderExtensionsTests
     }
 
     [Test]
-    public async Task AddCSharpFile_WritesContentToFile()
+    public async Task AddCSharpFile_WritesContentToFile(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
         const string fileName = "Program";
         const string content = "namespace Test { public class Program { } }";
@@ -186,18 +192,19 @@ public class ProjectBuilderExtensionsTests
         // Act
         builder.AddCSharpFile(fileName, content);
         var filePath = Path.Combine(directory.FullPath, "Program.cs");
-        var fileContent = await File.ReadAllTextAsync(filePath);
+        var fileContent = await File.ReadAllTextAsync(filePath, cancellationToken: cancellationToken);
 
         // Assert
         _ = await Assert.That(fileContent).IsEqualTo(content);
     }
 
     [Test]
-    public async Task AddVBFile_WritesContentToFile()
+    public async Task AddVBFile_WritesContentToFile(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
         const string fileName = "Program";
         const string content = "Namespace Test\nPublic Class Program\nEnd Class\nEnd Namespace";
@@ -205,7 +212,7 @@ public class ProjectBuilderExtensionsTests
         // Act
         builder.AddVBFile(fileName, content);
         var filePath = Path.Combine(directory.FullPath, "Program.vb");
-        var fileContent = await File.ReadAllTextAsync(filePath);
+        var fileContent = await File.ReadAllTextAsync(filePath, cancellationToken: cancellationToken);
 
         // Assert
         _ = await Assert.That(fileContent).IsEqualTo(content);

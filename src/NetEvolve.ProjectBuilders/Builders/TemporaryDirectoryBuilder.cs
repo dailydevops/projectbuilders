@@ -123,6 +123,8 @@ internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
     /// <inheritdoc cref="IObjectBuilder.CreateAsync(CancellationToken)"/>
     public ValueTask CreateAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (!_directory.Exists)
         {
             _directory.Create();

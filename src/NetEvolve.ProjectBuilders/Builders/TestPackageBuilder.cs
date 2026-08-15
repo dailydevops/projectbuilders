@@ -49,6 +49,8 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
     /// <inheritdoc cref="IObjectBuilder.CreateAsync(CancellationToken)"/>
     public async ValueTask CreateAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         await Lock.WaitAsync(cancellationToken).ConfigureAwait(false);
 
         try
@@ -97,6 +99,8 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
 
     private async ValueTask<Command> GetCliWrapAsync(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (OperatingSystem.IsWindows())
         {
             var exe = await GetNuGetExeAsync(cancellationToken).ConfigureAwait(false);
@@ -109,6 +113,8 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
 
     private async ValueTask<string> GetNuGetExeAsync(CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (_nugetFolder is null)
         {
             _nugetFolder = new TemporaryDirectoryBuilder();
@@ -134,6 +140,8 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
 
     private async Task DownloadNuGetClientAsync(string url, string fileName, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         using var downloadStream = await SharedHttpClient
             .Instance.GetStreamAsync(new Uri(url, UriKind.Absolute), cancellationToken)
             .ConfigureAwait(false);

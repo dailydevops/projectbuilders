@@ -95,6 +95,8 @@ internal static class SharedHttpClient
             CancellationToken cancellationToken
         )
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             for (var i = 1; i <= MaxRetries; i++)
             {
                 var delay = TimeSpan.FromMilliseconds(i * 200);

@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders.Builders;
 using NetEvolve.ProjectBuilders.Models;
@@ -10,31 +11,33 @@ using NetEvolve.ProjectBuilders.Models;
 public class ProjectBuilderTests
 {
     [Test]
-    public async Task CreateAsync_CreatesProjectFile()
+    public async Task CreateAsync_CreatesProjectFile(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
 
         // Act
-        await builder.CreateAsync();
+        await builder.CreateAsync(cancellationToken: cancellationToken);
 
         // Assert
         _ = await Assert.That(File.Exists(builder.FullPath)).IsTrue();
     }
 
     [Test]
-    public async Task CreateAsync_GeneratesValidXml()
+    public async Task CreateAsync_GeneratesValidXml(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
 
         // Act
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
 
         // Assert
         using (Assert.Multiple())
@@ -145,17 +148,18 @@ public class ProjectBuilderTests
     }
 
     [Test]
-    public async Task CreateAsync_WithItemGroupItems_IncludesInOutput()
+    public async Task CreateAsync_WithItemGroupItems_IncludesInOutput(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
         _ = builder.GetOrAddItemGroupItem<PackageReferenceItem>();
 
         // Act
-        await builder.CreateAsync();
-        var content = await File.ReadAllTextAsync(builder.FullPath);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
 
         // Assert
         _ = await Assert.That(content).Contains("ItemGroup");
@@ -187,11 +191,12 @@ public class ProjectBuilderTests
     }
 
     [Test]
-    public async Task CreateFile_MultipleFiles_CreatesAllSuccessfully()
+    public async Task CreateFile_MultipleFiles_CreatesAllSuccessfully(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         // Arrange
         await using var directory = new TemporaryDirectoryBuilder();
-        await directory.CreateAsync();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
         await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
         var fileNames = new[] { "File1.cs", "File2.cs", "File3.cs" };
 
@@ -199,7 +204,7 @@ public class ProjectBuilderTests
         foreach (var fileName in fileNames)
         {
             using var stream = builder.CreateFile(fileName);
-            await stream.WriteAsync(Encoding.UTF8.GetBytes("// Test content"));
+            await stream.WriteAsync(Encoding.UTF8.GetBytes("// Test content"), cancellationToken: cancellationToken);
         }
 
         // Assert

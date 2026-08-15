@@ -78,6 +78,8 @@ internal sealed class GlobalJsonBuilder : IGlobalJsonBuilder
 
     public async ValueTask CreateAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var document = CreateDocument();
 
         var file = _directory.CreateFile(FileName);
