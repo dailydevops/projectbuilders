@@ -28,12 +28,12 @@ using NetEvolve.ProjectBuilders.Helpers;
 /// <inheritdoc cref="ITestPackageBuilder" />
 internal sealed class TestPackageBuilder : ITestPackageBuilder
 {
-    private readonly Guid _identifier = Guid.NewGuid();
-    private TemporaryDirectoryBuilder? _nugetFolder;
+    internal readonly Guid _identifier = Guid.NewGuid();
+    internal TemporaryDirectoryBuilder? _nugetFolder;
     private readonly ISubdirectoryBuilder _directoy;
-    private bool _isInitialized;
+    internal bool _isInitialized;
     private static readonly SemaphoreSlim Lock = new SemaphoreSlim(1, 1);
-    private readonly HashSet<string> _packagePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+    internal readonly HashSet<string> _packagePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
     /// <inheritdoc cref="IObjectBuilder.FullPath"/>
     public string FullPath => _directoy.FullPath;

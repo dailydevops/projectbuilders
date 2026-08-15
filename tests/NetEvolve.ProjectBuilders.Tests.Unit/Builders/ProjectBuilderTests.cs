@@ -191,6 +191,28 @@ public class ProjectBuilderTests
     }
 
     [Test]
+    public async Task SetProjectSdk_WithSameValue_DoesNotChangeAttribute(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
+        await using var builder = new ProjectBuilder(directory, Constants.CSharpProjectFileName);
+
+        // Act
+        var result = builder.SetProjectSdk("Microsoft.NET.Sdk");
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(result).IsNotNull();
+            _ = await Assert.That(content).Contains("Sdk=\"Microsoft.NET.Sdk\"");
+        }
+    }
+
+    [Test]
     public async Task CreateFile_MultipleFiles_CreatesAllSuccessfully(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -204,7 +226,7 @@ public class ProjectBuilderTests
         foreach (var fileName in fileNames)
         {
             using var stream = builder.CreateFile(fileName);
-            await stream.WriteAsync(Encoding.UTF8.GetBytes("// Test content"), cancellationToken: cancellationToken);
+            await stream.WriteAsync(Encoding.UTF8.GetBytes("// Test content"), cancellationToken);
         }
 
         // Assert

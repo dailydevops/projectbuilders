@@ -133,6 +133,69 @@ public class GlobalJsonBuilderTests
     }
 
     [Test]
+    public async Task SetRollForward_WithLatestFeature_IncludesInOutput(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
+        await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
+
+        // Act
+        _ = builder.SetRollForward(RollForward.LatestFeature);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
+        var json = JsonDocument.Parse(content);
+
+        // Assert
+        _ = await Assert
+            .That(json.RootElement.GetProperty("sdk").GetProperty("rollForward").GetString())
+            .IsEqualTo("latestFeature");
+    }
+
+    [Test]
+    public async Task SetRollForward_WithLatestMajor_IncludesInOutput(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
+        await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
+
+        // Act
+        _ = builder.SetRollForward(RollForward.LatestMajor);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
+        var json = JsonDocument.Parse(content);
+
+        // Assert
+        _ = await Assert
+            .That(json.RootElement.GetProperty("sdk").GetProperty("rollForward").GetString())
+            .IsEqualTo("latestMajor");
+    }
+
+    [Test]
+    public async Task SetRollForward_WithDisable_IncludesInOutput(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await directory.CreateAsync(cancellationToken: cancellationToken);
+        await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
+
+        // Act
+        _ = builder.SetRollForward(RollForward.Disable);
+        await builder.CreateAsync(cancellationToken: cancellationToken);
+        var content = await File.ReadAllTextAsync(builder.FullPath, cancellationToken: cancellationToken);
+        var json = JsonDocument.Parse(content);
+
+        // Assert
+        _ = await Assert
+            .That(json.RootElement.GetProperty("sdk").GetProperty("rollForward").GetString())
+            .IsEqualTo("disable");
+    }
+
+    [Test]
     public async Task SetRuntimeSdk_UpdatesVersion(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
