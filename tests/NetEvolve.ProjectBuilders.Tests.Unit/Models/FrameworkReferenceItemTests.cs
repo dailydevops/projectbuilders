@@ -53,6 +53,7 @@ public class FrameworkReferenceItemTests
         // while restricting what's forwarded to consuming projects.
         var item = new FrameworkReferenceItem
         {
+            Aliases = "FooFramework",
             IncludeAssets = ReferenceAssets.Compile | ReferenceAssets.Runtime,
             ExcludeAssets = ReferenceAssets.Analyzers,
             PrivateAssets = ReferenceAssets.All,
@@ -64,6 +65,7 @@ public class FrameworkReferenceItemTests
         // Assert
         using (Assert.Multiple())
         {
+            _ = await Assert.That(element.Attribute("Aliases")?.Value).IsEqualTo("FooFramework");
             _ = await Assert.That(element.Element("IncludeAssets")?.Value).IsEqualTo("compile;runtime");
             _ = await Assert.That(element.Element("ExcludeAssets")?.Value).IsEqualTo("analyzers");
             _ = await Assert.That(element.Element("PrivateAssets")?.Value).IsEqualTo("all");

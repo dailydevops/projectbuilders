@@ -3,7 +3,7 @@
     <ErrorLog>result.sarif,version=2.1</ErrorLog>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" GeneratePathProperty="true" VersionOverride="13.0.1">
+    <PackageReference Include="Newtonsoft.Json" GeneratePathProperty="true" Aliases="" VersionOverride="13.0.1">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
   </ItemGroup>

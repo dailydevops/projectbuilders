@@ -19,7 +19,12 @@ public class PackageReferenceItemTests
     public async Task GetXElement_WithVersion_SetsVersionAttribute()
     {
         // Arrange
-        var item = new PackageReferenceItem { Include = "Some.Package", Version = "1.2.3" };
+        var item = new PackageReferenceItem
+        {
+            Include = "Some.Package",
+            Version = "1.2.3",
+            Aliases = "SomePackageAlias",
+        };
 
         // Act
         var element = item.GetXElement();
@@ -31,6 +36,7 @@ public class PackageReferenceItemTests
             _ = await Assert.That(element.Attribute("Include")?.Value).IsEqualTo("Some.Package");
             _ = await Assert.That(element.Attribute("Version")?.Value).IsEqualTo("1.2.3");
             _ = await Assert.That(element.Attribute("VersionOverride")).IsNull();
+            _ = await Assert.That(element.Attribute("Aliases")?.Value).IsEqualTo("SomePackageAlias");
         }
     }
 

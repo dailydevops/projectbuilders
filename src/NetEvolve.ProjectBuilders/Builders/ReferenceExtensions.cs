@@ -14,6 +14,7 @@ internal static class ReferenceExtensions
         element.SetAttributeValue("Condition", item.Condition);
         element.SetAttributeValue("Label", item.Label);
         element.SetAttributeValue("GeneratePathProperty", item.GeneratePathProperty ? true : null);
+        element.SetAttributeValue("Aliases", item.Aliases);
 
         element.SetElementValue("IncludeAssets", item.IncludeAssets.GetValue());
         element.SetElementValue("ExcludeAssets", item.ExcludeAssets.GetValue());

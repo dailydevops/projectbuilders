@@ -3,6 +3,6 @@
     <ErrorLog>result.sarif,version=2.1</ErrorLog>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../OtherProject/OtherProject.csproj" GeneratePathProperty="true" />
+    <ProjectReference Include="../OtherProject/OtherProject.csproj" GeneratePathProperty="true" Aliases="" />
   </ItemGroup>
 </Project>

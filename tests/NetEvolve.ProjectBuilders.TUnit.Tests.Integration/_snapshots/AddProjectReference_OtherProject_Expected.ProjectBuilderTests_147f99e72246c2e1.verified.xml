@@ -3,7 +3,7 @@
     <ErrorLog>result.sarif,version=2.1</ErrorLog>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../OtherProject/OtherProject.csproj" GeneratePathProperty="true">
+    <ProjectReference Include="../OtherProject/OtherProject.csproj" GeneratePathProperty="true" Aliases="NOther">
       <IncludeAssets>all</IncludeAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
       <PrivateAssets>contentfiles;build</PrivateAssets>
