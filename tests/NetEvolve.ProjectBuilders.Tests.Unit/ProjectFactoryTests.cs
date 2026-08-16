@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders;
 using NetEvolve.ProjectBuilders.Abstractions;
 using NetEvolve.ProjectBuilders.Builders;
+using NetEvolve.ProjectBuilders.Models.Output;
 
 public class ProjectFactoryTests
 {
@@ -177,5 +178,94 @@ public class ProjectFactoryTests
         var match = ProjectFactory.RulesFilter().Match("just a plain line without a rule id");
 
         _ = await Assert.That(match.Success).IsFalse();
+    }
+
+    [Test]
+    public async Task EnrichSarifResults_WithNuGetErrorInOutput_AddsRunWithParsedResult()
+    {
+        // Arrange - mirrors a real `dotnet restore`/`dotnet build` console line for an unresolvable
+        // package reference, which is how BuildAsync enriches its SARIF output with diagnostics
+        // that never made it into the compiler's own SARIF file (NuGet errors don't).
+        await using var factory = ProjectFactory.Create();
+        var projectFactory = (ProjectFactory)factory;
+        projectFactory._output.Add("test.csproj : error NU1101: Unable to find package 'Some.Missing.Package'.");
+        var sarif = new OutputFile { Runs = [] };
+
+        // Act
+        projectFactory.EnrichSarifResults(sarif);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(sarif.Runs.Count).IsEqualTo(1);
+            _ = await Assert.That(sarif.Results.Count).IsEqualTo(1);
+            _ = await Assert.That(sarif.Results[0].RuleId).IsEqualTo("NU1101");
+            _ = await Assert.That(sarif.Results[0].Level).IsEqualTo("error");
+            _ = await Assert.That(sarif.Results[0].Message?.Text).Contains("Unable to find package");
+        }
+    }
+
+    [Test]
+    public async Task EnrichSarifResults_WithDuplicateRuleAndLevel_DeduplicatesResults()
+    {
+        // Arrange
+        await using var factory = ProjectFactory.Create();
+        var projectFactory = (ProjectFactory)factory;
+        projectFactory._output.Add("test.csproj : error NU1101: Unable to find package 'A'.");
+        projectFactory._output.Add("test.csproj : error NU1101: Unable to find package 'A'.");
+        var sarif = new OutputFile { Runs = [] };
+
+        // Act
+        projectFactory.EnrichSarifResults(sarif);
+
+        // Assert
+        _ = await Assert.That(sarif.Results.Count).IsEqualTo(1);
+    }
+
+    [Test]
+    public async Task EnrichSarifResults_WithNoRuleIdInOutput_LeavesSarifUnchanged()
+    {
+        // Arrange
+        await using var factory = ProjectFactory.Create();
+        var projectFactory = (ProjectFactory)factory;
+        projectFactory._output.Add("Build succeeded.");
+        var sarif = new OutputFile { Runs = [] };
+
+        // Act
+        projectFactory.EnrichSarifResults(sarif);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(sarif.Runs.Count).IsEqualTo(1);
+            _ = await Assert.That(sarif.Results).IsEmpty();
+        }
+    }
+
+    [Test]
+    public async Task EnrichSarifResults_WithEmptyOutput_DoesNotAddRun()
+    {
+        // Arrange
+        await using var factory = ProjectFactory.Create();
+        var projectFactory = (ProjectFactory)factory;
+        var sarif = new OutputFile { Runs = [] };
+
+        // Act
+        projectFactory.EnrichSarifResults(sarif);
+
+        // Assert
+        _ = await Assert.That(sarif.Runs).IsEmpty();
+    }
+
+    [Test]
+    public async Task EnrichSarifResults_WithNullSarif_DoesNotThrow()
+    {
+        // Arrange
+        await using var factory = ProjectFactory.Create();
+        var projectFactory = (ProjectFactory)factory;
+        projectFactory._output.Add("test.csproj : error NU1101: Unable to find package 'A'.");
+
+        // Act & Assert
+        projectFactory.EnrichSarifResults(null);
     }
 }

@@ -57,7 +57,7 @@ public sealed partial class ProjectFactory : IProjectFactory
     private readonly ITestPackageBuilder? _testPackageBuilder;
     private readonly ISubdirectoryBuilder _tempDirectory;
     private bool _disposedValue;
-    private readonly List<string> _output;
+    internal readonly List<string> _output;
 
     internal Dictionary<string, string?> EnvironmentVariables { get; init; }
     internal HashSet<IObjectBuilder> ObjectBuilders { get; init; }
@@ -288,7 +288,7 @@ public sealed partial class ProjectFactory : IProjectFactory
     private static readonly Regex RulesFilterField = new Regex(RulesFilterPattern, RegexOptions.Compiled);
 #endif
 
-    private void EnrichSarifResults(OutputFile? sarif)
+    internal void EnrichSarifResults(OutputFile? sarif)
     {
         if (_output.Count == 0 || sarif is null)
         {
