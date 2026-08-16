@@ -86,7 +86,7 @@ internal static class SharedHttpClient
     /// </list>
     /// </para>
     /// </remarks>
-    private sealed class HttpRetryMessageHandler(HttpMessageHandler handler) : DelegatingHandler(handler)
+    internal sealed class HttpRetryMessageHandler(HttpMessageHandler handler) : DelegatingHandler(handler)
     {
         private const int MaxRetries = 5;
 

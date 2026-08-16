@@ -3,6 +3,6 @@
     <ErrorLog>result.sarif,version=2.1</ErrorLog>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Aliases="" Version="13.0.1" />
   </ItemGroup>
 </Project>

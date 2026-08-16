@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders.Models;
@@ -127,4 +128,25 @@ public partial class TargetFrameworkTests
     [Test]
     public async ValueTask InequalityOperator_DifferentValues_ReturnsTrue() =>
         await Assert.That(TargetFramework.Net8 != TargetFramework.Net9).IsTrue();
+
+    // The named static properties (Net8, Net8Android, ...) are only ever consumed through the
+    // `Values` collection in the tests above, which never actually invokes each individual getter
+    // (the framework instance is created eagerly by the field initializer regardless). Touch every
+    // named static property directly at least once so its getter is exercised too.
+    [Test]
+    public async ValueTask NamedStaticProperties_AllReturnNonDefaultValue()
+    {
+        var properties = typeof(TargetFramework)
+            .GetProperties(BindingFlags.Public | BindingFlags.Static)
+            .Where(p => p.PropertyType == typeof(TargetFramework));
+
+        using (Assert.Multiple())
+        {
+            foreach (var property in properties)
+            {
+                var value = (TargetFramework)property.GetValue(null)!;
+                _ = await Assert.That(value.Value).IsNotNullOrWhiteSpace();
+            }
+        }
+    }
 }

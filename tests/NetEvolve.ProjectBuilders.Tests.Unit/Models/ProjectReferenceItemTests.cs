@@ -3,7 +3,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders.Models;
 
@@ -37,8 +36,7 @@ public class ProjectReferenceItemTests
     {
         // Arrange
         const string include = "../OtherProject/OtherProject.csproj";
-        var item = new ProjectReferenceItem();
-        SetInclude(item, include);
+        var item = new ProjectReferenceItem { Include = include };
 
         // Act
         var paths = item.LookUpPaths.ToList();
@@ -56,8 +54,7 @@ public class ProjectReferenceItemTests
     public async Task GetXElement_ReturnsElementWithName()
     {
         // Arrange
-        var item = new ProjectReferenceItem();
-        SetInclude(item, "Foo.csproj");
+        var item = new ProjectReferenceItem { Include = "Foo.csproj" };
 
         // Act
         var element = item.GetXElement();
@@ -66,15 +63,33 @@ public class ProjectReferenceItemTests
         _ = await Assert.That(element.Name.LocalName).IsEqualTo("ProjectReference");
     }
 
-    // `Include` is a get-only auto-property (no public setter), so the backing field is set via
-    // reflection to exercise the real LookUpPaths/FullPath implementation with a concrete value.
-    private static void SetInclude(ProjectReferenceItem item, string include)
+    [Test]
+    public async Task GetXElement_WithAssetFiltering_SerializesAssetElements()
     {
-        var field = typeof(ProjectReferenceItem).GetField(
-            "<Include>k__BackingField",
-            BindingFlags.Instance | BindingFlags.NonPublic
-        );
-        _ = field ?? throw new InvalidOperationException("Backing field for Include not found.");
-        field.SetValue(item, include);
+        // Arrange - mirrors real usage: a project reference that shouldn't flow its build
+        // output/analyzers to consuming projects, while still generating a path property for it,
+        // and referencing it under an alias to avoid a type-name collision.
+        var item = new ProjectReferenceItem
+        {
+            Include = "Foo.csproj",
+            GeneratePathProperty = true,
+            Aliases = "FooLib",
+            IncludeAssets = ReferenceAssets.Compile | ReferenceAssets.Runtime,
+            ExcludeAssets = ReferenceAssets.Analyzers,
+            PrivateAssets = ReferenceAssets.All,
+        };
+
+        // Act
+        var element = item.GetXElement();
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(element.Attribute("GeneratePathProperty")?.Value).IsEqualTo("true");
+            _ = await Assert.That(element.Attribute("Aliases")?.Value).IsEqualTo("FooLib");
+            _ = await Assert.That(element.Element("IncludeAssets")?.Value).IsEqualTo("compile;runtime");
+            _ = await Assert.That(element.Element("ExcludeAssets")?.Value).IsEqualTo("analyzers");
+            _ = await Assert.That(element.Element("PrivateAssets")?.Value).IsEqualTo("all");
+        }
     }
 }

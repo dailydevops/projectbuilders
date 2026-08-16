@@ -3,7 +3,7 @@
     <ErrorLog>result.sarif,version=2.1</ErrorLog>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" GeneratePathProperty="true" Version="13.0.1">
+    <PackageReference Include="Newtonsoft.Json" GeneratePathProperty="true" Aliases="NJson" Version="13.0.1">
       <IncludeAssets>all</IncludeAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
       <PrivateAssets>contentfiles;build</PrivateAssets>

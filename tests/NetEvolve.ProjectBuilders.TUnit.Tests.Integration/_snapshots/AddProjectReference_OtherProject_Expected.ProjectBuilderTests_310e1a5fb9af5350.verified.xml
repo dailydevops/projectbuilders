@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ErrorLog>result.sarif,version=2.1</ErrorLog>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../OtherProject/OtherProject.csproj" GeneratePathProperty="true" Aliases="">
+      <IncludeAssets>all</IncludeAssets>
+      <ExcludeAssets>runtime</ExcludeAssets>
+      <PrivateAssets>contentfiles;build</PrivateAssets>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

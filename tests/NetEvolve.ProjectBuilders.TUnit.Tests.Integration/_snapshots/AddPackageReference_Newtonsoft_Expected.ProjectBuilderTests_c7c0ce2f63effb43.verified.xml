@@ -3,7 +3,7 @@
     <ErrorLog>result.sarif,version=2.1</ErrorLog>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json">
+    <PackageReference Include="Newtonsoft.Json" Aliases="">
       <IncludeAssets>all</IncludeAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
       <PrivateAssets>contentfiles;build</PrivateAssets>

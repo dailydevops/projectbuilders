@@ -45,4 +45,30 @@ public class FrameworkReferenceItemTests
             _ = await Assert.That(element.Attribute("GeneratePathProperty")?.Value).IsEqualTo("true");
         }
     }
+
+    [Test]
+    public async Task GetXElement_WithAssetFiltering_SerializesAssetElements()
+    {
+        // Arrange - mirrors real usage: excluding analyzer/build assets from a framework reference
+        // while restricting what's forwarded to consuming projects.
+        var item = new FrameworkReferenceItem
+        {
+            Aliases = "FooFramework",
+            IncludeAssets = ReferenceAssets.Compile | ReferenceAssets.Runtime,
+            ExcludeAssets = ReferenceAssets.Analyzers,
+            PrivateAssets = ReferenceAssets.All,
+        };
+
+        // Act
+        var element = item.GetXElement();
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(element.Attribute("Aliases")?.Value).IsEqualTo("FooFramework");
+            _ = await Assert.That(element.Element("IncludeAssets")?.Value).IsEqualTo("compile;runtime");
+            _ = await Assert.That(element.Element("ExcludeAssets")?.Value).IsEqualTo("analyzers");
+            _ = await Assert.That(element.Element("PrivateAssets")?.Value).IsEqualTo("all");
+        }
+    }
 }
