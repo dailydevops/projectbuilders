@@ -3,10 +3,32 @@
 using System.IO;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders;
+using NetEvolve.ProjectBuilders.Abstractions;
 using Xunit;
 
 public class TemporaryDirectoryFixtureTests
 {
+    [Fact]
+    public async Task CreateAsync_ViaObjectBuilderContract_CreatesUnderlyingDirectory()
+    {
+        // Arrange - exercises the IObjectBuilder.CreateAsync passthrough directly, as a caller
+        // holding only the interface (not the concrete type) would.
+        IObjectBuilder fixture = new TemporaryDirectoryFixture();
+
+        // Act
+        await fixture.CreateAsync(cancellationToken: TestContext.Current.CancellationToken);
+
+        // Assert
+        try
+        {
+            Assert.True(Directory.Exists(fixture.FullPath));
+        }
+        finally
+        {
+            await fixture.DisposeAsync();
+        }
+    }
+
     [Fact]
     public async Task CreateDirectory_WithName_CreatesSubdirectory()
     {
