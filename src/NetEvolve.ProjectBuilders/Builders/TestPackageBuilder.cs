@@ -63,7 +63,7 @@ internal sealed class TestPackageBuilder : ITestPackageBuilder
             await _directoy.CreateAsync(cancellationToken).ConfigureAwait(false);
             var cliWrap = await GetCliWrapAsync(cancellationToken).ConfigureAwait(false);
 
-            foreach (var packagePath in _packagePaths)
+            foreach (var packagePath in _packagePaths.Where(File.Exists))
             {
                 string[] args =
                 [
