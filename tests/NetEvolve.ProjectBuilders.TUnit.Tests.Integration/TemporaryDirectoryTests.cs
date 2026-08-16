@@ -1,0 +1,87 @@
+﻿namespace NetEvolve.ProjectBuilders.TUnit.Tests.Integration;
+
+using System.IO;
+using System.Threading.Tasks;
+using global::TUnit.Core.Interfaces;
+using NetEvolve.ProjectBuilders;
+
+public class TemporaryDirectoryTests
+{
+    [Test]
+    public async Task CreateDirectory_WithName_CreatesSubdirectory()
+    {
+        // Arrange
+        var directory = new TemporaryDirectory();
+        await ((IAsyncInitializer)directory).InitializeAsync();
+
+        // Act
+        var subdirectory = directory.CreateDirectory("sub");
+
+        // Assert
+        try
+        {
+            _ = await Assert.That(Directory.Exists(subdirectory.FullPath)).IsTrue();
+        }
+        finally
+        {
+            await directory.DisposeAsync();
+        }
+    }
+
+    [Test]
+    public async Task CreateFile_WithFileName_ReturnsWritableStream()
+    {
+        // Arrange
+        var directory = new TemporaryDirectory();
+        await ((IAsyncInitializer)directory).InitializeAsync();
+
+        // Act
+        await using var stream = directory.CreateFile("file.txt");
+
+        // Assert
+        try
+        {
+            _ = await Assert.That(stream.CanWrite).IsTrue();
+        }
+        finally
+        {
+            await directory.DisposeAsync();
+        }
+    }
+
+    [Test]
+    public async Task GetFilePath_WithFileName_ReturnsCombinedPath()
+    {
+        // Arrange
+        var directory = new TemporaryDirectory();
+        await ((IAsyncInitializer)directory).InitializeAsync();
+
+        // Act
+        var path = directory.GetFilePath("file.txt");
+
+        // Assert
+        try
+        {
+            _ = await Assert.That(path).IsEqualTo(Path.Combine(directory.FullPath, "file.txt"));
+        }
+        finally
+        {
+            await directory.DisposeAsync();
+        }
+    }
+
+    [Test]
+    public async Task DisposeAsync_RemovesDirectory()
+    {
+        // Arrange
+        var directory = new TemporaryDirectory();
+        await ((IAsyncInitializer)directory).InitializeAsync();
+        var path = directory.FullPath;
+
+        // Act
+        await directory.DisposeAsync();
+
+        // Assert
+        _ = await Assert.That(Directory.Exists(path)).IsFalse();
+    }
+}

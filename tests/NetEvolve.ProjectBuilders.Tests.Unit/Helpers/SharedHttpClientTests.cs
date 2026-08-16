@@ -165,6 +165,34 @@ public class SharedHttpClientTests
     }
 
     [Test]
+    public async Task SendAsync_ClientTimeout_RetriesThenThrowsTaskCanceledException(
+        CancellationToken cancellationToken = default
+    )
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        // Arrange - every response is delayed well beyond the client's own timeout, exercising the
+        // TaskCanceledException-from-HttpClient.Timeout retry/rethrow branch (distinct from caller
+        // cancellation, since `cancellationToken` here is never cancelled).
+        using var listener = StartListener(
+            context =>
+            {
+                Thread.Sleep(500);
+                context.Response.StatusCode = 200;
+            },
+            out var prefix
+        );
+        using var innerHandler = new SocketsHttpHandler();
+        using var retryHandler = new SharedHttpClient.HttpRetryMessageHandler(innerHandler);
+        using var client = new HttpClient(retryHandler) { Timeout = TimeSpan.FromMilliseconds(100) };
+
+        // Act
+        async Task Act() => _ = await client.GetAsync(new Uri(prefix), cancellationToken);
+
+        // Assert
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(Act);
+    }
+
+    [Test]
     public async Task SendAsync_ConnectionRefused_RetriesThenThrowsHttpRequestException()
     {
         // Arrange - nothing is listening on this port, so every attempt fails with HttpRequestException,
