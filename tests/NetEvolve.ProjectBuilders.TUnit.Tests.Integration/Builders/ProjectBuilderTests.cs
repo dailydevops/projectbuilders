@@ -108,4 +108,35 @@ public class ProjectBuilderTests(TemporaryDirectory directory)
             )
             .HashParameters();
     }
+
+    [Test]
+    [MatrixDataSource]
+    public async ValueTask AddProjectReference_OtherProject_Expected(
+        bool generatePathProperty,
+        [Matrix("NOther", "")] string? aliases,
+        [Matrix(ReferenceAssets.All, null)] ReferenceAssets? includeAssets,
+        [Matrix(ReferenceAssets.None, ReferenceAssets.Runtime)] ReferenceAssets? excludeAssets,
+        [Matrix(ReferenceAssets.Build | ReferenceAssets.ContentFiles, null)] ReferenceAssets? privateAssets,
+        CancellationToken cancellationToken = default
+    )
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var subdirectory = directory.CreateDirectory(nameof(AddProjectReference_OtherProject_Expected));
+        await using var builder = new ProjectBuilder(subdirectory, Constants.CSharpProjectFileName);
+        await builder
+            .AddProjectReference(
+                "../OtherProject/OtherProject.csproj",
+                generatePathProperty,
+                aliases,
+                includeAssets,
+                excludeAssets,
+                privateAssets
+            )
+            .CreateAsync(cancellationToken: cancellationToken);
+
+        _ = await VerifyFile(builder.FullPath, extension: "xml")
+            .UseParameters(generatePathProperty, aliases, includeAssets, excludeAssets, privateAssets)
+            .HashParameters();
+    }
 }

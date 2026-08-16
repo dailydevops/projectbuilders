@@ -37,7 +37,7 @@ internal sealed record ProjectReferenceItem : IReference
     /// For project references, this contains the relative path to the referenced project file,
     /// such as "../OtherProject/OtherProject.csproj".
     /// </remarks>
-    public string Include { get; } = default!;
+    public string Include { get; set; } = default!;
 
     /// <inheritdoc cref="IReference.GeneratePathProperty"/>
     public bool GeneratePathProperty { get; set; }

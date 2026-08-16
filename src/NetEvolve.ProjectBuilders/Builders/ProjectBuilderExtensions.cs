@@ -295,4 +295,47 @@ public static class ProjectBuilderExtensions
         }
         return builder;
     }
+
+    /// <summary>
+    /// Adds a project reference to the project.
+    /// </summary>
+    /// <remarks>
+    /// This method adds a ProjectReference item to the project, enabling the project to depend on
+    /// another project's compiled output within the same solution or local file system.
+    /// </remarks>
+    /// <typeparam name="T">The type of the project builder.</typeparam>
+    /// <param name="builder">The project builder to add the project reference to. Must not be <see langword="null"/>.</param>
+    /// <param name="include">The relative path to the referenced project file, such as "../OtherProject/OtherProject.csproj". Must not be <see langword="null"/> or empty.</param>
+    /// <param name="generatePathProperty">When <see langword="true"/>, generates a property containing the path to the referenced project. Default is <see langword="false"/>.</param>
+    /// <param name="aliases">The optional comma-separated list of alias names for the reference. See <see href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/extern-alias"/>.</param>
+    /// <param name="includeAssets">The optional asset types to include from the referenced project. When <see langword="null"/>, all assets are included.</param>
+    /// <param name="excludeAssets">The optional asset types to exclude from the referenced project. Takes precedence over <paramref name="includeAssets"/>.</param>
+    /// <param name="privateAssets">The optional asset types that should not flow to consuming projects. Commonly used for analyzers and build tools.</param>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="include"/> is <see langword="null"/> or whitespace.</exception>
+    public static T AddProjectReference<T>(
+        this T builder,
+        string include,
+        bool generatePathProperty = false,
+        string? aliases = null,
+        ReferenceAssets? includeAssets = null,
+        ReferenceAssets? excludeAssets = null,
+        ReferenceAssets? privateAssets = null
+    )
+        where T : class, IProjectBuilder
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(include);
+
+        if (builder is ProjectBuilder projectBuilder)
+        {
+            var item = projectBuilder.GetOrAddItemGroupItem<ProjectReferenceItem>();
+            item.Include = include;
+            item.GeneratePathProperty = generatePathProperty;
+            item.Aliases = aliases;
+            item.IncludeAssets = includeAssets;
+            item.ExcludeAssets = excludeAssets;
+            item.PrivateAssets = privateAssets;
+        }
+        return builder;
+    }
 }
