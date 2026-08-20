@@ -19,7 +19,7 @@
     <GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.32.0.713" />
   </ItemGroup>
   <ItemGroup>
-    <PackageVersion Include="CliWrap" Version="3.10.4" />
+    <PackageVersion Include="CliWrap" Version="3.10.5" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.9.0" />
     <PackageVersion Include="NetEvolve.Arguments" Version="3.4.16" />
     <PackageVersion Include="NetEvolve.Extensions.TUnit" Version="3.5.348" />
