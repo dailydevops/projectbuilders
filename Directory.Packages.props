@@ -28,8 +28,8 @@
     <PackageVersion Include="TUnit.Core" Version="1.66.0" />
     <PackageVersion Include="Verify.ParametersHashing" Version="1.0.0" />
     <PackageVersion Include="Verify.TUnit" Version="31.28.0" />
-    <PackageVersion Include="Verify.XunitV3" Version="31.28.0" />
-    <PackageVersion Include="xunit.v3" Version="3.2.2" />
-    <PackageVersion Include="xunit.v3.extensibility.core" Version="3.2.2" />
+    <PackageVersion Include="Verify.XunitV3" Version="32.0.0" />
+    <PackageVersion Include="xunit.v3" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3.extensibility.core" Version="4.0.0" />
   </ItemGroup>
 </Project>
