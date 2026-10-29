@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using NetEvolve.ProjectBuilders;
 using NetEvolve.ProjectBuilders.Builders;
+using NetEvolve.ProjectBuilders.Models;
 
 public class VBProjectTests(TemporaryDirectoryFixture directory) : IClassFixture<TemporaryDirectoryFixture>
 {
@@ -19,7 +20,9 @@ public class VBProjectTests(TemporaryDirectoryFixture directory) : IClassFixture
 
         var result = await factory
             .AddVBProject(builder => builder.WithDefaults().AddVBFile("main.vb", content))
-            .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
+            .AddGlobalJson(configure: projectBuilder =>
+                projectBuilder.WithDefaults().SetRollForward(RollForward.LatestMajor)
+            )
             .BuildAsync(cancellationToken: TestContext.Current.CancellationToken);
 
         Assert.Equal(result.HasErrors(), expectedErrors);
@@ -38,7 +41,9 @@ public class VBProjectTests(TemporaryDirectoryFixture directory) : IClassFixture
 
         _ = await factory
             .AddVBProject(builder => builder.WithDefaults().AddVBFile("main.vb", content))
-            .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
+            .AddGlobalJson(configure: projectBuilder =>
+                projectBuilder.WithDefaults().SetRollForward(RollForward.LatestMajor)
+            )
             .BuildAsync(cancellationToken: TestContext.Current.CancellationToken);
 
         _ = await VerifyDirectory(projectDirectory.FullPath, include: ProjectHelpers.DirectoryFilter)

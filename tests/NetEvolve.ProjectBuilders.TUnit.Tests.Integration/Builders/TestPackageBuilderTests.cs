@@ -24,7 +24,7 @@ public class TestPackageBuilderTests(TemporaryDirectory directory)
         await using var otherFactory = ProjectFactory.Create(directory: otherProjectDirectory);
         var otherBuildResult = await otherFactory
             .AddCSharpProject(builder => builder.WithTargetFramework(TargetFramework.Net8))
-            .AddGlobalJson(configure: builder => builder.WithDefaults())
+            .AddGlobalJson(configure: builder => builder.WithDefaults().SetRollForward(RollForward.LatestMajor))
             .BuildAsync(cancellationToken: cancellationToken);
         _ = await Assert.That(otherBuildResult.HasNoErrorsOrWarnings()).IsTrue();
 
