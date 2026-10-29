@@ -113,6 +113,44 @@ public class ProjectFactoryTests
     }
 
     [Test]
+    public async Task Create_Default_SetsDefaultEnvironmentVariables()
+    {
+        await using var factory = ProjectFactory.Create();
+
+        var variables = ((ProjectFactory)factory).EnvironmentVariables;
+
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(variables.Count).IsEqualTo(5);
+            _ = await Assert.That(variables.ContainsKey("CI")).IsTrue();
+            _ = await Assert.That(variables["CI"]).IsNull();
+            _ = await Assert.That(variables["DOTNET_CLI_TELEMETRY_OPTOUT"]).IsEqualTo("true");
+            _ = await Assert.That(variables["DOTNET_NOLOGO"]).IsEqualTo("true");
+            _ = await Assert.That(variables["DOTNET_SKIP_FIRST_TIME_EXPERIENCE"]).IsEqualTo("true");
+            _ = await Assert.That(variables.ContainsKey("GITHUB_ACTIONS")).IsTrue();
+            _ = await Assert.That(variables["GITHUB_ACTIONS"]).IsNull();
+            _ = await Assert.That(variables.ContainsKey("ci")).IsTrue();
+        }
+    }
+
+    [Test]
+    public async Task Create_WithoutDirectory_UsesTemporaryDirectoryBuilder()
+    {
+        await using var factory = ProjectFactory.Create();
+
+        _ = await Assert.That(factory.DirectoryBuilder).IsTypeOf<TemporaryDirectoryBuilder>();
+    }
+
+    [Test]
+    public async Task Create_WithDirectory_UsesProvidedDirectory()
+    {
+        await using var directory = new TemporaryDirectoryBuilder();
+        await using var factory = ProjectFactory.Create(directory: directory);
+
+        _ = await Assert.That(factory.DirectoryBuilder).IsSameReferenceAs(directory);
+    }
+
+    [Test]
     public async Task AddFileBuilder_WithNullBuilder_ThrowsArgumentNullException()
     {
         await using var factory = ProjectFactory.Create();
