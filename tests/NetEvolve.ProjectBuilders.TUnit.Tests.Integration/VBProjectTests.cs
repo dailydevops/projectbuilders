@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit.Logging;
 using NetEvolve.ProjectBuilders;
 using NetEvolve.ProjectBuilders.Builders;
+using NetEvolve.ProjectBuilders.Models;
 
 [ClassDataSource<TemporaryDirectory>]
 public class VBProjectTests(TemporaryDirectory directory)
@@ -34,7 +35,9 @@ public class VBProjectTests(TemporaryDirectory directory)
 
         var result = await factory
             .AddVBProject(builder => builder.WithDefaults().AddVBFile("main.vb", content))
-            .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
+            .AddGlobalJson(configure: projectBuilder =>
+                projectBuilder.WithDefaults().SetRollForward(RollForward.LatestMajor)
+            )
             .BuildAsync(cancellationToken: cancellationToken);
 
         using (Assert.Multiple())
@@ -68,7 +71,9 @@ public class VBProjectTests(TemporaryDirectory directory)
 
         _ = await factory
             .AddVBProject(builder => builder.WithDefaults().AddVBFile("main.vb", content))
-            .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
+            .AddGlobalJson(configure: projectBuilder =>
+                projectBuilder.WithDefaults().SetRollForward(RollForward.LatestMajor)
+            )
             .BuildAsync(cancellationToken: cancellationToken);
 
         _ = await VerifyDirectory(projectDirectory.FullPath, include: ProjectHelpers.DirectoryFilter)
