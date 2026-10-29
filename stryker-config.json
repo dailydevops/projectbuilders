@@ -22,7 +22,7 @@
       "tests/NetEvolve.ProjectBuilders.XUnit.Tests.Integration/NetEvolve.ProjectBuilders.XUnit.Tests.Integration.csproj",
       "tests/NetEvolve.ProjectBuilders.TUnit.Tests.Integration/NetEvolve.ProjectBuilders.TUnit.Tests.Integration.csproj"
     ],
-    "coverage-analysis": "perTest",
+    "coverage-analysis": "all",
     "mutate": [
       "**/*.cs",
       "!**/*.Designer.cs",
