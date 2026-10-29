@@ -36,7 +36,8 @@ public class TemporaryDirectoryBuilderTests
         void Act() => directory.CreateFile(fileName);
 
         // Assert
-        _ = Assert.Throws<ArgumentException>(Act);
+        var ex = Assert.Throws<ArgumentException>(Act);
+        _ = await Assert.That(ex.Message).Contains(fileName).And.Contains("already exists");
     }
 
     [Test]
