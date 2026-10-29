@@ -90,7 +90,8 @@ public class SubdirectoryBuilderTests
         void Act() => _ = subdirectory.CreateFile("file.txt");
 
         // Assert
-        _ = Assert.Throws<ArgumentException>(Act);
+        var ex = Assert.Throws<ArgumentException>(Act);
+        _ = await Assert.That(ex.Message).Contains("file.txt").And.Contains("already exists");
     }
 
     [Test]
