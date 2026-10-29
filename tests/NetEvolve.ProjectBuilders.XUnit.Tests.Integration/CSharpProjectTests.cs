@@ -58,10 +58,6 @@ public class CSharpProjectTests(TemporaryDirectoryFixture directory) : IClassFix
         {
             { false, false, "class Program { static void Main() { System.Console.WriteLine(\"Hello, World!\"); } }" },
             { true, false, "class Program { static void Main() { WriteLine(\"Hello, World!\"); } }" },
-            {
-                false,
-                true,
-                "class Program { static async void Main() { System.Console.WriteLine(\"Hello, World!\"); } }"
-            },
+            { false, true, "class Program { static void Main() { int unused; } }" },
         };
 }
