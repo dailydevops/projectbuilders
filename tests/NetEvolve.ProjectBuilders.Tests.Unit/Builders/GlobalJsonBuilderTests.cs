@@ -280,4 +280,36 @@ public class GlobalJsonBuilderTests
         // Assert
         _ = await Assert.That(content).Contains("\"version\"");
     }
+
+    [Test]
+    [Arguments("")]
+    [Arguments(" ")]
+    public async Task SetRuntimeSdk_WithEmptyOrWhitespace_ThrowsArgumentException(string runtimeVersion)
+    {
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
+
+        // Act
+        void Act() => builder.SetRuntimeSdk(runtimeVersion);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>(Act);
+    }
+
+    [Test]
+    public async Task CreateAsync_WithCanceledToken_ThrowsOperationCanceledException()
+    {
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await using var builder = new GlobalJsonBuilder(directory, Constants.RuntimeSdkDefault);
+        using var cts = new CancellationTokenSource();
+        await cts.CancelAsync();
+
+        // Act
+        async Task Act() => await builder.CreateAsync(cts.Token);
+
+        // Assert
+        _ = await Assert.ThrowsAsync<OperationCanceledException>(Act);
+    }
 }

@@ -217,4 +217,66 @@ public class ProjectBuilderExtensionsTests
         // Assert
         _ = await Assert.That(fileContent).IsEqualTo(content);
     }
+
+    [Test]
+    public async Task AddVBFile_WithEmptyFileName_ThrowsArgumentException()
+    {
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
+        var fileName = string.Empty;
+        const string content = "Public Class Program End Class";
+
+        // Act
+        void Act() => builder.AddVBFile(fileName, content);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>(Act);
+    }
+
+    [Test]
+    public async Task AddVBFile_WithWhitespaceFileName_ThrowsArgumentException()
+    {
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
+        const string content = "Public Class Program End Class";
+
+        // Act
+        void Act() => builder.AddVBFile(" ", content);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>(Act);
+    }
+
+    [Test]
+    public async Task AddVBFile_WithEmptyContent_ThrowsArgumentException()
+    {
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
+        const string fileName = "Program";
+        var content = string.Empty;
+
+        // Act
+        void Act() => builder.AddVBFile(fileName, content);
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>(Act);
+    }
+
+    [Test]
+    public async Task AddVBFile_WithWhitespaceContent_ThrowsArgumentException()
+    {
+        // Arrange
+        await using var directory = new TemporaryDirectoryBuilder();
+        await using var builder = new ProjectBuilder(directory, Constants.VBNetProjectFileName);
+        const string fileName = "Program";
+
+        // Act
+        void Act() => builder.AddVBFile(fileName, " ");
+
+        // Assert
+        _ = Assert.Throws<ArgumentException>(Act);
+    }
 }
