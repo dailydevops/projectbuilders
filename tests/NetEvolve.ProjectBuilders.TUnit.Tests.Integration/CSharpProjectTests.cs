@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NetEvolve.Extensions.TUnit.Logging;
 using NetEvolve.ProjectBuilders;
 using NetEvolve.ProjectBuilders.Builders;
+using NetEvolve.ProjectBuilders.Models;
 
 [ClassDataSource<TemporaryDirectory>]
 public class CSharpProjectTests(TemporaryDirectory directory)
@@ -34,7 +35,9 @@ public class CSharpProjectTests(TemporaryDirectory directory)
 
         var result = await factory
             .AddCSharpProject(builder => builder.WithDefaults().AddCSharpFile("main.cs", content))
-            .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
+            .AddGlobalJson(configure: projectBuilder =>
+                projectBuilder.WithDefaults().SetRollForward(RollForward.LatestMajor)
+            )
             .BuildAsync(cancellationToken: cancellationToken);
 
         using (Assert.Multiple())
@@ -70,7 +73,9 @@ public class CSharpProjectTests(TemporaryDirectory directory)
 
         _ = await factory
             .AddCSharpProject(builder => builder.WithDefaults().AddCSharpFile("main.cs", content))
-            .AddGlobalJson(configure: projectBuilder => projectBuilder.WithDefaults())
+            .AddGlobalJson(configure: projectBuilder =>
+                projectBuilder.WithDefaults().SetRollForward(RollForward.LatestMajor)
+            )
             .BuildAsync(cancellationToken: cancellationToken);
 
         _ = await VerifyDirectory(projectDirectory.FullPath, include: ProjectHelpers.DirectoryFilter)
@@ -82,10 +87,6 @@ public class CSharpProjectTests(TemporaryDirectory directory)
         [
             (false, false, "class Program { static void Main() { System.Console.WriteLine(\"Hello, World!\"); } }"),
             (true, false, "class Program { static void Main() { WriteLine(\"Hello, World!\"); }"),
-            (
-                false,
-                true,
-                "class Program { static async void Main() { System.Console.WriteLine(\"Hello, World!\"); } }"
-            ),
+            (false, true, "class Program { static void Main() { int unused; } }"),
         ];
 }

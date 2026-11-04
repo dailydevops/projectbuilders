@@ -26,7 +26,7 @@ public class ProjectFactoryTests(TemporaryDirectory directory)
             .AddCSharpProject(projectBuilder => projectBuilder.WithTargetFramework(TargetFramework.Net8))
             .AddGlobalJson(
                 Constants.RuntimeSdkDefault,
-                jsonBuilder => jsonBuilder.SetRollForward(RollForward.LatestMinor)
+                jsonBuilder => jsonBuilder.SetRollForward(RollForward.LatestMajor)
             )
             .BuildAsync(cancellationToken: cancellationToken);
 
@@ -58,7 +58,7 @@ public class ProjectFactoryTests(TemporaryDirectory directory)
             .AddCSharpProject(projectBuilder => projectBuilder.WithTargetFramework(TargetFramework.Net8))
             .AddGlobalJson(
                 Constants.RuntimeSdkDefault,
-                jsonBuilder => jsonBuilder.SetRollForward(RollForward.LatestMinor)
+                jsonBuilder => jsonBuilder.SetRollForward(RollForward.LatestMajor)
             )
             .BuildAsync(cancellationToken: cancellationToken);
 
@@ -82,7 +82,7 @@ public class ProjectFactoryTests(TemporaryDirectory directory)
             .AddVBProject(projectBuilder => projectBuilder.WithTargetFramework(TargetFramework.Net8))
             .AddGlobalJson(
                 Constants.RuntimeSdkDefault,
-                jsonBuilder => jsonBuilder.SetRollForward(RollForward.LatestMinor)
+                jsonBuilder => jsonBuilder.SetRollForward(RollForward.LatestMajor)
             )
             .BuildAsync(cancellationToken: cancellationToken);
 
