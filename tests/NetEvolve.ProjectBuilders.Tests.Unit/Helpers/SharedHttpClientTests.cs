@@ -1,8 +1,13 @@
 ﻿namespace NetEvolve.ProjectBuilders.Tests.Unit.Helpers;
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -207,6 +212,138 @@ public class SharedHttpClientTests
         _ = await Assert.ThrowsAsync<HttpRequestException>(Act);
     }
 
+    // The handler only retries a TaskCanceledException whose token differs from the caller's token.
+    // The tests below therefore always pass a non-default token to the handler and throw a
+    // TaskCanceledException carrying the default token from the stub.
+    // Lower-bound timing assertions only (never upper bounds) keep them stable on slow runners.
+
+    [Test]
+    public async Task SendAsync_PersistentTaskCanceledException_RetriesFiveTimesThenRethrows()
+    {
+        // Arrange
+        using var cts = new CancellationTokenSource();
+        using var inner = new StubHandler((_, _) => throw new TaskCanceledException());
+        using var retryHandler = new SharedHttpClient.HttpRetryMessageHandler(inner);
+        using var invoker = new HttpMessageInvoker(retryHandler);
+        using var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost/");
+        var stopwatch = Stopwatch.StartNew();
+
+        // Act
+        async Task Act() => _ = await invoker.SendAsync(request, cts.Token);
+
+        // Assert
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(Act);
+        stopwatch.Stop();
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(inner.CallCount).IsEqualTo(5);
+            // 200 + 400 + 600 + 800 ms backoff
+            _ = await Assert.That(stopwatch.Elapsed).IsGreaterThanOrEqualTo(TimeSpan.FromMilliseconds(1800));
+        }
+    }
+
+    [Test]
+    public async Task SendAsync_TaskCanceledExceptionTwiceThenSuccess_ReturnsResponseAfterThreeAttempts()
+    {
+        // Arrange
+        using var cts = new CancellationTokenSource();
+        using var inner = new StubHandler(
+            (attempt, _) => attempt < 3 ? throw new TaskCanceledException() : new HttpResponseMessage(HttpStatusCode.OK)
+        );
+        using var retryHandler = new SharedHttpClient.HttpRetryMessageHandler(inner);
+        using var invoker = new HttpMessageInvoker(retryHandler);
+        using var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost/");
+
+        // Act
+        using var response = await invoker.SendAsync(request, cts.Token);
+
+        // Assert
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
+            _ = await Assert.That(inner.CallCount).IsEqualTo(3);
+        }
+    }
+
+    [Test]
+    public async Task SendAsync_TaskCanceledExceptionWithCallerToken_PropagatesWithoutRetry()
+    {
+        // Arrange
+        using var cts = new CancellationTokenSource();
+        using var inner = new StubHandler((_, _) => throw new TaskCanceledException(null, null, cts.Token));
+        using var retryHandler = new SharedHttpClient.HttpRetryMessageHandler(inner);
+        using var invoker = new HttpMessageInvoker(retryHandler);
+        using var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost/");
+
+        // Act
+        async Task Act() => _ = await invoker.SendAsync(request, cts.Token);
+
+        // Assert
+        _ = await Assert.ThrowsAsync<TaskCanceledException>(Act);
+        _ = await Assert.That(inner.CallCount).IsEqualTo(1);
+    }
+
+    [Test]
+    public async Task SendAsync_PreCanceledToken_ThrowsWithoutCallingInnerHandler()
+    {
+        // Arrange
+        using var cts = new CancellationTokenSource();
+        await cts.CancelAsync();
+        using var inner = new StubHandler((_, _) => new HttpResponseMessage(HttpStatusCode.OK));
+        using var retryHandler = new SharedHttpClient.HttpRetryMessageHandler(inner);
+        using var invoker = new HttpMessageInvoker(retryHandler);
+        using var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost/");
+
+        // Act
+        async Task Act() => _ = await invoker.SendAsync(request, cts.Token);
+
+        // Assert
+        _ = await Assert.ThrowsAsync<OperationCanceledException>(Act);
+        _ = await Assert.That(inner.CallCount).IsEqualTo(0);
+    }
+
+    [Test]
+    [Arguments(HttpStatusCode.InternalServerError)]
+    [Arguments(HttpStatusCode.RequestTimeout)]
+    [Arguments(HttpStatusCode.TooManyRequests)]
+    public async Task SendAsync_PersistentRetryableStatus_HonorsRetryAfterAndDisposesDiscardedResponses(
+        HttpStatusCode statusCode
+    )
+    {
+        // Arrange
+        using var cts = new CancellationTokenSource();
+        var responses = new List<TrackingContent>();
+        using var inner = new StubHandler(
+            (_, _) =>
+            {
+                var content = new TrackingContent();
+                responses.Add(content);
+                var message = new HttpResponseMessage(statusCode) { Content = content };
+                message.Headers.RetryAfter = new RetryConditionHeaderValue(TimeSpan.FromMilliseconds(300));
+                return message;
+            }
+        );
+        using var retryHandler = new SharedHttpClient.HttpRetryMessageHandler(inner);
+        using var invoker = new HttpMessageInvoker(retryHandler);
+        using var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost/");
+        var stopwatch = Stopwatch.StartNew();
+
+        // Act
+        using var response = await invoker.SendAsync(request, cts.Token);
+        stopwatch.Stop();
+
+        // Assert - four discarded responses are disposed, the last one is handed to the caller
+        using (Assert.Multiple())
+        {
+            _ = await Assert.That(response.StatusCode).IsEqualTo(statusCode);
+            _ = await Assert.That(inner.CallCount).IsEqualTo(5);
+            _ = await Assert.That(responses.Take(4).All(x => x.Disposed)).IsTrue();
+            _ = await Assert.That(responses[4].Disposed).IsFalse();
+            // 4 x 300 ms Retry-After
+            _ = await Assert.That(stopwatch.Elapsed).IsGreaterThanOrEqualTo(TimeSpan.FromMilliseconds(1100));
+        }
+    }
+
     private static HttpListener StartListener(Action<HttpListenerContext> handler, out string prefix)
     {
         var port = GetFreePort();
@@ -247,5 +384,36 @@ public class SharedHttpClientTests
         var port = ((IPEndPoint)listener.LocalEndpoint).Port;
         listener.Stop();
         return port;
+    }
+
+    private sealed class StubHandler(Func<int, CancellationToken, HttpResponseMessage> responder) : HttpMessageHandler
+    {
+        private int _callCount;
+
+        public int CallCount => Volatile.Read(ref _callCount);
+
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken
+        ) => Task.FromResult(responder(Interlocked.Increment(ref _callCount), cancellationToken));
+    }
+
+    private sealed class TrackingContent : HttpContent
+    {
+        public bool Disposed { get; private set; }
+
+        protected override Task SerializeToStreamAsync(Stream stream, TransportContext? context) => Task.CompletedTask;
+
+        protected override bool TryComputeLength(out long length)
+        {
+            length = 0;
+            return true;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            Disposed = true;
+            base.Dispose(disposing);
+        }
     }
 }
