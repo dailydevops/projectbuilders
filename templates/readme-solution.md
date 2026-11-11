@@ -207,7 +207,6 @@ This solution follows modern .NET architectural patterns and best practices:
 - **Repository Pattern**: Abstraction over data access logic
 - **SOLID Principles**: Object-oriented design with SOLID principles
 
-
 ## Contributing
 
 <!--
