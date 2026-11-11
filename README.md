@@ -98,7 +98,6 @@ tests/                 # Test projects
 ├── NetEvolve.ProjectBuilders.TUnit.Tests.Integration/ # TUnit integration tests
 └── NetEvolve.ProjectBuilders.XUnit.Tests.Integration/ # xUnit integration tests
 
-decisions/            # Architecture Decision Records (ADRs)
 templates/            # Documentation and file templates
 ```
 
@@ -110,8 +109,6 @@ This solution follows modern .NET architectural patterns and best practices:
 - **Dependency Injection**: Built-in .NET dependency injection throughout
 - **Extensible Abstractions**: Interfaces and extension points for custom builders
 - **SOLID Principles**: Object-oriented design with SOLID principles
-
-For detailed architectural decisions, see the [Architecture Decision Records](decisions/).
 
 ## Contributing
 
@@ -130,7 +127,6 @@ This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDU
 
 ## Documentation
 
-- **[Architecture Decision Records](decisions/)** - Detailed architectural decisions and rationale
 - **[Contributing Guidelines](CONTRIBUTING.md)** - How to contribute to this project
 - **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community standards and expectations
 - **[License](LICENSE)** - Project licensing information
