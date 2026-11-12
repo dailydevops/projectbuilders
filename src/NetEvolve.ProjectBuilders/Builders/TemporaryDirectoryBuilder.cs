@@ -106,9 +106,8 @@ internal sealed class TemporaryDirectoryBuilder : ITemporaryDirectoryBuilder
         try
         {
             await Parallel
-                .ForEachAsync(
-                    directory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly),
-                    async (dir, _) => await DeleteDiretoryAsync(dir).ConfigureAwait(false)
+                .ForEachAsync(directory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly), async (dir, _) =>
+                    await DeleteDiretoryAsync(dir).ConfigureAwait(false)
                 )
                 .ConfigureAwait(false);
 
