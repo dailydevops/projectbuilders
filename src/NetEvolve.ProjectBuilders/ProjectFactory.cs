@@ -180,10 +180,8 @@ public sealed partial class ProjectFactory : IProjectFactory
         await PrepareNuGetPackagesAsync(cancellationToken).ConfigureAwait(false);
 
         await Parallel
-            .ForEachAsync(
-                ObjectBuilders,
-                cancellationToken,
-                async (file, token) => await file.CreateAsync(token).ConfigureAwait(false)
+            .ForEachAsync(ObjectBuilders, cancellationToken, async (file, token) =>
+                await file.CreateAsync(token).ConfigureAwait(false)
             )
             .ConfigureAwait(false);
 

@@ -68,16 +68,15 @@ public sealed class OutputFile
         {
             if (_results is null)
             {
-                _results =
-                    Runs?.SelectMany(r =>
+                _results = Runs?.SelectMany(r =>
+                    {
+                        if (r.Results is null)
                         {
-                            if (r.Results is null)
-                            {
-                                return [];
-                            }
-                            return r.Results;
-                        })
-                        .ToList()
+                            return [];
+                        }
+                        return r.Results;
+                    })
+                    .ToList()
                     ?? [];
             }
 
